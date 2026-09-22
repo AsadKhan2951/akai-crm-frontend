@@ -1,0 +1,44 @@
+[
+  {
+    "locale": "en",
+    "view": "catalogue",
+    "direction": "ltr",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "locale": "en",
+    "view": "cart",
+    "direction": "ltr",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "locale": "en",
+    "view": "quote",
+    "direction": "ltr",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "locale": "ur",
+    "view": "catalogue",
+    "direction": "rtl",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "locale": "ur",
+    "view": "cart",
+    "direction": "rtl",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "locale": "ur",
+    "view": "quote",
+    "direction": "rtl",
+    "width": 390,
+    "height": 844
+  }
+]

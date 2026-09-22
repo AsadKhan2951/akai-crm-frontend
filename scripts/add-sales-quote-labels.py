@@ -1,0 +1,10 @@
+import json
+from pathlib import Path
+for filename, values in {
+  "en.json": {"quoteQueueTitle": "Quote pricing queue", "quoteQueueDescription": "Price REQUESTED quotes, set validity, and send the vendor notification.", "quoteNumber": "Quote", "quoteLines": "Quote lines", "requestedPrice": "Requested price", "setPrice": "Set price PKR", "validUntil": "Valid until", "internalNotes": "Internal notes", "sendQuote": "Send quote", "quoteSent": "Quote sent to vendor.", "quotePriceError": "The quote could not be priced. Check every line and the validity date.", "noRequestedQuotes": "No REQUESTED quotes.", "noRequestedQuotesHint": "New Vendor quote requests will appear here.", "acceptanceRate": "Acceptance rate", "accepted": "Accepted", "declined": "Declined", "responded": "Responded", "vendorContactMissing": "Vendor email or WhatsApp number is not saved.", "notifyWhatsApp": "Notify on WhatsApp", "notifyEmail": "Notify by email"},
+  "ur.json": {"quoteQueueTitle": "Quote pricing queue", "quoteQueueDescription": "REQUESTED quotes کی pricing، validity اور vendor notification۔", "quoteNumber": "Quote", "quoteLines": "Quote lines", "requestedPrice": "Requested price", "setPrice": "Price PKR لکھیں", "validUntil": "Valid until", "internalNotes": "Internal notes", "sendQuote": "Quote send کریں", "quoteSent": "Vendor کو quote send ہو گیا۔", "quotePriceError": "Quote price نہیں ہو سکا۔ ہر line اور validity date چیک کریں۔", "noRequestedQuotes": "کوئی REQUESTED quote نہیں۔", "noRequestedQuotesHint": "نئے Vendor quote requests یہاں آئیں گے۔", "acceptanceRate": "Acceptance rate", "accepted": "Accepted", "declined": "Declined", "responded": "Responded", "vendorContactMissing": "Vendor کا email یا WhatsApp number محفوظ نہیں ہے۔", "notifyWhatsApp": "WhatsApp پر notify کریں", "notifyEmail": "Email پر notify کریں"}
+}.items():
+    path = Path("messages") / filename
+    data = json.loads(path.read_text())
+    data["sales"].update(values)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")

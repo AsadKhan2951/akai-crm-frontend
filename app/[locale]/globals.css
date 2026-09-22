@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --akai-navy: #16233F;
+  --akai-red: #D6202C;
+  --akai-slate: #64748B;
+  --akai-surface: #F1F5F9;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; }
+body { margin: 0; background: white; color: var(--akai-navy); font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 16px; }
+[dir="rtl"] body { font-family: "Noto Nastaliq Urdu", "Noto Sans Arabic", sans-serif; }
+[dir="rtl"] bdi, [dir="rtl"] .numeric { direction: ltr; unicode-bidi: isolate; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+button, a, input, select, textarea { min-height: 44px; }
+.portal-shell { min-height: 100vh; display: flex; flex-direction: column; }
+.portal-main { flex: 1; min-width: 0; }
+@media (min-width: 768px) { .portal-shell { flex-direction: row; } }
