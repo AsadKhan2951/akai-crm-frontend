@@ -58,7 +58,18 @@
     "updatePassword": "Update password",
     "passwordUpdated": "Your password was updated. You can now log in.",
     "passwordMismatch": "The passwords do not match.",
-    "passwordTooShort": "Use at least 8 characters."
+    "passwordTooShort": "Use at least 10 characters.",
+    "backToLogin": "Back to log in",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "sending": "Sending",
+    "updating": "Updating",
+    "linkError": "This link is invalid or has expired. Request a new one.",
+    "linkExpiredTitle": "Reset link expired",
+    "requestNewLink": "Request a new link",
+    "passwordCommon": "Choose a less common password.",
+    "passwordHint": "At least 10 characters.",
+    "updateError": "We could not update your password. Try again."
   },
   "portal": {
     "admin": "Admin portal",

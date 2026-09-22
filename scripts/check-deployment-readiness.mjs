@@ -6,7 +6,6 @@ const requiredFiles = ["README.md", "PROJECT_RULES.md", "Dockerfile", ".env.exam
 const requiredEnvNames = ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY", "NEXT_PUBLIC_APP_URL", "CRON_SECRET"];
 // Pages and routes referenced by the app/README but missing from the recovered source.
 const historicalRequired = [
-  "app/[locale]/auth/login/page.tsx",
   "app/[locale]/(vendor)/vendor/page.tsx",
   "app/[locale]/(vendor)/vendor/catalogue/VendorCatalogue.tsx",
   "app/api/vendor/catalogue-pdf/route.ts",
