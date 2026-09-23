@@ -99,13 +99,13 @@ export async function assembleCurrentUserAiContext(surface: AiSurface): Promise<
       context.trace.push("loyalty_transactions.select.current_user_rls");
     }
     if (permissions.includes("financials.view_revenue")) {
-      const { data: revenue, error } = await supabase.from("revenue_snapshots").select("snapshot_date,total_revenue_pkr").order("snapshot_date", { ascending: false }).limit(120);
+      const { data: revenue, error } = await supabase.from("revenue_snapshots").select("snapshot_date:period_start,total_revenue_pkr:revenue_pkr").order("period_start", { ascending: false }).limit(120);
       if (error) throw new Error("Your permitted revenue context could not be loaded.");
       context.evidence = { ...context.evidence, revenueSnapshots: revenue ?? [] };
       context.trace.push("revenue_snapshots.select.current_user_rls");
     }
     if (permissions.includes("financials.view_margin")) {
-      const { data: margins, error } = await supabase.from("margin_snapshots").select("snapshot_date,total_margin_pkr,margin_percent").order("snapshot_date", { ascending: false }).limit(120);
+      const { data: margins, error } = await supabase.from("margin_snapshots").select("snapshot_date:period_start,total_margin_pkr:margin_pkr").order("period_start", { ascending: false }).limit(120);
       if (error) throw new Error("Your permitted margin context could not be loaded.");
       context.evidence = { ...context.evidence, marginSnapshots: margins ?? [] };
       context.trace.push("margin_snapshots.select.current_user_rls");

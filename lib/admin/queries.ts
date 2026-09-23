@@ -61,7 +61,7 @@ export async function getAdminCustomerDetail(customerId: string) {
     supabase.from("quotes").select("id,quote_number,status,valid_until,created_at,responded_at,converted_order_id").eq("customer_id", customerId).order("created_at", { ascending: false }).limit(100),
     supabase.from("activities").select("id,type,disposition,notes,occurred_at,agent_id,latitude,longitude,distance_from_customer_meters").eq("customer_id", customerId).order("occurred_at", { ascending: false }).limit(100),
     supabase.from("ledger_entries").select("id,type,amount_pkr,reference_number,description,entry_date,recorded_by_user_id").eq("customer_id", customerId).order("entry_date", { ascending: false }).limit(100),
-    supabase.from("follow_ups").select("id,due_at,is_completed,note,priority,calendar_event_uid,assigned_to_user_id").eq("customer_id", customerId).order("due_at", { ascending: true }).limit(100),
+    supabase.from("follow_ups").select("id,due_at,is_completed,note,priority,calendar_event_uid,agent_id").eq("customer_id", customerId).order("due_at", { ascending: true }).limit(100),
     supabase.from("audit_logs").select("id,user_id,action,entity_type,entity_id,changes_json,created_at").eq("entity_type", "CUSTOMER").eq("entity_id", customerId).order("created_at", { ascending: false }).limit(100),
     supabase.from("voice_notes").select("id,processing_status,transcript,created_at,duration_seconds").eq("customer_id", customerId).order("created_at", { ascending: false }).limit(100),
   ]);
@@ -73,7 +73,7 @@ export async function getAdminTeamMetrics() {
   const supabase = await getSupabaseServerClient();
   const [{ data: metrics, error: metricsError }, { data: progress, error: progressError }] = await Promise.all([
     supabase.from("admin_sales_team_metrics").select("agent_id,agent_name,orders_count,revenue_pkr,activities_count,quoted_count,converted_quotes_count,quote_conversion_rate,monthly_target_pkr,target_progress_percent,visit_flags_count").order("revenue_pkr", { ascending: false }),
-    supabase.from("customer_enrichment_progress").select("agent_id,agent_code,total_customers,complete_customers,completion_percent").order("agent_code"),
+    supabase.from("customer_enrichment_progress").select("agent_id:sales_agent_id,agent_code,agent_name:sales_agent_name,total_customers,complete_customers:completed_customers,remaining_customers").order("agent_code"),
   ]);
   if (metricsError || progressError) throw new Error("Sales team data could not be loaded.");
   return { metrics: metrics ?? [], progress: progress ?? [] };
@@ -122,7 +122,7 @@ export async function getAdminReports() {
 export async function getAdminUsers() {
   const supabase = await getSupabaseServerClient();
   const [{ data: users, error: userError }, { data: roles, error: roleError }, { data: invites, error: inviteError }] = await Promise.all([
-    supabase.from("users").select("id,email,full_name,phone,role_id,manager_id,is_active,preferred_locale,last_login_at,created_at,role:roles(id,name,data_scope,portal_access,is_system_role)").order("full_name").limit(500),
+    supabase.from("users").select("id,email,full_name,phone,role_id,manager_id,is_active,preferred_locale,last_login_at,created_at,role:roles!users_role_id_fkey(id,name,data_scope,portal_access,is_system_role)").order("full_name").limit(500),
     supabase.from("roles").select("id,name,description,data_scope,portal_access,is_system_role,is_active").order("name"),
     supabase.from("admin_user_invites").select("id,email,full_name,phone,role_id,manager_id,preferred_locale,status,created_at,expires_at,role:roles(name)").order("created_at", { ascending: false }).limit(200),
   ]);
@@ -144,7 +144,7 @@ export async function getAdminRoles() {
 export async function getAdminEffectivePermissions(userId: string) {
   const supabase = await getSupabaseServerClient();
   const [{ data: user, error: userError }, { data: permissions, error: permissionError }] = await Promise.all([
-    supabase.from("users").select("id,full_name,email,role_id,role:roles(id,name,data_scope,portal_access)").eq("id", userId).maybeSingle(),
+    supabase.from("users").select("id,full_name,email,role_id,role:roles!users_role_id_fkey(id,name,data_scope,portal_access)").eq("id", userId).maybeSingle(),
     supabase.rpc("permission_keys", { uid: userId }),
   ]);
   if (userError || permissionError || !user) throw new Error("Effective permissions could not be loaded.");

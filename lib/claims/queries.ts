@@ -6,7 +6,7 @@ export async function getClaimsForCurrentUser() {
   const supabase = await getSupabaseServerClient();
   const { data, error } = await supabase
     .from("claims")
-    .select("id,claim_number,customer_id,order_id,claim_type,status,resolution_type,description,rejection_reason,reviewed_at,resolved_at,created_at,customer:customers(business_name,area_code,primary_phone),order:orders(order_number,total_pkr),lines:claim_lines(id,product_id,quantity,batch_or_serial,reason_notes,product:products(sku,name_en,name_ur)),photos:claim_photos(id,url,caption,uploaded_at)")
+    .select("id,claim_number,customer_id,order_id,claim_type,status,resolution_type,description,rejection_reason,reviewed_at,resolved_at,created_at,customer:customers(business_name,area_code,primary_phone),order:orders!claims_order_id_fkey(order_number,total_pkr),lines:claim_lines(id,product_id,quantity,batch_or_serial,reason_notes,product:products(sku,name_en,name_ur)),photos:claim_photos(id,url,caption,uploaded_at)")
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) throw new Error("Claims could not be loaded. Refresh and try again.");
@@ -17,7 +17,7 @@ export async function getClaimForCurrentUser(claimId: string) {
   const supabase = await getSupabaseServerClient();
   const { data, error } = await supabase
     .from("claims")
-    .select("id,claim_number,customer_id,order_id,claim_type,status,resolution_type,description,rejection_reason,resolution_notes,reviewed_at,resolved_at,created_at,customer:customers(business_name,area_code,primary_phone),order:orders(order_number,total_pkr),lines:claim_lines(id,product_id,quantity,batch_or_serial,reason_notes,product:products(sku,name_en,name_ur)),photos:claim_photos(id,url,caption,uploaded_at)")
+    .select("id,claim_number,customer_id,order_id,claim_type,status,resolution_type,description,rejection_reason,resolution_notes,reviewed_at,resolved_at,created_at,customer:customers(business_name,area_code,primary_phone),order:orders!claims_order_id_fkey(order_number,total_pkr),lines:claim_lines(id,product_id,quantity,batch_or_serial,reason_notes,product:products(sku,name_en,name_ur)),photos:claim_photos(id,url,caption,uploaded_at)")
     .eq("id", claimId)
     .maybeSingle();
   if (error || !data) throw new Error("Claim could not be loaded. Check the claim number and try again.");

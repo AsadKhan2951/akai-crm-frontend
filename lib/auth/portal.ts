@@ -15,8 +15,7 @@ export type PortalAccess =
 export const PORTAL_HOME: Record<PortalName, string> = {
   admin: "/admin",
   sales: "/sales",
-  // The Vendor home page is missing from the recovered source; send vendors to an existing page for now.
-  vendor: "/vendor/offers",
+  vendor: "/vendor",
 };
 
 const PORTALS: ReadonlySet<string> = new Set(["admin", "sales", "vendor"]);

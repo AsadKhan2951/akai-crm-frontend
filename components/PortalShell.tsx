@@ -14,7 +14,7 @@ import type { PermissionKey } from "@/lib/auth/permissions";
 
 export type PortalShellName = "admin" | "sales" | "vendor";
 
-type NavKey = "overview" | "settings" | "profile" | "catalogue" | "cart" | "progress" | "enrichment" | "leads" | "customers" | "quotes" | "approvals" | "reports" | "recovery" | "communications" | "schemes" | "offers" | "delivery" | "points" | "rewards" | "claims" | "warranty" | "beats" | "beat";
+type NavKey = "overview" | "settings" | "profile" | "catalogue" | "cart" | "progress" | "enrichment" | "leads" | "customers" | "quotes" | "approvals" | "reports" | "recovery" | "communications" | "schemes" | "offers" | "delivery" | "points" | "rewards" | "claims" | "warranty" | "beats" | "beat" | "orders";
 const navItems: ReadonlyArray<{ key: NavKey; path: string; icon: LucideIcon; permission?: PermissionKey; portals?: PortalShellName[] }> = [
   { key: "overview", path: "", icon: LayoutDashboard },
   { key: "approvals", path: "/approvals", icon: ClipboardCheck, permission: "order.approve", portals: ["admin"] },
@@ -34,10 +34,11 @@ const navItems: ReadonlyArray<{ key: NavKey; path: string; icon: LucideIcon; per
   { key: "catalogue", path: "/catalogue", icon: Boxes, permission: "product.view", portals: ["admin", "vendor"] },
   { key: "offers", path: "/offers", icon: Gift, permission: "scheme.view", portals: ["vendor"] },
   { key: "points", path: "/points", icon: Gift, permission: "loyalty.view", portals: ["vendor"] },
-  { key: "cart", path: "/cart", icon: Boxes, permission: "order.create", portals: ["vendor"] },
+  { key: "cart", path: "/cart", icon: ShoppingCart, permission: "order.create", portals: ["vendor"] },
+  { key: "orders", path: "/orders", icon: ListTodo, permission: "order.view", portals: ["vendor"] },
   { key: "enrichment", path: "/customers/enrichment", icon: ClipboardCheck, permission: "customer.enrich", portals: ["sales"] },
   { key: "progress", path: "/customers/progress", icon: UsersRound, permission: "customer.view", portals: ["admin"] },
-  { key: "settings", path: "/settings", icon: Settings, permission: "settings.manage", portals: ["admin", "vendor"] },
+  { key: "settings", path: "/settings", icon: Settings, permission: "settings.manage", portals: ["admin"] },
   { key: "profile", path: "/profile", icon: UserRound, portals: ["admin", "vendor"] },
 ];
 

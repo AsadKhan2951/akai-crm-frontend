@@ -171,21 +171,39 @@ export async function acknowledgeAdminAnomaly(formData: FormData) {
   revalidatePath("/[locale]/admin", "page");
 }
 
-export async function createAdminInvite(formData: FormData) {
+export async function createAdminInvite(formData: FormData): Promise<{ status: "LINKED" | "WAITING_FOR_LOGIN" | "ALREADY_ACTIVE" | "NO_INVITE" }> {
   await requirePermission("user.create");
-  const email = textValue(formData, "email");
+  const email = textValue(formData, "email").toLowerCase();
   const fullName = textValue(formData, "fullName");
   const phone = textValue(formData, "phone") || null;
   const roleId = textValue(formData, "roleId");
   const managerId = textValue(formData, "managerId") || null;
   const preferredLocale = textValue(formData, "preferredLocale") || "en";
-  if (!/^\S+@\S+\.\S+$/.test(email) || !fullName || !roleId || !["en", "ur"].includes(preferredLocale)) throw new Error("Enter a valid email, full name, role, and locale.");
+  const customerId = textValue(formData, "customerId") || null;
+  const agentCode = textValue(formData, "agentCode").toUpperCase().replace(/[^A-Z0-9-]/g, "") || null;
+  if (!/^\S+@\S+\.\S+$/.test(email) || !fullName || !roleId || !["en", "ur"].includes(preferredLocale)) throw new Error("Enter a valid email, full name, role, and language.");
+  if (customerId && !/^[0-9a-f-]{36}$/i.test(customerId)) throw new Error("Choose a valid customer account.");
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Your session expired. Log in again and retry.");
-  const { error } = await supabase.from("admin_user_invites").insert({ email, full_name: fullName, phone, role_id: roleId, manager_id: managerId, preferred_locale: preferredLocale, created_by_user_id: user.id });
-  if (error) throw new Error("The pending invite could not be saved. Check the email and role.");
+  const { data: role } = await supabase.from("roles").select("portal_access").eq("id", roleId).maybeSingle();
+  if (role?.portal_access === "VENDOR" && !customerId) throw new Error("A Vendor login must be linked to a customer account. Choose the shop.");
+  const { error } = await supabase.from("admin_user_invites").insert({ email, full_name: fullName, phone, role_id: roleId, manager_id: managerId, preferred_locale: preferredLocale, customer_id: role?.portal_access === "VENDOR" ? customerId : null, agent_code: role?.portal_access === "SALES" ? agentCode : null, created_by_user_id: user.id });
+  if (error) throw new Error("The user could not be saved. Check the email and role.");
+  const { data: status, error: linkError } = await supabase.rpc("provision_invited_user", { p_email: email });
+  if (linkError) throw new Error("The user was saved, but linking the login failed. Try Link now from the pending list.");
   revalidatePath("/[locale]/admin/users", "page");
+  return { status: (status ?? "WAITING_FOR_LOGIN") as "LINKED" | "WAITING_FOR_LOGIN" | "ALREADY_ACTIVE" | "NO_INVITE" };
+}
+
+export async function linkInvitedUser(formData: FormData): Promise<{ status: string }> {
+  await requirePermission("user.create");
+  const email = textValue(formData, "email").toLowerCase();
+  const supabase = await getSupabaseServerClient();
+  const { data, error } = await supabase.rpc("provision_invited_user", { p_email: email });
+  if (error) throw new Error("The login could not be linked. Try again.");
+  revalidatePath("/[locale]/admin/users", "page");
+  return { status: String(data ?? "WAITING_FOR_LOGIN") };
 }
 
 export async function updateAdminRole(formData: FormData) {
