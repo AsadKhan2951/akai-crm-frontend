@@ -45,7 +45,7 @@ export function UpdatePasswordForm() {
 
   return (
     <form onSubmit={(event) => void onSubmit(event)} className="space-y-4">
-      {error ? <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-[#D6202C]">{error}</p> : null}
+      {error ? <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-[#b42318]">{error}</p> : null}
       <div>
         <label htmlFor="new-password" className={labelClass}>{t("newPassword")}</label>
         <PasswordInput id="new-password" value={password} onChange={setPassword} autoComplete="new-password" showLabel={t("showPassword")} hideLabel={t("hidePassword")} />

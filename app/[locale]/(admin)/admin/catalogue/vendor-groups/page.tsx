@@ -41,7 +41,7 @@ export default async function VendorGroupsPage({ params, searchParams }: { param
           <label className="text-sm font-medium text-primary">{t("groupName")}<input name="name" required className={input} /></label>
           <label className="text-sm font-medium text-primary">{t("groupDescription")}<input name="description" className={input} /></label>
           <label className="flex min-h-11 items-center gap-2 text-sm font-medium text-primary"><input type="checkbox" name="showAll" className="h-5 w-5" />{t("showAllByDefault")}</label>
-          <div><button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-5 font-semibold text-white">{t("createGroupAction")}</button></div>
+          <div><button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-5 font-semibold text-white">{t("createGroupAction")}</button></div>
         </form>
       </details>
 
@@ -83,7 +83,7 @@ export default async function VendorGroupsPage({ params, searchParams }: { param
             <input type="hidden" name="locale" value={locale} />
             <div className="max-h-80 space-y-1 overflow-y-auto rounded-md border border-slate-200 p-2">
               {(customers.data ?? []).map((c) => (
-                <label key={c.id} className="flex min-h-11 items-center gap-3 rounded px-2 hover:bg-[#F1F5F9]">
+                <label key={c.id} className="flex min-h-11 items-center gap-3 rounded px-2 hover:bg-[#f1f0ec]">
                   <input type="checkbox" name="customerIds" value={c.id} className="h-5 w-5" />
                   <span className="text-primary">{c.business_name}</span>
                   <bdi className="text-sm text-muted-foreground">{c.area_code}</bdi>
@@ -93,7 +93,7 @@ export default async function VendorGroupsPage({ params, searchParams }: { param
             </div>
             <div className="flex flex-wrap gap-2">
               <select name="groupId" required className="min-h-11 flex-1 rounded-md border border-slate-300 bg-white px-3" aria-label={t("selectGroup")}><option value="">{t("selectGroup")}</option>{groupRows.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}</select>
-              <button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-4 font-semibold text-white">{t("assignCustomers")}</button>
+              <button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{t("assignCustomers")}</button>
             </div>
           </form>
         )}

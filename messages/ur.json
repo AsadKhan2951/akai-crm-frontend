@@ -2018,5 +2018,533 @@
     "language": "پسندیدہ زبان",
     "changePassword": "Password بدلیں",
     "changePasswordHint": "کم از کم 10 حروف کا نیا password رکھیں۔ آپ login رہیں گے۔"
+  },
+  "console": {
+    "shell": {
+      "portal": "ایڈمن کنسول",
+      "mainNav": "مرکزی مینو",
+      "search": "تلاش",
+      "searchPlaceholder": "نام یا علاقے سے کسٹمر تلاش کریں…",
+      "notifications": "اطلاعات",
+      "menu": "مینو"
+    },
+    "nav": {
+      "groups": {
+        "operations": "آپریشنز",
+        "field": "فیلڈ اور ڈیلرز",
+        "finance": "مالیات",
+        "growth": "ترقی",
+        "afterSales": "بعد از فروخت",
+        "admin": "ایڈمن"
+      },
+      "items": {
+        "overview": "جائزہ",
+        "approvals": "منظوریاں",
+        "orders": "آرڈرز",
+        "delivery": "ڈیلیوری",
+        "customers": "کسٹمرز",
+        "beats": "بیٹ پلان",
+        "team": "سیلز ٹیم",
+        "enrichment": "ڈیٹا کا معیار",
+        "recovery": "وصولی",
+        "ledger": "کھاتہ",
+        "schemes": "ٹریڈ اسکیمیں",
+        "rewards": "انعامات",
+        "communications": "واٹس ایپ اور مہمات",
+        "catalogue": "کیٹلاگ",
+        "claims": "کلیمز",
+        "warranty": "وارنٹی",
+        "reports": "رپورٹس",
+        "users": "صارفین",
+        "roles": "کردار اور اجازتیں",
+        "access": "ڈیلر پیش نظارہ",
+        "audit": "آڈٹ لاگ",
+        "settings": "ترتیبات",
+        "quotes": "کوٹیشنز",
+        "visits": "وزٹس اور کالز"
+      }
+    },
+    "roles": {
+      "Administrator": "ایڈمنسٹریٹر",
+      "Sales Agent": "سیلز ایجنٹ",
+      "Sales Manager": "سیلز منیجر",
+      "Analyst": "اینالسٹ",
+      "Catalogue Manager": "کیٹلاگ منیجر",
+      "Support Agent": "سپورٹ ایجنٹ",
+      "Accounts / Recovery Officer": "اکاؤنٹس / وصولی افسر",
+      "Vendor": "ڈیلر"
+    },
+    "error": {
+      "title": "یہ صفحہ نہیں کھل سکا",
+      "body": "کچھ ضائع نہیں ہوا۔ دوبارہ کوشش کریں — اگر بار بار ہو تو نیچے دیا گیا کوڈ سپورٹ کو بھیجیں۔",
+      "retry": "دوبارہ کوشش کریں"
+    },
+    "common": {
+      "xOfY": "{y} میں سے {x}",
+      "viewAll": "سب دیکھیں",
+      "dateRange": "تاریخ کی حد",
+      "ranges": {
+        "today": "آج",
+        "week": "7 دن",
+        "mtd": "اس ماہ",
+        "qtd": "سہ ماہی"
+      }
+    },
+    "kpi": {
+      "revenue": "آمدنی",
+      "orders": "آرڈرز",
+      "approvals": "منظوری کے منتظر",
+      "overLimit": "{n} کریڈٹ حد سے زیادہ",
+      "activeDealers": "فعال ڈیلرز",
+      "ofDealers": "{n} میں سے آرڈر دیا",
+      "receivables": "واجب الادا",
+      "overdue30": "{amount} تیس دن سے زائد",
+      "collected": "وصول شدہ",
+      "ofTarget": "{target} ٹارگٹ کا {p}%",
+      "vsLastMonth": "پچھلے ماہ کے مقابلے {p}%",
+      "ordersVsLast": "پچھلے ماہ کے مقابلے {n}"
+    },
+    "overview": {
+      "title": "جائزہ",
+      "subtitle": "{date} · آپریشنز ایک نظر میں",
+      "ask": "AKAI سے پوچھیں — مثلاً “ڈیفنس کے کن ڈیلرز نے اس ماہ آرڈر نہیں دیا؟”",
+      "askButton": "پوچھیں",
+      "revenueByMonth": "ماہانہ آمدنی",
+      "last6Months": "روپے · پچھلے 6 ماہ",
+      "noRevenue": "ابھی کوئی آمدنی نہیں",
+      "noRevenueBody": "آرڈرز آنے پر یہاں گراف نظر آئے گا۔",
+      "needsAttention": "توجہ طلب",
+      "allClear": "کوئی مسئلہ نہیں",
+      "allClearBody": "منظوریاں، چیک، بقایا جات اور ڈیلیوری سب ٹھیک ہیں۔",
+      "agents": "سیلز ایجنٹس · اس ماہ",
+      "noAgents": "ابھی کوئی سیلز ایجنٹ نہیں",
+      "noAgentsBody": "صارفین میں حارث اور دانیال کو سیلز ایجنٹ کے کردار کے ساتھ شامل کریں۔",
+      "byCategory": "کیٹیگری کے لحاظ سے آمدنی",
+      "cols": {
+        "agent": "ایجنٹ",
+        "revenue": "آمدنی",
+        "orders": "آرڈرز",
+        "visits": "بیٹ وزٹس",
+        "recovery": "وصولی بمقابلہ ٹارگٹ"
+      },
+      "attn": {
+        "review": "دیکھیں",
+        "followUp": "فالو اپ",
+        "seeList": "فہرست",
+        "open": "کھولیں",
+        "approvals": "{n} آرڈرز منظوری کے منتظر",
+        "approvalsMeta": "{amount} · {n} کریڈٹ حد سے زیادہ",
+        "bounced": "{n} باؤنس چیک",
+        "overdue60": "{n} ڈیلرز ساٹھ دن سے زائد بقایا",
+        "delayed": "{n} ڈیلیوری رن تاخیر میں",
+        "delayedMeta": "ڈرائیور اور باقی ڈراپس چیک کریں"
+      },
+      "health": {
+        "title": "ڈیٹا کی صحت",
+        "subtitle": "یہ مسائل ایجنٹ کی تقسیم، بیٹ اور رپورٹس کو روکتے ہیں۔ لانچ سے پہلے درست کریں۔",
+        "profiles": "مکمل ڈیلر پروفائلز",
+        "profilesMeta": "واٹس ایپ آرڈرنگ اور بیٹ کے لیے فون، پتہ اور لوکیشن ضروری ہیں۔",
+        "profilesAction": "نامکمل کھولیں",
+        "agents": "ایجنٹ والے ڈیلرز",
+        "agentsMeta": "امپورٹ میں ایجنٹ کے نام موجود ہیں — ایک ساتھ مقرر کریں۔",
+        "agentsAction": "ایجنٹ مقرر کریں",
+        "areas": "ایریا کوڈ غائب یا نامعلوم",
+        "areasValue": "{raw} ← {merged}",
+        "areasMeta": "بیٹس، روٹس اور ایریا رپورٹس کے لیے درست ایریا کوڈ ضروری ہے۔",
+        "areasAction": "کسٹمرز دیکھیں",
+        "types": "قسم ابھی تک “دیگر”",
+        "typesMeta": "{n} کے لیے تجویز کردہ قسم تیار ہے۔",
+        "typesAction": "اقسام دیکھیں",
+        "dupes": "ممکنہ ڈپلیکیٹ",
+        "dupesMeta": "امپورٹ کے دوران نشان زد، مثلاً Shell Select ×3۔",
+        "dupesAction": "ڈپلیکیٹ دیکھیں"
+      },
+      "moreAnalytics": "مزید تجزیہ",
+      "moreAnalyticsBody": "کسی بھی تاریخ کے لیے برانڈز، ایریاز، ٹاپ پروڈکٹس، فنل اور الرٹس۔",
+      "glanceView": "فون گلانس ویو",
+      "askHint": "جوابات صرف پڑھنے کے لیے ہیں اور آپ کی ڈیٹا رسائی کے مطابق ہیں۔"
+    },
+    "approvals": {
+      "title": "منظوریاں",
+      "subtitle": "{n} آرڈرز منتظر · منظوری سے پہلے کریڈٹ دیکھیں",
+      "subtitleEmpty": "کریڈٹ لمٹ سے زیادہ والے کریڈٹ آرڈرز یہاں آتے ہیں",
+      "queue": "منظوری کے منتظر آرڈرز",
+      "emptyTitle": "کوئی آرڈر منظوری کا منتظر نہیں",
+      "emptyBody": "نئے آرڈرز ڈیلر کی کریڈٹ صورتحال کے ساتھ یہاں آئیں گے۔",
+      "flags": {
+        "overLimit": "کریڈٹ حد سے زیادہ",
+        "aboveThreshold": "منظوری کی حد سے زیادہ",
+        "firstOrder": "پہلا آرڈر"
+      },
+      "placedBy": "از {name}",
+      "credit": "اس آرڈر کے بعد کریڈٹ کی صورتحال",
+      "balance": "بیلنس",
+      "thisOrder": "یہ آرڈر",
+      "limit": "حد",
+      "noLimit": "کریڈٹ حد مقرر نہیں",
+      "item": "آئٹم",
+      "qty": "تعداد",
+      "total": "کل",
+      "note": "مسترد کرنے کی وجہ (مسترد کرنے کے لیے ضروری)",
+      "notePlaceholder": "مثلاً پہلے 100,000 روپے ادا کریں، پھر دوبارہ آرڈر کریں",
+      "reject": "مسترد کریں",
+      "approve": "آرڈر منظور کریں",
+      "reasonRequired": "مسترد کرنے سے پہلے نوٹ میں وجہ لکھیں۔"
+    },
+    "customers": {
+      "title": "کسٹمرز",
+      "subtitle": "کراچی بھر میں {n} ڈیلرز",
+      "export": "CSV ایکسپورٹ",
+      "search": "نام یا علاقے سے تلاش کریں",
+      "views": {
+        "all": "تمام",
+        "incomplete": "نامکمل",
+        "unassigned": "بغیر ایجنٹ",
+        "duplicates": "ممکنہ ڈپلیکیٹ",
+        "internal": "اندرونی اکاؤنٹس"
+      },
+      "filters": {
+        "agent": "ایجنٹ",
+        "noAgent": "بغیر ایجنٹ",
+        "area": "علاقہ",
+        "type": "قسم",
+        "status": "حالت"
+      },
+      "bulk": {
+        "label": "اجتماعی کارروائیاں",
+        "selected": "{n} منتخب",
+        "assign": "ایجنٹ مقرر کریں",
+        "noAgents": "ابھی کوئی ایجنٹ نہیں",
+        "unassign": "ایجنٹ ہٹائیں",
+        "setType": "قسم طے کریں",
+        "acceptSuggestions": "تجویز کردہ اقسام قبول کریں",
+        "clear": "صاف کریں",
+        "done": "{n} کسٹمرز اپڈیٹ ہو گئے"
+      },
+      "selectAll": "اس صفحے کے سب منتخب کریں",
+      "cols": {
+        "name": "کسٹمر",
+        "area": "علاقہ",
+        "type": "قسم",
+        "agent": "ایجنٹ",
+        "profile": "پروفائل",
+        "balance": "بیلنس",
+        "status": "حالت"
+      },
+      "tags": {
+        "duplicate": "ممکنہ ڈپلیکیٹ",
+        "internal": "اندرونی اکاؤنٹ"
+      },
+      "suggested": "تجویز: {type}",
+      "assign": "مقرر کریں",
+      "complete": "مکمل",
+      "missing": "موجود نہیں: {fields}",
+      "fields": {
+        "phone": "فون",
+        "address": "پتہ",
+        "location": "لوکیشن"
+      },
+      "paging": "{total} میں سے {from}–{to}",
+      "prev": "پچھلا",
+      "next": "اگلا",
+      "emptyTitle": "کوئی کسٹمر نہیں ملا",
+      "emptyBody": "فلٹر ہٹائیں یا دوسرا ویو منتخب کریں۔"
+    },
+    "enums": {
+      "customerType": {
+        "AUTO_PARTS": "آٹو پارٹس",
+        "OIL_CHANGE": "آئل چینج",
+        "CAR_WASH": "کار واش",
+        "DETAILING": "ڈیٹیلنگ",
+        "PAINT_HARDWARE": "پینٹ اور ہارڈویئر",
+        "FUEL_STATION": "فیول اسٹیشن",
+        "DISTRIBUTOR": "ڈسٹری بیوٹر",
+        "OTHER": "دیگر"
+      },
+      "customerStatus": {
+        "ACTIVE": "فعال",
+        "INACTIVE": "غیر فعال",
+        "PROSPECT": "ممکنہ",
+        "BLOCKED": "بلاک"
+      }
+    },
+    "recovery": {
+      "title": "وصولی",
+      "subtitle": "واجب الادا رقم، وصولیاں، جمع اور چیک",
+      "kpi": {
+        "outstanding": "کل واجب الادا",
+        "dealers": "{n} ڈیلرز",
+        "overdue30": "تیس دن سے زائد",
+        "collected": "اس ماہ وصولی",
+        "ofTarget": "ٹارگٹ کا {p}%",
+        "pendingDeposit": "جمع ہونا باقی",
+        "payments": "ایجنٹس کے پاس {n} ادائیگیاں",
+        "bounced": "باؤنس چیک",
+        "cheques": "{n} چیک"
+      },
+      "ageing": "بقایا جات کی مدت",
+      "buckets": {
+        "0_30": "0–30 دن",
+        "31_60": "31–60 دن",
+        "61_90": "61–90 دن",
+        "90_plus": "90+ دن"
+      },
+      "noAgeing": "ابھی مدت کا ڈیٹا نہیں",
+      "noAgeingBody": "واجب الادا تاریخ والی انوائسز بننے پر نظر آئے گا۔",
+      "byAgent": "ایجنٹ کے لحاظ سے وصولی بمقابلہ ٹارگٹ",
+      "noAgents": "ابھی کوئی سیلز ایجنٹ نہیں",
+      "agentLine": "{p}% · {target} میں سے {got}",
+      "topOverdue": "سب سے زیادہ بقایا",
+      "noOverdue": "کوئی بقایا نہیں",
+      "days": "{n} دن",
+      "tabs": {
+        "pending": "جمع ہونا باقی",
+        "clearing": "کلیئرنگ میں",
+        "bounced": "باؤنس"
+      },
+      "empty": {
+        "pending": {
+          "title": "کوئی ادائیگی جمع ہونے کی منتظر نہیں",
+          "body": "ایجنٹس کی وصول کردہ نقد رقم اور چیک جمع ہونے تک یہاں رہتے ہیں۔"
+        },
+        "clearing": {
+          "title": "کوئی چیک کلیئرنگ میں نہیں",
+          "body": "جمع شدہ چیک بینک سے کلیئر ہونے تک یہاں رہتے ہیں۔"
+        },
+        "bounced": {
+          "title": "کوئی باؤنس چیک نہیں",
+          "body": "واپس آنے والے چیک فالو اپ کے لیے یہاں آتے ہیں۔"
+        }
+      },
+      "cols": {
+        "customer": "کسٹمر",
+        "ref": "چیک / حوالہ",
+        "by": "وصول کنندہ",
+        "amount": "رقم"
+      },
+      "cash": "نقد",
+      "daysAgo": "{n, plural, =0 {آج} other {# دن پہلے}}",
+      "markDeposited": "جمع شدہ نشان لگائیں"
+    },
+    "delivery": {
+      "title": "ڈیلیوری",
+      "subtitle": "پِکنگ، ڈسپیچ رنز اور ڈیلیوری کا ثبوت",
+      "createPicking": "پِکنگ لسٹ بنائیں",
+      "stages": {
+        "confirmed": {
+          "label": "تصدیق شدہ",
+          "hint": "پِکنگ کے لیے تیار"
+        },
+        "picked": {
+          "label": "پِک شدہ",
+          "hint": "رن کے منتظر"
+        },
+        "dispatched": {
+          "label": "راستے میں",
+          "hint": "آج کے رنز پر"
+        },
+        "delivered": {
+          "label": "آج ڈیلیور",
+          "hint": "ثبوت کے ساتھ"
+        },
+        "failed": {
+          "label": "ناکام / واپس",
+          "hint": "آج"
+        }
+      },
+      "runsToday": "آج کے ڈیلیوری رنز",
+      "newRun": "نیا رن",
+      "noRuns": "آج کوئی ڈیلیوری رن نہیں",
+      "noRunsBody": "ڈسپیچ شروع کرنے کے لیے پِک شدہ آرڈرز سے رن بنائیں۔",
+      "cols": {
+        "run": "رن",
+        "route": "روٹ",
+        "driver": "ڈرائیور · گاڑی",
+        "drops": "ڈراپس",
+        "status": "حالت"
+      },
+      "dropsOf": "{total} میں سے {done}",
+      "runStatus": {
+        "PLANNED": "منصوبہ بند",
+        "ON_ROUTE": "راستے میں",
+        "DELAYED": "تاخیر",
+        "COMPLETED": "مکمل"
+      }
+    },
+    "communications": {
+      "title": "واٹس ایپ اور مہمات",
+      "subtitle": "آرڈرنگ اسسٹنٹ، میسج ٹیمپلیٹس اور مہمات",
+      "newCampaign": "نئی مہم",
+      "bot": {
+        "title": "واٹس ایپ آرڈرنگ اسسٹنٹ",
+        "body": "صرف تصدیق شدہ ڈیلر نمبرز۔ آرڈر، کوٹیشن اور کلیم بناتا ہے؛ باقی سب ایجنٹ کو جاتا ہے۔",
+        "ceiling": "آرڈر کی حد",
+        "ceilingHelp": "اس سے بڑے آرڈرز تصدیق کے لیے متعلقہ ایجنٹ کو جائیں گے۔"
+      },
+      "saved": "محفوظ ہو گیا",
+      "save": "محفوظ کریں",
+      "conversations": "گفتگو",
+      "noConversations": "ابھی کوئی گفتگو نہیں",
+      "noConversationsBody": "تصدیق شدہ ڈیلر کے پہلے میسج کے بعد یہاں نظر آئے گی۔",
+      "failed": "ناکام پیغامات",
+      "noFailed": "کوئی ناکام پیغام نہیں",
+      "noFailedBody": "تین بار ناکام ہونے والے پیغامات یہاں آتے ہیں۔",
+      "templates": "میسج ٹیمپلیٹس",
+      "templatesSub": "ہر زبان میں Meta منظوری کی حالت۔ 24 گھنٹے کے بعد صرف منظور شدہ ٹیمپلیٹ بھیجے جا سکتے ہیں۔",
+      "cols": {
+        "template": "ٹیمپلیٹ"
+      },
+      "templateNames": {
+        "order_confirmation": "آرڈر کی تصدیق",
+        "order_approved": "آرڈر منظور",
+        "order_rejected": "آرڈر مسترد",
+        "order_status_change": "آرڈر کی حالت میں تبدیلی",
+        "quote_ready": "کوٹیشن تیار",
+        "quote_expiring": "کوٹیشن ختم ہونے والی",
+        "payment_reminder": "ادائیگی کی یاد دہانی",
+        "receipt": "رسید",
+        "dispatch_notification": "ڈسپیچ کی اطلاع",
+        "promotional_broadcast": "پروموشنل پیغام",
+        "followup_nudge": "فالو اپ یاد دہانی"
+      },
+      "templateStatus": {
+        "DRAFT": "مسودہ",
+        "SUBMITTED": "جمع شدہ",
+        "APPROVED": "منظور شدہ",
+        "REJECTED": "مسترد"
+      },
+      "edit": "ترمیم"
+    },
+    "settings": {
+      "title": "ترتیبات",
+      "subtitle": "پورے CRM کے لیے حفاظتی حدود اور زبان",
+      "groups": {
+        "orders": {
+          "title": "آرڈرز اور کریڈٹ",
+          "sub": "آرڈر لگتے وقت لاگو اصول"
+        },
+        "prices": {
+          "title": "قیمتوں کی فہرستیں",
+          "sub": "قیمتوں میں تبدیلی"
+        },
+        "ai": {
+          "title": "AI اور وائس",
+          "sub": "استعمال کی حدیں"
+        },
+        "locale": {
+          "title": "زبان اور علاقہ",
+          "sub": "CRM کیسے پڑھتا اور پرنٹ کرتا ہے"
+        }
+      },
+      "fields": {
+        "approvalThreshold": {
+          "label": "منظوری کی حد",
+          "help": "اس رقم سے بڑے آرڈرز کو ایڈمن کی منظوری درکار ہے"
+        },
+        "blockOverCreditLimit": {
+          "label": "کریڈٹ حد سے زیادہ آرڈر روکیں",
+          "help": "ایجنٹ اور ڈیلر ایسے آرڈر نہیں لگا سکیں گے"
+        },
+        "priceListNeedsApproval": {
+          "label": "قیمتوں کی فہرست فعال کرنے سے پہلے منظوری",
+          "help": "نئی قیمتیں دوسرا ایڈمن منظور کرے"
+        },
+        "dailyAiBudget": {
+          "label": "روزانہ AI بجٹ",
+          "help": "اس رقم کے بعد اسسٹنٹ رک جائے گا"
+        },
+        "voiceRetentionMonths": {
+          "label": "وائس نوٹ محفوظ رکھنے کی مدت",
+          "help": "مہینے، 1 تا 120"
+        },
+        "companyNameEn": {
+          "label": "کمپنی کا نام (انگریزی)",
+          "help": "انوائس اور پیغامات میں"
+        },
+        "companyNameUr": {
+          "label": "کمپنی کا نام (اردو)",
+          "help": "اردو اسکرینز اور پیغامات میں"
+        },
+        "westernNumerals": {
+          "label": "اردو میں انگریزی ہندسے",
+          "help": "۱، ۲، ۳ کی جگہ 1، 2، 3 دکھائیں"
+        }
+      },
+      "saved": "تبدیلیاں محفوظ ہو گئیں",
+      "reset": "واپس لیں",
+      "save": "تبدیلیاں محفوظ کریں"
+    },
+    "glance": {
+      "title": "AKAI آپریشنز",
+      "mtd": "اس ماہ",
+      "ofTarget": "{target} ٹارگٹ کا {p}%",
+      "vsLastMonth": "پچھلا ماہ: {amount}",
+      "vsLast": "پچھلا ماہ: {n}",
+      "pctOfTarget": "ٹارگٹ کا {p}%",
+      "deliveredToday": "آج ڈیلیور",
+      "onTrack": "رنز وقت پر ہیں",
+      "needsAttention": "توجہ طلب",
+      "allClear": "فی الحال سب ٹھیک ہے",
+      "attn": {
+        "approvals": "{n} آرڈرز منظوری کے منتظر",
+        "approvalsMeta": "{amount} · منظوری ڈیسک ٹاپ پر",
+        "bounced": "{n} باؤنس چیک",
+        "overdue60": "{n} ڈیلرز ساٹھ دن سے زائد بقایا",
+        "delayed": "{n} رن تاخیر میں",
+        "delayedMeta": "ڈرائیور سے رابطہ کریں"
+      },
+      "deliveryToday": "آج کی ڈیلیوری",
+      "pipe": {
+        "picked": "پِک شدہ",
+        "dispatched": "راستے میں",
+        "delivered": "ڈیلیور",
+        "failed": "ناکام"
+      },
+      "dataHealth": "ڈیٹا کی صحت",
+      "profiles": "مکمل ڈیلر پروفائلز",
+      "withAgent": "ایجنٹ والے ڈیلرز",
+      "xOfY": "{y} میں سے {x}",
+      "revenueByMonth": "ماہانہ آمدنی",
+      "orderStatus": "آرڈرز کی حالت",
+      "status": {
+        "pendingApproval": "منظوری کے منتظر",
+        "confirmed": "تصدیق شدہ",
+        "picked": "پِک شدہ",
+        "dispatched": "راستے میں",
+        "deliveredMtd": "اس ماہ ڈیلیور"
+      },
+      "topDealers": "اس ماہ کے بہترین ڈیلرز",
+      "noOrders": "اس ماہ ابھی کوئی آرڈر نہیں",
+      "outstanding": "کل واجب الادا",
+      "ageing": {
+        "0_30": "0–30 دن",
+        "31_60": "31–60 دن",
+        "61_90": "61–90 دن",
+        "90_plus": "90+ دن"
+      },
+      "collectedVsTarget": "وصولی بمقابلہ ٹارگٹ",
+      "pendingDeposit": "جمع ہونا باقی",
+      "bounced": "باؤنس چیک",
+      "topOverdue": "سب سے زیادہ بقایا",
+      "noOverdue": "کوئی بقایا نہیں",
+      "days": "{n} دن",
+      "noAgents": "ابھی کوئی سیلز ایجنٹ نہیں",
+      "noAgentsBody": "ڈیسک ٹاپ پر حارث اور دانیال کو سیلز ایجنٹ کے طور پر شامل کریں تاکہ یہاں ٹیم کے اعداد نظر آئیں۔",
+      "ordersN": "{n} آرڈرز",
+      "metric": {
+        "visits": "بیٹ وزٹس",
+        "recovery": "وصولی بمقابلہ ٹارگٹ",
+        "profiles": "مکمل پروفائلز"
+      },
+      "readOnly": "{name} کے لیے صرف دیکھنے کا منظر",
+      "openFull": "مکمل کنسول کھولیں",
+      "sections": "حصے",
+      "tabs": {
+        "today": "آج",
+        "sales": "سیلز",
+        "recovery": "وصولی",
+        "team": "ٹیم"
+      }
+    }
   }
 }

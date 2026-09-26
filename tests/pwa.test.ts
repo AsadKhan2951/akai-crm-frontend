@@ -27,7 +27,7 @@ describe("Phase 14 PWA and mobile contracts", () => {
       expect(source).toContain("akai-icon-192.png");
       expect(source).toContain("akai-icon-512.png");
       expect(source).toContain("akai-icon-maskable-512.png");
-      expect(source).toContain('theme_color: "#16233F"');
+      expect(source).toContain('theme_color: "#15171c"');
       expect(source).toContain('display: "standalone"');
     }
   });
@@ -72,7 +72,7 @@ describe("Phase 14 PWA and mobile contracts", () => {
 
   it("provides five-item mobile navigation for Sales and Vendor and keeps locale keys parallel", () => {
     expect(shell).toContain("mobileNav");
-    expect(shell).toContain('portal !== "admin"');
+    expect(shell).toContain('type ShellPortal = Exclude<PortalShellName, "admin">');
     for (const key of ["mobileToday", "mobileLeads", "mobileCustomers", "mobileOrders", "mobileMore", "mobileHome", "mobileCatalogue", "mobileCart", "mobileVendorOrders"]) {
       expect(en.portal[key]).toBeTruthy();
       expect(ur.portal[key]).toBeTruthy();

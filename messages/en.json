@@ -2018,5 +2018,533 @@
     "language": "Preferred language",
     "changePassword": "Change password",
     "changePasswordHint": "Choose a new password of at least 10 characters. You will stay logged in."
+  },
+  "console": {
+    "shell": {
+      "portal": "Admin console",
+      "mainNav": "Main navigation",
+      "search": "Search",
+      "searchPlaceholder": "Search customers by name or area…",
+      "notifications": "Notifications",
+      "menu": "Menu"
+    },
+    "nav": {
+      "groups": {
+        "operations": "Operations",
+        "field": "Field & dealers",
+        "finance": "Finance",
+        "growth": "Growth",
+        "afterSales": "After-sales",
+        "admin": "Admin"
+      },
+      "items": {
+        "overview": "Overview",
+        "approvals": "Approvals",
+        "orders": "Orders",
+        "delivery": "Delivery",
+        "customers": "Customers",
+        "beats": "Beat plans",
+        "team": "Sales team",
+        "enrichment": "Data quality",
+        "recovery": "Recovery",
+        "ledger": "Ledger",
+        "schemes": "Trade schemes",
+        "rewards": "Rewards",
+        "communications": "WhatsApp & campaigns",
+        "catalogue": "Catalogue",
+        "claims": "Claims",
+        "warranty": "Warranty",
+        "reports": "Reports",
+        "users": "Users",
+        "roles": "Roles & permissions",
+        "access": "Vendor preview",
+        "audit": "Audit log",
+        "settings": "Settings",
+        "quotes": "Quotes",
+        "visits": "Visits & calls"
+      }
+    },
+    "roles": {
+      "Administrator": "Administrator",
+      "Sales Agent": "Sales Agent",
+      "Sales Manager": "Sales Manager",
+      "Analyst": "Analyst",
+      "Catalogue Manager": "Catalogue Manager",
+      "Support Agent": "Support Agent",
+      "Accounts / Recovery Officer": "Accounts / Recovery Officer",
+      "Vendor": "Dealer"
+    },
+    "error": {
+      "title": "This screen couldn’t load",
+      "body": "Nothing was lost. Try again — if it keeps happening, share the code below with support.",
+      "retry": "Try again"
+    },
+    "common": {
+      "xOfY": "{x} of {y}",
+      "viewAll": "View all",
+      "dateRange": "Date range",
+      "ranges": {
+        "today": "Today",
+        "week": "7 days",
+        "mtd": "This month",
+        "qtd": "Quarter"
+      }
+    },
+    "kpi": {
+      "revenue": "Revenue",
+      "orders": "Orders",
+      "approvals": "Awaiting approval",
+      "overLimit": "{n} over credit limit",
+      "activeDealers": "Active dealers",
+      "ofDealers": "of {n} ordered",
+      "receivables": "Receivables",
+      "overdue30": "{amount} overdue 30+ days",
+      "collected": "Collected",
+      "ofTarget": "{p}% of {target} target",
+      "vsLastMonth": "{p}% vs last month",
+      "ordersVsLast": "{n} vs last month"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "{date} · operations at a glance",
+      "ask": "Ask AKAI — e.g. “which dealers in DHA haven’t ordered this month?”",
+      "askButton": "Ask",
+      "revenueByMonth": "Revenue by month",
+      "last6Months": "PKR · last 6 months",
+      "noRevenue": "No revenue yet",
+      "noRevenueBody": "Bars appear once orders are placed.",
+      "needsAttention": "Needs attention",
+      "allClear": "Nothing needs attention",
+      "allClearBody": "Approvals, cheques, overdue and deliveries are all on track.",
+      "agents": "Sales agents · this month",
+      "noAgents": "No Sales Agents yet",
+      "noAgentsBody": "Add Harris and Daniyal under Users with the Sales Agent role.",
+      "byCategory": "Revenue by category",
+      "cols": {
+        "agent": "Agent",
+        "revenue": "Revenue",
+        "orders": "Orders",
+        "visits": "Beat visits",
+        "recovery": "Recovery vs target"
+      },
+      "attn": {
+        "review": "Review",
+        "followUp": "Follow up",
+        "seeList": "See list",
+        "open": "Open",
+        "approvals": "{n, plural, one {# order} other {# orders}} waiting for approval",
+        "approvalsMeta": "{amount} · {n} over credit limit",
+        "bounced": "{n, plural, one {# bounced cheque} other {# bounced cheques}}",
+        "overdue60": "{n, plural, one {# dealer} other {# dealers}} overdue 60+ days",
+        "delayed": "{n, plural, one {# delivery run} other {# delivery runs}} delayed",
+        "delayedMeta": "Check the driver and remaining drops"
+      },
+      "health": {
+        "title": "Data health",
+        "subtitle": "These block agent assignment, beats and reporting. Fix before go-live.",
+        "profiles": "Complete dealer profiles",
+        "profilesMeta": "Phone, address and GPS are needed for WhatsApp ordering and beats.",
+        "profilesAction": "Open incomplete",
+        "agents": "Dealers with an agent",
+        "agentsMeta": "The import already holds agent names — assign in bulk.",
+        "agentsAction": "Assign agents",
+        "areas": "Area code missing or unknown",
+        "areasValue": "{raw} → {merged}",
+        "areasMeta": "Beats, routes and area reports need a known area code.",
+        "areasAction": "Review customers",
+        "types": "Customer type still “Other”",
+        "typesMeta": "{n} have a suggested type ready to accept.",
+        "typesAction": "Review types",
+        "dupes": "Possible duplicates",
+        "dupesMeta": "Flagged during import, e.g. Shell Select ×3.",
+        "dupesAction": "Review duplicates"
+      },
+      "moreAnalytics": "More analytics",
+      "moreAnalyticsBody": "Brands, areas, top products, funnel and alerts for any date range.",
+      "glanceView": "Phone glance view",
+      "askHint": "Answers are read-only and use your data access."
+    },
+    "approvals": {
+      "title": "Approvals",
+      "subtitle": "{n, plural, one {# order} other {# orders}} waiting · check credit before approving",
+      "subtitleEmpty": "Credit orders that go over the dealer’s credit limit land here",
+      "queue": "Orders waiting for approval",
+      "emptyTitle": "No orders are waiting for approval",
+      "emptyBody": "New pending orders appear here with the dealer’s credit position.",
+      "flags": {
+        "overLimit": "Over credit limit",
+        "aboveThreshold": "Above threshold",
+        "firstOrder": "First order"
+      },
+      "placedBy": "by {name}",
+      "credit": "Credit position after this order",
+      "balance": "Balance",
+      "thisOrder": "This order",
+      "limit": "Limit",
+      "noLimit": "No credit limit set",
+      "item": "Item",
+      "qty": "Qty",
+      "total": "Total",
+      "note": "Rejection reason (needed to reject)",
+      "notePlaceholder": "e.g. Clear PKR 100,000 first, then reorder",
+      "reject": "Reject",
+      "approve": "Approve order",
+      "reasonRequired": "Type a reason in the note before rejecting."
+    },
+    "customers": {
+      "title": "Customers",
+      "subtitle": "{n} dealers across Karachi",
+      "export": "Export CSV",
+      "search": "Search by name or area",
+      "views": {
+        "all": "All",
+        "incomplete": "Incomplete",
+        "unassigned": "No agent",
+        "duplicates": "Possible duplicates",
+        "internal": "Internal accounts"
+      },
+      "filters": {
+        "agent": "Agent",
+        "noAgent": "No agent",
+        "area": "Area",
+        "type": "Type",
+        "status": "Status"
+      },
+      "bulk": {
+        "label": "Bulk actions",
+        "selected": "{n} selected",
+        "assign": "Assign agent",
+        "noAgents": "No agents yet",
+        "unassign": "Remove agent",
+        "setType": "Set type",
+        "acceptSuggestions": "Accept suggested types",
+        "clear": "Clear",
+        "done": "Updated {n, plural, one {# customer} other {# customers}}"
+      },
+      "selectAll": "Select all on this page",
+      "cols": {
+        "name": "Customer",
+        "area": "Area",
+        "type": "Type",
+        "agent": "Agent",
+        "profile": "Profile",
+        "balance": "Balance",
+        "status": "Status"
+      },
+      "tags": {
+        "duplicate": "Possible duplicate",
+        "internal": "Internal account"
+      },
+      "suggested": "Suggested: {type}",
+      "assign": "Assign",
+      "complete": "Complete",
+      "missing": "Missing {fields}",
+      "fields": {
+        "phone": "phone",
+        "address": "address",
+        "location": "location"
+      },
+      "paging": "{from}–{to} of {total}",
+      "prev": "Previous",
+      "next": "Next",
+      "emptyTitle": "No customers match",
+      "emptyBody": "Clear a filter or switch view."
+    },
+    "enums": {
+      "customerType": {
+        "AUTO_PARTS": "Auto parts",
+        "OIL_CHANGE": "Oil change",
+        "CAR_WASH": "Car wash",
+        "DETAILING": "Detailing",
+        "PAINT_HARDWARE": "Paint & hardware",
+        "FUEL_STATION": "Fuel station",
+        "DISTRIBUTOR": "Distributor",
+        "OTHER": "Other"
+      },
+      "customerStatus": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive",
+        "PROSPECT": "Prospect",
+        "BLOCKED": "Blocked"
+      }
+    },
+    "recovery": {
+      "title": "Recovery",
+      "subtitle": "Receivables, collections, deposits and cheques",
+      "kpi": {
+        "outstanding": "Outstanding",
+        "dealers": "{n, plural, one {# dealer} other {# dealers}}",
+        "overdue30": "Overdue 30+ days",
+        "collected": "Collected this month",
+        "ofTarget": "{p}% of target",
+        "pendingDeposit": "Pending deposit",
+        "payments": "{n, plural, one {# payment} other {# payments}} with agents",
+        "bounced": "Bounced cheques",
+        "cheques": "{n, plural, one {# cheque} other {# cheques}}"
+      },
+      "ageing": "Receivables ageing",
+      "buckets": {
+        "0_30": "0–30 days",
+        "31_60": "31–60 days",
+        "61_90": "61–90 days",
+        "90_plus": "90+ days"
+      },
+      "noAgeing": "No ageing data yet",
+      "noAgeingBody": "Appears once invoices with due dates exist.",
+      "byAgent": "Collected vs target by agent",
+      "noAgents": "No Sales Agents yet",
+      "agentLine": "{p}% · {got} of {target}",
+      "topOverdue": "Top overdue",
+      "noOverdue": "No overdue balances",
+      "days": "{n} days",
+      "tabs": {
+        "pending": "Pending deposit",
+        "clearing": "In clearing",
+        "bounced": "Bounced"
+      },
+      "empty": {
+        "pending": {
+          "title": "No payments waiting for deposit",
+          "body": "Cash and cheques collected by agents show here until deposited."
+        },
+        "clearing": {
+          "title": "No cheques in clearing",
+          "body": "Deposited cheques wait here until the bank clears them."
+        },
+        "bounced": {
+          "title": "No bounced cheques",
+          "body": "Returned cheques appear here for follow-up."
+        }
+      },
+      "cols": {
+        "customer": "Customer",
+        "ref": "Cheque / ref",
+        "by": "Collected by",
+        "amount": "Amount"
+      },
+      "cash": "Cash",
+      "daysAgo": "{n, plural, =0 {today} one {# day ago} other {# days ago}}",
+      "markDeposited": "Mark deposited"
+    },
+    "delivery": {
+      "title": "Delivery",
+      "subtitle": "Picking, dispatch runs and proof of delivery",
+      "createPicking": "Create picking list",
+      "stages": {
+        "confirmed": {
+          "label": "Confirmed",
+          "hint": "ready to pick"
+        },
+        "picked": {
+          "label": "Picked",
+          "hint": "waiting for a run"
+        },
+        "dispatched": {
+          "label": "Out for delivery",
+          "hint": "on today’s runs"
+        },
+        "delivered": {
+          "label": "Delivered today",
+          "hint": "with proof of delivery"
+        },
+        "failed": {
+          "label": "Failed / returned",
+          "hint": "today"
+        }
+      },
+      "runsToday": "Today’s delivery runs",
+      "newRun": "New run",
+      "noRuns": "No delivery runs today",
+      "noRunsBody": "Create a run from picked orders to start dispatch.",
+      "cols": {
+        "run": "Run",
+        "route": "Route",
+        "driver": "Driver · vehicle",
+        "drops": "Drops",
+        "status": "Status"
+      },
+      "dropsOf": "{done} of {total}",
+      "runStatus": {
+        "PLANNED": "Planned",
+        "ON_ROUTE": "On route",
+        "DELAYED": "Delayed",
+        "COMPLETED": "Completed"
+      }
+    },
+    "communications": {
+      "title": "WhatsApp & campaigns",
+      "subtitle": "Ordering assistant, message templates and campaigns",
+      "newCampaign": "New campaign",
+      "bot": {
+        "title": "WhatsApp ordering assistant",
+        "body": "Verified dealer numbers only. Creates orders, quotes and claims; everything else goes to the agent.",
+        "ceiling": "Order ceiling",
+        "ceilingHelp": "Orders above this go to the assigned agent to confirm."
+      },
+      "saved": "Saved",
+      "save": "Save",
+      "conversations": "Conversations",
+      "noConversations": "No conversations yet",
+      "noConversationsBody": "They appear after a verified dealer sends the first message.",
+      "failed": "Failed messages",
+      "noFailed": "No failed messages",
+      "noFailedBody": "Messages that fail three times appear here.",
+      "templates": "Message templates",
+      "templatesSub": "Meta approval status per language. Outside the 24-hour window only approved templates can be sent.",
+      "cols": {
+        "template": "Template"
+      },
+      "templateNames": {
+        "order_confirmation": "Order confirmation",
+        "order_approved": "Order approved",
+        "order_rejected": "Order rejected",
+        "order_status_change": "Order status change",
+        "quote_ready": "Quote ready",
+        "quote_expiring": "Quote expiring",
+        "payment_reminder": "Payment reminder",
+        "receipt": "Receipt",
+        "dispatch_notification": "Dispatch notification",
+        "promotional_broadcast": "Promotional broadcast",
+        "followup_nudge": "Follow-up nudge"
+      },
+      "templateStatus": {
+        "DRAFT": "Draft",
+        "SUBMITTED": "Submitted",
+        "APPROVED": "Approved",
+        "REJECTED": "Rejected"
+      },
+      "edit": "Edit"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Safeguards, limits and localisation for the whole CRM",
+      "groups": {
+        "orders": {
+          "title": "Orders & credit",
+          "sub": "Rules applied when an order is placed"
+        },
+        "prices": {
+          "title": "Price lists",
+          "sub": "Changes to prices"
+        },
+        "ai": {
+          "title": "AI & voice",
+          "sub": "Usage limits"
+        },
+        "locale": {
+          "title": "Localisation",
+          "sub": "How the CRM reads and prints"
+        }
+      },
+      "fields": {
+        "approvalThreshold": {
+          "label": "Approval threshold",
+          "help": "Orders above this amount need admin approval"
+        },
+        "blockOverCreditLimit": {
+          "label": "Block orders over credit limit",
+          "help": "Agents and dealers cannot place them"
+        },
+        "priceListNeedsApproval": {
+          "label": "Require approval before activating a price list",
+          "help": "A second admin must approve new prices"
+        },
+        "dailyAiBudget": {
+          "label": "Daily AI budget",
+          "help": "The assistant pauses after this amount"
+        },
+        "voiceRetentionMonths": {
+          "label": "Voice note retention",
+          "help": "Months, 1–120"
+        },
+        "companyNameEn": {
+          "label": "Company name (English)",
+          "help": "On invoices and messages"
+        },
+        "companyNameUr": {
+          "label": "Company name (Urdu)",
+          "help": "On Urdu screens and messages"
+        },
+        "westernNumerals": {
+          "label": "Western numerals in Urdu",
+          "help": "Show 1, 2, 3 instead of ۱، ۲، ۳"
+        }
+      },
+      "saved": "Changes saved",
+      "reset": "Discard",
+      "save": "Save changes"
+    },
+    "glance": {
+      "title": "AKAI Ops",
+      "mtd": "This month",
+      "ofTarget": "{p}% of {target} target",
+      "vsLastMonth": "Last month: {amount}",
+      "vsLast": "Last month: {n}",
+      "pctOfTarget": "{p}% of target",
+      "deliveredToday": "Delivered today",
+      "onTrack": "Runs on track",
+      "needsAttention": "Needs attention",
+      "allClear": "All clear right now",
+      "attn": {
+        "approvals": "{n, plural, one {# order} other {# orders}} waiting for approval",
+        "approvalsMeta": "{amount} · approve on desktop",
+        "bounced": "{n, plural, one {# bounced cheque} other {# bounced cheques}}",
+        "overdue60": "{n, plural, one {# dealer} other {# dealers}} overdue 60+ days",
+        "delayed": "{n, plural, one {# run} other {# runs}} delayed",
+        "delayedMeta": "Check with the driver"
+      },
+      "deliveryToday": "Delivery today",
+      "pipe": {
+        "picked": "Picked",
+        "dispatched": "On route",
+        "delivered": "Delivered",
+        "failed": "Failed"
+      },
+      "dataHealth": "Data health",
+      "profiles": "Complete dealer profiles",
+      "withAgent": "Dealers with an agent",
+      "xOfY": "{x} of {y}",
+      "revenueByMonth": "Revenue by month",
+      "orderStatus": "Orders by status",
+      "status": {
+        "pendingApproval": "Waiting approval",
+        "confirmed": "Confirmed",
+        "picked": "Picked",
+        "dispatched": "Out for delivery",
+        "deliveredMtd": "Delivered this month"
+      },
+      "topDealers": "Top dealers this month",
+      "noOrders": "No orders this month yet",
+      "outstanding": "Total outstanding",
+      "ageing": {
+        "0_30": "0–30 days",
+        "31_60": "31–60 days",
+        "61_90": "61–90 days",
+        "90_plus": "90+ days"
+      },
+      "collectedVsTarget": "Collected vs target",
+      "pendingDeposit": "Pending deposit",
+      "bounced": "Bounced cheques",
+      "topOverdue": "Top overdue",
+      "noOverdue": "No overdue balances",
+      "days": "{n} days",
+      "noAgents": "No Sales Agents yet",
+      "noAgentsBody": "Add Harris and Daniyal as Sales Agents on desktop to see team numbers here.",
+      "ordersN": "{n} orders",
+      "metric": {
+        "visits": "Beat visits",
+        "recovery": "Recovery vs target",
+        "profiles": "Profiles completed"
+      },
+      "readOnly": "Read-only glance for {name}",
+      "openFull": "Open full console",
+      "sections": "Sections",
+      "tabs": {
+        "today": "Today",
+        "sales": "Sales",
+        "recovery": "Recovery",
+        "team": "Team"
+      }
+    }
   }
 }

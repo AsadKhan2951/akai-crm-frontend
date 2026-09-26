@@ -59,9 +59,9 @@ export function AddToCartForm({ productId, quoteOnly, canOrder = true, canQuote 
     <div className={compact ? "space-y-2" : "space-y-3"}>
       <div className="flex flex-wrap items-center gap-2">
         {stepper}
-        <button type="button" onClick={add} disabled={pending} className="min-h-11 flex-1 rounded-md bg-[#D6202C] px-4 font-semibold text-white disabled:opacity-60">{pending ? tp("adding") : t("addToCart")}</button>
+        <button type="button" onClick={add} disabled={pending} className="min-h-11 flex-1 rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white disabled:opacity-60">{pending ? tp("adding") : t("addToCart")}</button>
       </div>
-      {message ? <p role="status" className={message.ok ? "text-sm font-medium text-primary" : "text-sm font-medium text-[#D6202C]"}>{message.text}</p> : null}
+      {message ? <p role="status" className={message.ok ? "text-sm font-medium text-primary" : "text-sm font-medium text-[#b42318]"}>{message.text}</p> : null}
     </div>
   );
 }

@@ -1,32 +1,167 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
-import { EmptyState, PageHeader, StatCard } from "@/components/ui-kit";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { EmptyState } from "@/components/ui-kit";
 import { acknowledgeAdminAnomaly } from "./actions";
-import { AdminAnalyticsAssistant } from "./AdminAnalyticsAssistant";
 
 type Row = Record<string, string | number | null>;
 type Analytics = Record<string, Row[]>;
-type Summary = { revenue_this_month: string | null; revenue_last_month: string | null; revenue_change_percent: string | null; orders_this_month: number; quotes_pending: number; active_customers: number; outstanding_receivables: string | null; orders_awaiting_approval: number };
 type Alert = { id: string; title: string; body: string; status: string; created_at: string; supporting_metrics_json: unknown };
 
-function asRows(value: unknown): Row[] { return Array.isArray(value) ? value as Row[] : []; }
-function money(value: string | null | undefined) { return value === null || value === undefined ? "—" : `PKR ${value}`; }
-function ChartCard({ title, children }: { title: string; children: React.ReactNode }) { return <section className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"><h2 className="font-semibold text-primary">{title}</h2><div className="h-64">{children}</div></section>; }
-function EmptyChart({ text }: { text: string }) { return <div className="flex h-full items-center justify-center text-sm text-muted-foreground">{text}</div>; }
+const BRAND = "#1f47c6";
+const TINT = "#7c9ae8";
+const INK = "#15171c";
+const PIE = [BRAND, "#c2560c", "#0b6b3c", "#7c9ae8", "#5e6470", "#b42318", "#8a4b08", "#3a3f48"];
+const axis = { fill: "#5e6470", fontSize: 12 };
 
-export function AdminDashboard({ summary, analytics, anomalies, rangeStart, rangeEnd }: { summary: Summary | null; analytics: unknown; anomalies: Alert[]; rangeStart: string; rangeEnd: string }) {
+function asRows(value: unknown): Row[] { return Array.isArray(value) ? value as Row[] : []; }
+function ChartCard({ title, children, tall }: { title: string; children: React.ReactNode; tall?: boolean }) {
+  return <section className="flex flex-col gap-3 rounded-[10px] border border-line bg-surface p-5"><h3 className="text-[15px] font-semibold">{title}</h3><div className={tall ? "h-72" : "h-64"} dir="ltr">{children}</div></section>;
+}
+function EmptyChart({ text }: { text: string }) { return <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-[#d8d6cf] text-[13px] text-muted">{text}</div>; }
+
+/** Detailed analytics under the overview: date range, charts, rankings, customer recency and alerts. */
+export function AdminDashboard({ analytics, anomalies, rangeStart, rangeEnd, title, subtitle }: { analytics: unknown; anomalies: Alert[]; rangeStart: string; rangeEnd: string; title: string; subtitle: string }) {
   const t = useTranslations("admin");
+  const router = useRouter();
+  const pathname = usePathname();
   const [message, setMessage] = useState("");
+  const [hidden, setHidden] = useState<Set<string>>(new Set());
+  const [pending, start] = useTransition();
   const data = (analytics && typeof analytics === "object" ? analytics : {}) as Analytics;
-  const colors = ["#16233F", "#D6202C", "#64748B"];
-  function applyRange(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); const form = new FormData(event.currentTarget); const start = String(form.get("rangeStart") ?? ""); const end = String(form.get("rangeEnd") ?? ""); window.location.assign(`?rangeStart=${encodeURIComponent(start)}&rangeEnd=${encodeURIComponent(end)}`); }
-  async function reviewAlert(id: string, status: string) { const form = new FormData(); form.set("alertId", id); form.set("status", status); try { await acknowledgeAdminAnomaly(form); setMessage(t("saved")); } catch (error) { setMessage(error instanceof Error ? error.message : t("error")); } }
-  return <div className="space-y-6"><PageHeader title={t("dashboardTitle")} description={t("dashboardDescription")} /><AdminAnalyticsAssistant rangeStart={rangeStart} rangeEnd={rangeEnd} /><section className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">{[["/admin/orders", t("ordersTitle")], ["/admin/team", t("salesTeamTitle")], ["/admin/ledger", t("ledgerTitle")], ["/admin/users", t("usersTitle")], ["/admin/settings/roles", t("rolesTitle")], ["/admin/access", t("vendorImpersonation")], ["/admin/audit", t("auditTitle")], ["/admin/settings", t("settingsTitle")]].map(([href, label]) => <Link key={href} href={href as never} className="flex min-h-11 items-center rounded-md border border-slate-200 bg-white px-3 text-sm font-semibold text-primary hover:bg-slate-50">{label}</Link>)}</section><form onSubmit={applyRange} className="flex flex-col gap-3 rounded-lg bg-slate-50 p-4 md:flex-row md:items-end"><label className="flex-1 text-sm font-medium text-primary">{t("from")}<input name="rangeStart" type="date" defaultValue={rangeStart} className="mt-1 min-h-11 w-full rounded-md border border-slate-300 bg-white px-3" /></label><label className="flex-1 text-sm font-medium text-primary">{t("to")}<input name="rangeEnd" type="date" defaultValue={rangeEnd} className="mt-1 min-h-11 w-full rounded-md border border-slate-300 bg-white px-3" /></label><Button type="submit">{t("applyFilter")}</Button></form>{summary ? <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"><StatCard label={t("revenueThisMonth")} value={money(summary.revenue_this_month)} hint={summary.revenue_change_percent ? `${summary.revenue_change_percent}% ${t("revenueChange")}` : undefined} /><StatCard label={t("ordersThisMonth")} value={<bdi>{summary.orders_this_month}</bdi>} /><StatCard label={t("quotesPending")} value={<bdi>{summary.quotes_pending}</bdi>} /><StatCard label={t("activeCustomers")} value={<bdi>{summary.active_customers}</bdi>} /><StatCard label={t("outstandingReceivables")} value={money(summary.outstanding_receivables)} /><StatCard label={t("awaitingApproval")} value={<bdi>{summary.orders_awaiting_approval}</bdi>} /></div> : <EmptyState title={t("noDashboardData")} description={t("noDashboardDataHint")} />}<div className="grid gap-4 xl:grid-cols-2"><ChartCard title={t("revenueByMonth")}>{asRows(data.revenue_by_month).length ? <ResponsiveContainer width="100%" height="100%"><LineChart data={asRows(data.revenue_by_month)}><CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" /><XAxis dataKey="month" /><YAxis /><Tooltip /><Line type="monotone" dataKey="revenue_pkr" stroke="#16233F" strokeWidth={2} dot={false} /></LineChart></ResponsiveContainer> : <EmptyChart text={t("noDashboardData")} />}</ChartCard><ChartCard title={t("revenueByAgent")}>{asRows(data.revenue_by_agent).length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={asRows(data.revenue_by_agent)} layout="vertical"><CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" /><XAxis type="number" /><YAxis type="category" dataKey="agent" width={100} /><Tooltip /><Bar dataKey="revenue_pkr" fill="#16233F" /></BarChart></ResponsiveContainer> : <EmptyChart text={t("noDashboardData")} />}</ChartCard><ChartCard title={t("revenueByCategory")}>{asRows(data.revenue_by_category).length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={asRows(data.revenue_by_category)} layout="vertical"><CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" /><XAxis type="number" /><YAxis type="category" dataKey="category" width={110} /><Tooltip /><Bar dataKey="revenue_pkr" fill="#D6202C" /></BarChart></ResponsiveContainer> : <EmptyChart text={t("noDashboardData")} />}</ChartCard><ChartCard title={t("revenueByBrand")}>{asRows(data.revenue_by_brand).length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={asRows(data.revenue_by_brand)} layout="vertical"><CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" /><XAxis type="number" /><YAxis type="category" dataKey="brand" width={110} /><Tooltip /><Bar dataKey="revenue_pkr" fill="#64748B" /></BarChart></ResponsiveContainer> : <EmptyChart text={t("noDashboardData")} />}</ChartCard><ChartCard title={t("ordersByCustomerType")}>{asRows(data.orders_by_customer_type).length ? <ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={asRows(data.orders_by_customer_type)} dataKey="orders_count" nameKey="customer_type" outerRadius={90} label>{asRows(data.orders_by_customer_type).map((row, index) => <Cell key={String(row.customer_type)} fill={colors[index % colors.length]} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer> : <EmptyChart text={t("noDashboardData")} />}</ChartCard><ChartCard title={t("revenueByArea")}>{asRows(data.revenue_by_area).length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={asRows(data.revenue_by_area)} layout="vertical"><CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" /><XAxis type="number" /><YAxis type="category" dataKey="area_code" width={80} /><Tooltip /><Bar dataKey="revenue_pkr" fill="#16233F" /></BarChart></ResponsiveContainer> : <EmptyChart text={t("noDashboardData")} />}</ChartCard></div><div className="grid gap-4 lg:grid-cols-2"><ChartCard title={t("topCustomers")}><RankTable rows={asRows(data.top_customers)} labelKey="business_name" valueKey="revenue_pkr" valuePrefix="PKR " empty={t("noDashboardData")} /></ChartCard><ChartCard title={t("topProducts")}><RankTable rows={asRows(data.top_products)} labelKey="name_en" valueKey="units_sold" valuePrefix="" empty={t("noDashboardData")} /></ChartCard><ChartCard title={t("salesFunnel")}><RankTable rows={asRows(data.lead_funnel)} labelKey="stage" valueKey="count" valuePrefix="" empty={t("noDashboardData")} /></ChartCard><ChartCard title={t("quoteConversion")}><RankTable rows={asRows(data.quote_conversion_by_agent)} labelKey="agent" valueKey="converted" valuePrefix="" empty={t("noDashboardData")} /></ChartCard></div><section className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"><h2 className="font-semibold text-primary">{t("customerMap")}</h2>{asRows(data.customer_map).length ? <div className="grid gap-2 md:grid-cols-3">{asRows(data.customer_map).map((row) => <div key={`${row.area_code}-${row.business_name}`} className={`rounded-md border p-3 ${row.recency_band === "RED" ? "border-[#D6202C]" : row.recency_band === "AMBER" ? "border-[#64748B]" : "border-[#16233F]"}`}><p className="font-medium text-primary">{String(row.business_name)}</p><p className="text-sm text-muted-foreground"><bdi>{String(row.area_code)}</bdi> · <bdi>{String(row.latitude)}, {String(row.longitude)}</bdi></p><p className="text-xs text-muted-foreground">{String(row.recency_band)}</p></div>)}</div> : <EmptyChart text={t("noDashboardData")} />}</section><section className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"><h2 className="font-semibold text-primary">{t("openAlerts")}</h2>{anomalies.length ? <div className="space-y-2">{anomalies.map((alert) => <div key={alert.id} className="flex flex-col gap-3 rounded-md border border-[#D6202C] p-3 md:flex-row md:items-center md:justify-between"><div><p className="font-medium text-primary">{alert.title}</p><p className="text-sm text-muted-foreground">{alert.body}</p></div><Button type="button" variant="outline" onClick={() => void reviewAlert(alert.id, "ACKNOWLEDGED")}>{t("acknowledge")}</Button></div>)}</div> : <EmptyState title={t("noAnomalies")} description={t("noAnomaliesHint")} />}</section>{message ? <p role="status" className="text-sm font-medium text-primary">{message}</p> : null}</div>;
+  const empty = t("noDashboardData");
+
+  function applyRange(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const params = new URLSearchParams();
+    const startValue = String(form.get("rangeStart") ?? ""); const endValue = String(form.get("rangeEnd") ?? "");
+    if (startValue) params.set("rangeStart", startValue);
+    if (endValue) params.set("rangeEnd", endValue);
+    start(() => router.replace(`${pathname}${params.size ? `?${params.toString()}` : ""}` as never, { scroll: false }));
+  }
+  async function reviewAlert(id: string) {
+    const form = new FormData(); form.set("alertId", id); form.set("status", "ACKNOWLEDGED");
+    try { await acknowledgeAdminAnomaly(form); setHidden((current) => new Set(current).add(id)); setMessage(t("saved")); }
+    catch (error) { setMessage(error instanceof Error ? error.message : t("error")); }
+  }
+  const bars = (key: string, labelKey: string, fill: string, width = 110) => asRows(data[key]).length ? (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={asRows(data[key])} layout="vertical" margin={{ left: 4, right: 12 }}>
+        <CartesianGrid horizontal={false} stroke="#eeede8" />
+        <XAxis type="number" tick={axis} axisLine={false} tickLine={false} />
+        <YAxis type="category" dataKey={labelKey} width={width} tick={axis} axisLine={false} tickLine={false} />
+        <Tooltip cursor={{ fill: "#f1f0ec" }} contentStyle={{ borderRadius: 8, border: "1px solid #e4e3de", fontSize: 12.5 }} />
+        <Bar dataKey="revenue_pkr" fill={fill} radius={[0, 4, 4, 0]} maxBarSize={22} isAnimationActive={false} />
+      </BarChart>
+    </ResponsiveContainer>
+  ) : <EmptyChart text={empty} />;
+  const openAlerts = anomalies.filter((alert) => !hidden.has(alert.id));
+  const has = (key: string) => asRows(data[key]).length > 0;
+  const charts = [
+    has("revenue_by_agent") && <ChartCard key="agent" title={t("revenueByAgent")}>{bars("revenue_by_agent", "agent", BRAND, 100)}</ChartCard>,
+    has("revenue_by_category") && <ChartCard key="category" title={t("revenueByCategory")}>{bars("revenue_by_category", "category", TINT)}</ChartCard>,
+    has("revenue_by_brand") && <ChartCard key="brand" title={t("revenueByBrand")}>{bars("revenue_by_brand", "brand", INK)}</ChartCard>,
+    has("revenue_by_area") && <ChartCard key="area" title={t("revenueByArea")}>{bars("revenue_by_area", "area_code", BRAND, 80)}</ChartCard>,
+    has("orders_by_customer_type") && (
+      <ChartCard key="type" title={t("ordersByCustomerType")}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={asRows(data.orders_by_customer_type)} dataKey="orders_count" nameKey="customer_type" innerRadius={55} outerRadius={95} paddingAngle={2} isAnimationActive={false} label>
+              {asRows(data.orders_by_customer_type).map((row, index) => <Cell key={String(row.customer_type)} fill={PIE[index % PIE.length]} />)}
+            </Pie>
+            <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid #e4e3de", fontSize: 12.5 }} />
+          </PieChart>
+        </ResponsiveContainer>
+      </ChartCard>
+    ),
+    has("revenue_by_month") && rangeStart && (
+      <ChartCard key="month" title={t("revenueByMonth")}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={asRows(data.revenue_by_month)} margin={{ left: 4, right: 12, top: 8 }}>
+            <CartesianGrid vertical={false} stroke="#eeede8" />
+            <XAxis dataKey="month" tick={axis} axisLine={{ stroke: "#e4e3de" }} tickLine={false} />
+            <YAxis tick={axis} axisLine={false} tickLine={false} width={70} />
+            <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid #e4e3de", fontSize: 12.5 }} />
+            <Line type="monotone" dataKey="revenue_pkr" stroke={BRAND} strokeWidth={2.5} dot={false} isAnimationActive={false} />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartCard>
+    ),
+  ].filter(Boolean);
+  const ranks = [
+    has("top_customers") && <RankCard key="c" title={t("topCustomers")} rows={asRows(data.top_customers)} labelKey="business_name" valueKey="revenue_pkr" valuePrefix="PKR " empty={empty} />,
+    has("top_products") && <RankCard key="p" title={t("topProducts")} rows={asRows(data.top_products)} labelKey="name_en" valueKey="units_sold" valuePrefix="" empty={empty} />,
+    has("lead_funnel") && <RankCard key="f" title={t("salesFunnel")} rows={asRows(data.lead_funnel)} labelKey="stage" valueKey="count" valuePrefix="" empty={empty} />,
+    has("quote_conversion_by_agent") && <RankCard key="q" title={t("quoteConversion")} rows={asRows(data.quote_conversion_by_agent)} labelKey="agent" valueKey="converted" valuePrefix="" empty={empty} />,
+  ].filter(Boolean);
+
+  return (
+    <section className="flex flex-col gap-4" aria-labelledby="analytics-title">
+      <div className="flex flex-wrap items-end gap-3 border-t border-line pt-6">
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <h2 id="analytics-title" className="text-[19px] font-bold">{title}</h2>
+          <p className="text-[13px] text-muted">{subtitle}</p>
+        </div>
+        <form onSubmit={applyRange} className="flex flex-wrap items-end gap-2" aria-busy={pending}>
+          <label className="flex flex-col gap-1 text-xs font-medium text-muted">{t("from")}<input name="rangeStart" type="date" defaultValue={rangeStart} className="h-9 py-1" /></label>
+          <label className="flex flex-col gap-1 text-xs font-medium text-muted">{t("to")}<input name="rangeEnd" type="date" defaultValue={rangeEnd} className="h-9 py-1" /></label>
+          <button type="submit" className="h-9 rounded-lg bg-ink px-4 text-[13px] font-semibold text-white disabled:opacity-50" disabled={pending}>{t("applyFilter")}</button>
+        </form>
+      </div>
+
+      {openAlerts.length ? (
+        <section className="flex flex-col gap-2 rounded-[10px] border border-[#f1c1bc] bg-surface p-5">
+          <h3 className="text-[15px] font-semibold">{t("openAlerts")}</h3>
+          {openAlerts.map((alert) => (
+            <div key={alert.id} className="flex flex-col gap-3 rounded-lg border border-line-soft bg-[#fcfcfb] p-3 md:flex-row md:items-center">
+              <span className="inline-block size-2 shrink-0 rounded-full bg-bad" aria-hidden />
+              <div className="flex-1"><p className="text-[13.5px] font-semibold">{alert.title}</p><p className="text-[12.5px] text-muted">{alert.body}</p></div>
+              <button type="button" className="h-8 rounded-lg border border-line bg-surface px-3 text-[12.5px] font-semibold hover:bg-sunken" onClick={() => void reviewAlert(alert.id)}>{t("acknowledge")}</button>
+            </div>
+          ))}
+        </section>
+      ) : null}
+
+      {charts.length ? <div className="grid gap-4 xl:grid-cols-2">{charts}</div> : null}
+      {ranks.length ? <div className="grid gap-4 lg:grid-cols-2">{ranks}</div> : null}
+      {asRows(data.customer_map).length ? (
+        <section className="flex flex-col gap-3 rounded-[10px] border border-line bg-surface p-5">
+          <h3 className="text-[15px] font-semibold">{t("customerMap")}</h3>
+          <div className="grid gap-2 md:grid-cols-3">
+            {asRows(data.customer_map).map((row) => (
+              <div key={`${row.area_code}-${row.business_name}`} className="flex items-start gap-2.5 rounded-lg border border-line-soft bg-[#fcfcfb] p-3">
+                <span aria-hidden className={`mt-1.5 inline-block size-2 shrink-0 rounded-full ${row.recency_band === "RED" ? "bg-bad" : row.recency_band === "AMBER" ? "bg-orange" : "bg-good"}`} />
+                <div className="min-w-0"><p className="truncate text-[13.5px] font-semibold">{String(row.business_name)}</p><p className="text-xs text-muted"><bdi>{String(row.area_code)}</bdi> · <bdi>{String(row.latitude)}, {String(row.longitude)}</bdi></p></div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+      {!charts.length && !ranks.length && !asRows(data.customer_map).length ? <EmptyState compact title={empty} description={t("noDashboardDataHint")} /> : null}
+      {message ? <p role="status" className="text-[13px] font-medium text-muted">{message}</p> : null}
+    </section>
+  );
 }
 
-function RankTable({ rows, labelKey, valueKey, valuePrefix, empty }: { rows: Row[]; labelKey: string; valueKey: string; valuePrefix: string; empty: string }) { return rows.length ? <div className="space-y-2 overflow-auto">{rows.map((row, index) => <div key={`${String(row[labelKey])}-${index}`} className="flex items-center justify-between gap-3 border-b border-slate-100 py-2 text-sm"><span className="truncate text-primary">{String(row[labelKey])}</span><bdi className="shrink-0 text-muted-foreground">{valuePrefix}{String(row[valueKey])}</bdi></div>)}</div> : <EmptyChart text={empty} />; }
+function RankCard({ title, rows, labelKey, valueKey, valuePrefix, empty }: { title: string; rows: Row[]; labelKey: string; valueKey: string; valuePrefix: string; empty: string }) {
+  return (
+    <section className="flex flex-col gap-2 rounded-[10px] border border-line bg-surface p-5">
+      <h3 className="text-[15px] font-semibold">{title}</h3>
+      {rows.length ? (
+        <ol className="flex max-h-64 flex-col overflow-auto">
+          {rows.map((row, index) => (
+            <li key={`${String(row[labelKey])}-${index}`} className="flex items-center gap-3 border-b border-line-soft py-2 text-[13.5px] last:border-0">
+              <span className="num w-5 text-xs font-semibold text-muted">{index + 1}</span>
+              <span className="min-w-0 flex-1 truncate">{String(row[labelKey])}</span>
+              <bdi className="num shrink-0 font-semibold">{valuePrefix}{String(row[valueKey])}</bdi>
+            </li>
+          ))}
+        </ol>
+      ) : <EmptyState compact title={empty} />}
+    </section>
+  );
+}

@@ -39,7 +39,7 @@ export function ProductImageUploader({ productId }: { productId: string }) {
         <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" disabled={pending} onChange={(event) => { const file = event.target.files?.[0]; if (file) upload(file); }} className="mt-1 block min-h-11 w-full rounded-md border border-slate-300 bg-white p-2" />
       </label>
       {pending ? <p className="text-sm text-muted-foreground">{t("uploading")}</p> : null}
-      {message ? <p role="status" className={message.ok ? "text-sm font-medium text-primary" : "text-sm font-medium text-[#D6202C]"}>{message.text}</p> : null}
+      {message ? <p role="status" className={message.ok ? "text-sm font-medium text-primary" : "text-sm font-medium text-[#b42318]"}>{message.text}</p> : null}
     </div>
   );
 }

@@ -37,7 +37,7 @@ export async function ProductForm({ locale, product, cost, categories, brands, c
       <fieldset className="grid gap-4 md:grid-cols-3">
         <legend className="mb-2 text-lg font-semibold text-primary">{ta("pricingStock")}</legend>
         {product ? (
-          <div className="rounded-md bg-[#F1F5F9] p-3 md:col-span-3">
+          <div className="rounded-md bg-[#f1f0ec] p-3 md:col-span-3">
             <p className="text-sm text-muted-foreground">{t("currentPrice")}</p>
             <p className="text-xl font-bold text-primary"><bdi>{formatPkr(product.price_pkr)}</bdi></p>
             <p className="text-sm text-muted-foreground">{ta("priceViaPriceList")}</p>
@@ -56,7 +56,7 @@ export async function ProductForm({ locale, product, cost, categories, brands, c
         <label className="flex min-h-11 items-center gap-2 text-sm font-medium text-primary"><input type="checkbox" name="isActive" defaultChecked={product ? product.is_active !== false : true} className="h-5 w-5" />{t("active")}</label>
         <label className="flex min-h-11 items-center gap-2 text-sm font-medium text-primary"><input type="checkbox" name="isQuoteOnly" defaultChecked={Boolean(product?.is_quote_only)} className="h-5 w-5" />{t("quoteOnly")}</label>
       </fieldset>
-      <button type="submit" className="min-h-12 rounded-md bg-[#D6202C] px-6 text-lg font-semibold text-white">{product ? t("saveChanges") : t("createProduct")}</button>
+      <button type="submit" className="min-h-12 rounded-lg bg-brand hover:bg-[#1a3ca8] px-6 text-lg font-semibold text-white">{product ? t("saveChanges") : t("createProduct")}</button>
     </form>
   );
 }

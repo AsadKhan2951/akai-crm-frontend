@@ -32,7 +32,7 @@ export async function CollectionProducts({ locale, collections, selected }: { lo
           <p className="text-sm text-muted-foreground">{t("selectedCount", { count: memberIds.size })}</p>
           <div className="max-h-96 space-y-1 overflow-y-auto rounded-md border border-slate-200 p-2">
             {(products.data ?? []).map((p) => (
-              <label key={p.id} className="flex min-h-11 items-center gap-3 rounded px-2 hover:bg-[#F1F5F9]">
+              <label key={p.id} className="flex min-h-11 items-center gap-3 rounded px-2 hover:bg-[#f1f0ec]">
                 <input type="checkbox" name="productIds" value={p.id} defaultChecked={memberIds.has(p.id)} className="h-5 w-5" />
                 <span className="text-primary">{locale === "ur" ? p.name_ur || p.name_en : p.name_en}</span>
                 <bdi className="text-sm text-muted-foreground">{p.sku}</bdi>

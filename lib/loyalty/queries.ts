@@ -18,7 +18,7 @@ export async function getVendorLoyaltyData(customerId: string) {
 export async function getAdminLoyaltyData() {
   const supabase = await getSupabaseServerClient();
   const [{ data: rewards, error: rewardsError }, { data: redemptions, error: redemptionsError }, { data: liability, error: liabilityError }, { data: popularity, error: popularityError }] = await Promise.all([
-    supabase.from("rewards").select("id,name_en,name_ur,reward_type,points_cost,discount_value_pkr,discount_percent,free_product_id,free_product_quantity,stock_limit,redeemed_count,is_active,starts_at,ends_at").order("created_at", { ascending: false }),
+    supabase.from("rewards").select("id,name_en,name_ur,reward_type,points_cost,discount_value_pkr,discount_percent,free_product_id,free_product_quantity,stock_limit,redeemed_count,is_active,starts_at,ends_at").order("is_active", { ascending: false }).order("points_cost", { ascending: true }),
     supabase.from("redemptions").select("id,customer_id,reward_id,points_spent,status,requested_at,fulfilled_at,rejected_reason,customer:customers(business_name),reward:rewards(name_en,name_ur)").in("status", ["REQUESTED", "APPROVED"]).order("requested_at", { ascending: true }).limit(200),
     supabase.rpc("loyalty_liability_summary"),
     supabase.rpc("redemption_popularity"),

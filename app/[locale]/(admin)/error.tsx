@@ -2,6 +2,6 @@
 
 import { RouteErrorView } from "@/components/RouteErrorView";
 
-export default function AdminError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
-  return <RouteErrorView reset={reset} />;
+export default function AdminError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  return <RouteErrorView reset={reset} digest={error.digest} />;
 }

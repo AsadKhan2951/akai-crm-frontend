@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { Suspense, useEffect, type ReactNode } from "react";
 import { Boxes, ClipboardCheck, Gift, GitBranch, Home, LayoutDashboard, ListTodo, LogOut, MessageSquareQuote, Settings, ShieldAlert, ShoppingCart, Truck, UserRound, Users, UsersRound, type LucideIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
-import { Button } from "@/components/ui/button";
-import { LanguageSwitcher } from "@/components/ui-kit/LanguageSwitcher";
+import { LocaleSwitch } from "@/components/admin/shell/LocaleSwitch";
 import { NotificationBell } from "@/components/NotificationBell";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { usePermissions } from "@/components/providers/PermissionProvider";
 import type { PermissionKey } from "@/lib/auth/permissions";
 
 export type PortalShellName = "admin" | "sales" | "vendor";
+type ShellPortal = Exclude<PortalShellName, "admin">;
 
 type NavKey = "overview" | "settings" | "profile" | "catalogue" | "cart" | "progress" | "enrichment" | "leads" | "customers" | "quotes" | "approvals" | "reports" | "recovery" | "communications" | "schemes" | "offers" | "delivery" | "points" | "rewards" | "claims" | "warranty" | "beats" | "beat" | "orders";
 const navItems: ReadonlyArray<{ key: NavKey; path: string; icon: LucideIcon; permission?: PermissionKey; portals?: PortalShellName[] }> = [
@@ -59,7 +59,7 @@ const mobileNav: Record<Exclude<PortalShellName, "admin">, ReadonlyArray<{ label
   ],
 };
 
-export function PortalShell({ portal, children }: Readonly<{ portal: PortalShellName; children: ReactNode }>) {
+export function PortalShell({ portal, children }: Readonly<{ portal: ShellPortal; children: ReactNode }>) {
   const locale = useLocale();
   const t = useTranslations("portal");
   const common = useTranslations("common");
@@ -81,14 +81,49 @@ export function PortalShell({ portal, children }: Readonly<{ portal: PortalShell
   }
 
   return (
-    <div className="portal-shell">
-      <aside className="hidden w-full shrink-0 flex-col border-b border-slate-200 bg-secondary/60 md:flex md:w-64 md:border-e md:border-b-0">
-        <div className="flex items-center justify-between gap-3 p-4 md:p-6"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-md bg-primary font-bold text-white">A</span><div><p className="font-bold text-primary">{common("appName")}</p><p className="text-xs text-muted-foreground">{t(portal)}</p></div></div><LanguageSwitcher /></div>
-        <nav className="flex gap-1 overflow-x-auto px-3 pb-3 md:flex-col md:px-4" aria-label={t(portal)}>{visibleNavItems.map(({ key, path, icon: Icon }) => { const href = `/${portal}${path}`; const localizedHref = `/${locale}${href}`; const active = pathname === href || pathname === localizedHref; return <Button key={key} asChild variant={active ? "default" : "ghost"} className="shrink-0 justify-start gap-3"><Link href={href as never}><Icon className="h-4 w-4" aria-hidden="true" /><span>{t(key)}</span></Link></Button>; })}</nav>
-        <div className="mt-auto hidden p-4 md:block"><Button type="button" variant="outline" className="w-full justify-start gap-3" onClick={() => void logout()}><LogOut className="h-4 w-4" aria-hidden="true" />{t("logout")}</Button></div>
+    <div className="portal-shell bg-canvas text-ink">
+      <aside className="sticky top-0 hidden h-dvh w-[248px] shrink-0 flex-col border-e border-line bg-[#fbfbf9] md:flex">
+        <div className="flex h-16 shrink-0 items-center gap-3 border-b border-line px-5">
+          <span className="flex size-8 items-center justify-center rounded-lg bg-ink font-sans text-[15px] font-bold text-white">A</span>
+          <div className="flex flex-col leading-tight"><span className="font-sans text-[15px] font-bold">{common("appName")}</span><span className="text-xs text-muted">{t(portal)}</span></div>
+        </div>
+        <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-3" aria-label={t(portal)}>
+          {visibleNavItems.map(({ key, path, icon: Icon }) => {
+            const href = `/${portal}${path}`;
+            const active = path === "" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+            return (
+              <Link key={key} href={href as never} aria-current={active ? "page" : undefined}
+                className={`flex min-h-[36px] items-center gap-2.5 rounded-[7px] px-2.5 text-[13.5px] ${active ? "bg-ink font-semibold text-white" : "font-medium text-[#2b2f37] hover:bg-[#f0efeb]"}`}>
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" /><span>{t(key)}</span>
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="shrink-0 border-t border-line p-3">
+          <button type="button" onClick={() => void logout()} className="flex min-h-[36px] w-full items-center gap-2.5 rounded-[7px] px-2.5 text-[13.5px] font-medium text-[#2b2f37] hover:bg-[#f0efeb]"><LogOut className="h-4 w-4" aria-hidden="true" />{t("logout")}</button>
+        </div>
       </aside>
-      <div className="portal-main"><header className="flex items-center justify-between gap-4 border-b border-slate-200 px-4 py-3 md:px-8"><p className="text-sm font-semibold text-muted-foreground">{t("welcome", { portal: t(portal) })}</p><div className="flex items-center gap-2"><NotificationBell /><Button type="button" variant="ghost" className="md:hidden" onClick={() => void logout()}><LogOut className="h-4 w-4" aria-hidden="true" /><span className="sr-only">{t("logout")}</span></Button></div></header><main className="mx-auto w-full max-w-7xl p-4 pb-24 md:p-8">{children}</main></div>
-      {portal !== "admin" ? <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_8px_rgba(22,35,63,0.08)] md:hidden" aria-label={t(portal)}>{mobileNav[portal].map(({ label, path, icon: Icon }) => { const active = pathname === path || pathname === `/${locale}${path}`; return <Link key={path} href={path as never} className={`flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-center text-xs font-semibold ${active ? "text-primary" : "text-muted-foreground"}`}><Icon className="h-5 w-5" aria-hidden="true" /><span>{t(label)}</span></Link>; })}</nav> : null}
+      <div className="portal-main flex flex-col">
+        <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b border-line bg-surface px-4 md:h-16 md:px-8">
+          <span className="flex size-8 items-center justify-center rounded-lg bg-ink font-sans text-[15px] font-bold text-white md:hidden">A</span>
+          <p className="min-w-0 flex-1 truncate text-[13.5px] font-semibold text-muted">{t("welcome", { portal: t(portal) })}</p>
+          <Suspense fallback={null}><LocaleSwitch compact /></Suspense>
+          <NotificationBell />
+          <button type="button" onClick={() => void logout()} aria-label={t("logout")} className="flex size-[38px] items-center justify-center rounded-lg border border-line bg-surface hover:bg-sunken md:hidden"><LogOut className="h-4 w-4" aria-hidden="true" /></button>
+        </header>
+        <main className="mx-auto w-full max-w-7xl flex-1 p-4 pb-28 md:p-8">{children}</main>
+      </div>
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-line bg-surface px-1 pb-[max(8px,env(safe-area-inset-bottom))] pt-1 md:hidden" aria-label={t(portal)}>
+        {mobileNav[portal].map(({ label, path, icon: Icon }) => {
+          const active = pathname === path || (path !== `/${portal}` && pathname.startsWith(`${path}/`));
+          return (
+            <Link key={path} href={path as never} aria-current={active ? "page" : undefined} className={`flex min-h-14 flex-col items-center justify-center gap-1 px-1 text-center text-[11.5px] ${active ? "font-bold text-ink" : "font-medium text-muted"}`}>
+              <span className={`block h-1 w-7 rounded-full ${active ? "bg-ink" : "bg-transparent"}`} />
+              <Icon className="h-5 w-5" aria-hidden="true" /><span className="leading-tight">{t(label)}</span>
+            </Link>
+          );
+        })}
+      </nav>
       {can("ai.chat") ? <AIAssistantWidget portal={portal} /> : null}
     </div>
   );

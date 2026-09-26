@@ -43,13 +43,13 @@ export default async function VendorOrderPage({ params }: { params: Promise<{ lo
             <form action={reorderVendorOrder}>
               <input type="hidden" name="orderId" value={order.id} />
               <input type="hidden" name="locale" value={locale} />
-              <button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-4 font-semibold text-white">{t("reorder")}</button>
+              <button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{t("reorder")}</button>
             </form>
           ) : null}
         </div>
       </header>
 
-      {order.status === "PENDING_APPROVAL" ? <p className="rounded-md border border-[#D6202C] bg-white p-3 text-sm text-primary">{tCart("approvalNotice")}</p> : null}
+      {order.status === "PENDING_APPROVAL" ? <p className="rounded-md border border-[#b42318] bg-white p-3 text-sm text-primary">{tCart("approvalNotice")}</p> : null}
       {order.status === "CANCELLED" && order.rejection_reason ? <p className="rounded-md border border-slate-300 bg-white p-3 text-sm text-primary">{tp("rejectionReason")}: {order.rejection_reason}</p> : null}
 
       {order.status !== "CANCELLED" ? (
@@ -70,13 +70,13 @@ export default async function VendorOrderPage({ params }: { params: Promise<{ lo
 
       <section className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
         <table className="w-full min-w-[560px] text-start">
-          <thead className="bg-[#F1F5F9] text-sm text-primary">
+          <thead className="bg-[#f1f0ec] text-sm text-primary">
             <tr><th className="p-3 text-start">{tp("product")}</th><th className="p-3 text-start">{tCart("quantity")}</th><th className="p-3 text-start">{tp("unitPrice")}</th><th className="p-3 text-start">{tp("lineTotal")}</th></tr>
           </thead>
           <tbody>
             {lines.map((line) => (
               <tr key={line.id} className="border-t border-slate-100">
-                <td className="p-3"><span className="font-medium text-primary">{localName(line.product, locale)}</span><br /><bdi className="text-sm text-muted-foreground">{line.product?.sku}</bdi>{line.is_free_item ? <span className="ms-2 rounded-full bg-[#D6202C] px-2 py-0.5 text-sm text-white">{tp("freeItem")}</span> : null}</td>
+                <td className="p-3"><span className="font-medium text-primary">{localName(line.product, locale)}</span><br /><bdi className="text-sm text-muted-foreground">{line.product?.sku}</bdi>{line.is_free_item ? <span className="ms-2 rounded-full bg-[#b42318] px-2 py-0.5 text-sm text-white">{tp("freeItem")}</span> : null}</td>
                 <td className="p-3"><bdi>{formatQuantity(line.quantity)}</bdi></td>
                 <td className="p-3"><bdi>{formatPkr(line.unit_price_pkr)}</bdi></td>
                 <td className="p-3 font-semibold"><bdi>{formatPkr(line.line_total_pkr)}</bdi></td>

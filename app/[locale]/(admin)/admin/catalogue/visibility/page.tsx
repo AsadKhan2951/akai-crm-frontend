@@ -48,7 +48,7 @@ export default async function VisibilityPage({ params, searchParams }: { params:
         <form action={setVisibilityRuleAction}>
           <input type="hidden" name="locale" value={locale} /><input type="hidden" name="scopeType" value={scopeType} /><input type="hidden" name="scopeId" value={scopeId} />
           <input type="hidden" name="entityType" value={entityType} /><input type="hidden" name="entityId" value={entity.id} /><input type="hidden" name="mode" value={mode} /><input type="hidden" name="q" value={q} />
-          <button type="submit" aria-pressed={current === mode || (mode === "CLEAR" && !current)} className={`min-h-11 rounded-md border px-3 text-sm ${current === mode ? (mode === "DENY" ? "border-[#D6202C] bg-[#D6202C] text-white" : "border-primary bg-primary text-white") : "border-slate-300 bg-white text-primary"}`}>{text}</button>
+          <button type="submit" aria-pressed={current === mode || (mode === "CLEAR" && !current)} className={`min-h-11 rounded-md border px-3 text-sm ${current === mode ? (mode === "DENY" ? "border-[#b42318] bg-[#b42318] text-white" : "border-primary bg-primary text-white") : "border-slate-300 bg-white text-primary"}`}>{text}</button>
         </form>
       );
       return (

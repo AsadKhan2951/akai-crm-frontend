@@ -32,7 +32,9 @@ export default async function middleware(request: NextRequest) {
       },
     },
   });
-  await supabase.auth.getUser();
+  // Refresh only: getSession() reads the cookie and calls Supabase Auth only when the access
+  // token has expired. Pages still validate the user with getUser() (once per request).
+  await supabase.auth.getSession();
   return response;
 }
 

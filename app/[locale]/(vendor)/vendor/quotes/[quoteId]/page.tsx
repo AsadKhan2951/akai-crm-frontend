@@ -40,7 +40,7 @@ export default async function VendorQuotePage({ params }: { params: Promise<{ lo
 
       <section className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
         <table className="w-full min-w-[560px]">
-          <thead className="bg-[#F1F5F9] text-sm text-primary">
+          <thead className="bg-[#f1f0ec] text-sm text-primary">
             <tr><th className="p-3 text-start">{t("product")}</th><th className="p-3 text-start">{t("requestedQuantity")}</th><th className="p-3 text-start">{t("quotedPrice")}</th><th className="p-3 text-start">{tp("lineTotal")}</th></tr>
           </thead>
           <tbody>
@@ -65,7 +65,7 @@ export default async function VendorQuotePage({ params }: { params: Promise<{ lo
             <form action={acceptVendorQuote} className="rounded-lg border border-slate-200 bg-white p-4">
               <input type="hidden" name="quoteId" value={quote.id} />
               <input type="hidden" name="locale" value={locale} />
-              <button type="submit" className="min-h-12 w-full rounded-md bg-[#D6202C] px-4 text-lg font-semibold text-white">{t("acceptOrder")}</button>
+              <button type="submit" className="min-h-12 w-full rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 text-lg font-semibold text-white">{t("acceptOrder")}</button>
             </form>
           ) : null}
           {canQuote ? (

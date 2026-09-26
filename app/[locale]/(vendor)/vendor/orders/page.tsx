@@ -28,7 +28,7 @@ export default async function VendorOrdersPage({ params, searchParams }: { param
         <button type="submit" className="min-h-11 rounded-md bg-primary px-4 font-semibold text-white">{tp("search")}</button>
       </form>
       {orders.length === 0 ? (
-        <EmptyState title={t("noOrders")} description={t("noOrdersHint")} action={<Link href="/vendor/catalogue" className="inline-flex min-h-11 items-center rounded-md bg-[#D6202C] px-4 font-semibold text-white">{tp("browseCatalogue")}</Link>} />
+        <EmptyState title={t("noOrders")} description={t("noOrdersHint")} action={<Link href="/vendor/catalogue" className="inline-flex min-h-11 items-center rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{tp("browseCatalogue")}</Link>} />
       ) : (
         <ul className="space-y-3">
           {orders.map((order) => (

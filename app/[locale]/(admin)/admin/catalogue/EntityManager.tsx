@@ -66,7 +66,7 @@ export async function EntityManager({ locale, table, title, description, rows, c
           <summary className="min-h-11 cursor-pointer py-2 text-lg font-semibold text-primary">{createLabel}</summary>
           <form action={saveCatalogueEntityAction} className="mt-3 space-y-4">
             <EntityFields table={table} locale={locale} />
-            <button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-5 font-semibold text-white">{createLabel}</button>
+            <button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-5 font-semibold text-white">{createLabel}</button>
           </form>
         </details>
       ) : null}
@@ -97,7 +97,7 @@ export async function EntityManager({ locale, table, title, description, rows, c
                   {canDelete ? (
                     <form action={deleteCatalogueEntityAction}>
                       <input type="hidden" name="table" value={table} /><input type="hidden" name="locale" value={locale} /><input type="hidden" name="id" value={row.id} />
-                      <button type="submit" className="min-h-11 rounded-md px-3 text-[#D6202C] underline-offset-4 hover:underline">{t("delete")}</button>
+                      <button type="submit" className="min-h-11 rounded-md px-3 text-[#b42318] underline-offset-4 hover:underline">{t("delete")}</button>
                     </form>
                   ) : null}
                 </div>

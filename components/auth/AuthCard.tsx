@@ -3,22 +3,24 @@ import { LanguageSwitcher } from "@/components/ui-kit/LanguageSwitcher";
 
 export function AuthCard({ title, description, appName, children }: Readonly<{ title: string; description?: string; appName: string; children: ReactNode }>) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-secondary px-4 py-10">
-      <section className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-        <div className="mb-6 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary text-xl font-bold text-white" aria-hidden="true">A</span>
-            <span className="font-bold text-primary">{appName}</span>
+    <main className="flex min-h-dvh items-center justify-center bg-canvas px-4 py-10">
+      <div className="flex w-full max-w-[420px] flex-col gap-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-9 items-center justify-center rounded-lg bg-ink font-sans text-base font-bold text-white" aria-hidden="true">A</span>
+            <span className="font-sans text-[15px] font-bold text-ink">{appName}</span>
           </div>
-          <LanguageSwitcher />
+          <LanguageSwitcher compact />
         </div>
-        <h1 className="text-2xl font-bold text-primary">{title}</h1>
-        {description ? <p className="mt-2 text-sm text-muted-foreground">{description}</p> : null}
-        <div className="mt-6">{children}</div>
-      </section>
+        <section className="rounded-[12px] border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(21,23,28,0.04)] sm:p-8">
+          <h1 className="page-title text-[22px] font-bold text-ink">{title}</h1>
+          {description ? <p className="mt-1.5 text-sm text-muted">{description}</p> : null}
+          <div className="mt-6">{children}</div>
+        </section>
+      </div>
     </main>
   );
 }
 
-export const inputClass = "block min-h-11 w-full rounded-md border border-slate-300 px-3 text-base text-primary shadow-sm focus:border-primary focus:ring-primary";
-export const labelClass = "mb-1 block text-sm font-semibold text-primary";
+export const inputClass = "block h-11 w-full rounded-lg border border-line bg-white px-3 text-[15px] text-ink focus:border-muted";
+export const labelClass = "mb-1.5 block text-[13px] font-semibold text-ink-2";

@@ -8,7 +8,7 @@ export async function FlashMessage({ status, code }: { status?: string; code?: s
   const errorKeys = ["invalid", "duplicate", "saveFailed", "deleteBlocked", "noPermission"] as const;
   if (status === "error") {
     const key = errorKeys.find((k) => k === code) ?? "saveFailed";
-    return <p role="alert" className="rounded-md border border-[#D6202C] bg-white p-3 text-sm font-medium text-[#D6202C]">{tc(`errors.${key}` as never)}</p>;
+    return <p role="alert" className="rounded-md border border-[#b42318] bg-white p-3 text-sm font-medium text-[#b42318]">{tc(`errors.${key}` as never)}</p>;
   }
   const messages: Record<string, string> = { saved: tc("saved"), deleted: t("deleted"), approved: t("approved"), rejected: t("rejected"), activated: t("activated") };
   return <p role="status" className="rounded-md border border-slate-300 bg-white p-3 text-sm font-medium text-primary">{messages[status] ?? tc("saved")}</p>;

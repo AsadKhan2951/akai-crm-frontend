@@ -32,7 +32,7 @@ export function LoginForm({ next, linkError }: Readonly<{ next: string | null; l
 
   return (
     <form onSubmit={(event) => void onSubmit(event)} className="space-y-4" noValidate={false}>
-      {error ? <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-[#D6202C]">{error}</p> : null}
+      {error ? <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-[#b42318]">{error}</p> : null}
       <div>
         <label htmlFor="email" className={labelClass}>{t("email")}</label>
         <input id="email" type="email" dir="ltr" required autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />

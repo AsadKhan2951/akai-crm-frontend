@@ -46,7 +46,7 @@ export default async function AdminProductsPage({ params, searchParams }: { para
   return (
     <div className="space-y-6">
       <Link href="/admin/catalogue" className="inline-flex min-h-11 items-center gap-1 text-primary underline-offset-4 hover:underline"><ChevronLeft className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />{t("catalogueTitle")}</Link>
-      <PageHeader title={t("productsTitle")} description={t("productsDescription")} actions={canCreate ? <Link href="/admin/catalogue/products/new" className="inline-flex min-h-11 items-center rounded-md bg-[#D6202C] px-4 font-semibold text-white">{t("createProduct")}</Link> : null} />
+      <PageHeader title={t("productsTitle")} description={t("productsDescription")} actions={canCreate ? <Link href="/admin/catalogue/products/new" className="inline-flex min-h-11 items-center rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{t("createProduct")}</Link> : null} />
       <form method="get" role="search" className="grid gap-2 md:grid-cols-[2fr_1fr_1fr_1fr_auto]">
         <input name="q" defaultValue={q} placeholder={t("searchProducts")} aria-label={t("searchProducts")} className="min-h-11 rounded-md border border-slate-300 bg-white px-3" />
         <select name="category" defaultValue={category} aria-label={t("category")} className="min-h-11 rounded-md border border-slate-300 bg-white px-3"><option value="">{t("allCategories")}</option>{(categories.data ?? []).map((c) => <option key={c.id} value={c.id}>{locale === "ur" ? c.name_ur : c.name_en}</option>)}</select>
@@ -54,10 +54,10 @@ export default async function AdminProductsPage({ params, searchParams }: { para
         <select name="status" defaultValue={status} aria-label={ta("status")} className="min-h-11 rounded-md border border-slate-300 bg-white px-3"><option value="">{ta("allStatuses")}</option><option value="active">{t("active")}</option><option value="inactive">{t("inactive")}</option></select>
         <button type="submit" className="min-h-11 rounded-md bg-primary px-4 font-semibold text-white">{ta("search")}</button>
       </form>
-      {(products ?? []).length === 0 ? <EmptyState title={t("noProducts")} action={canCreate ? <Link href="/admin/catalogue/products/new" className="inline-flex min-h-11 items-center rounded-md bg-[#D6202C] px-4 font-semibold text-white">{t("createProduct")}</Link> : undefined} /> : (
+      {(products ?? []).length === 0 ? <EmptyState title={t("noProducts")} action={canCreate ? <Link href="/admin/catalogue/products/new" className="inline-flex min-h-11 items-center rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{t("createProduct")}</Link> : undefined} /> : (
         <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
           <table className="w-full min-w-[820px]">
-            <thead className="bg-[#F1F5F9] text-sm text-primary"><tr><th className="p-3 text-start">{t("sku")}</th><th className="p-3 text-start">{t("product")}</th><th className="p-3 text-start">{t("category")}</th><th className="p-3 text-start">{t("brand")}</th><th className="p-3 text-end">{t("pricePKR")}</th><th className="p-3 text-end">{t("stockQuantity")}</th><th className="p-3 text-start">{ta("status")}</th></tr></thead>
+            <thead className="bg-[#f1f0ec] text-sm text-primary"><tr><th className="p-3 text-start">{t("sku")}</th><th className="p-3 text-start">{t("product")}</th><th className="p-3 text-start">{t("category")}</th><th className="p-3 text-start">{t("brand")}</th><th className="p-3 text-end">{t("pricePKR")}</th><th className="p-3 text-end">{t("stockQuantity")}</th><th className="p-3 text-start">{ta("status")}</th></tr></thead>
             <tbody>
               {(products ?? []).map((p) => (
                 <tr key={p.id} className="border-t border-slate-100">
@@ -66,7 +66,7 @@ export default async function AdminProductsPage({ params, searchParams }: { para
                   <td className="p-3">{categoryName.get(p.category_id) ?? "—"}</td>
                   <td className="p-3">{p.brand_id ? brandName.get(p.brand_id) ?? "—" : t("unbranded")}</td>
                   <td className="p-3 text-end"><bdi>{formatPkr(p.price_pkr, { withSymbol: false })}</bdi></td>
-                  <td className={`p-3 text-end ${compareDecimal(p.stock_quantity, p.low_stock_threshold) <= 0 ? "font-semibold text-[#D6202C]" : ""}`}><bdi>{formatQuantity(p.stock_quantity)}</bdi></td>
+                  <td className={`p-3 text-end ${compareDecimal(p.stock_quantity, p.low_stock_threshold) <= 0 ? "font-semibold text-[#b42318]" : ""}`}><bdi>{formatQuantity(p.stock_quantity)}</bdi></td>
                   <td className="p-3">{p.is_active ? t("active") : t("inactive")}</td>
                 </tr>
               ))}

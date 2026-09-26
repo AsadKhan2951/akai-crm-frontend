@@ -27,7 +27,7 @@ export default async function VendorCartPage({ params, searchParams }: { params:
   return (
     <div className="space-y-6">
       <PageHeader title={t("title")} actions={<Link href="/vendor/catalogue" className="inline-flex min-h-11 items-center rounded-md border border-slate-300 bg-white px-4 text-primary">{tp("continueShopping")}</Link>} />
-      {removedCount > 0 ? <p role="status" className="rounded-md border border-[#D6202C] bg-white p-3 text-sm text-[#D6202C]">{t("removed", { count: removedCount })}</p> : null}
+      {removedCount > 0 ? <p role="status" className="rounded-md border border-[#b42318] bg-white p-3 text-sm text-[#b42318]">{t("removed", { count: removedCount })}</p> : null}
       {skipped > 0 ? <p role="status" className="rounded-md border border-slate-300 bg-white p-3 text-sm text-primary">{tOrders("reorderSkipped")}</p> : null}
 
       {!cart || lines.length === 0 ? (
@@ -36,8 +36,8 @@ export default async function VendorCartPage({ params, searchParams }: { params:
         <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
           <section aria-label={t("lineItems")} className="space-y-3">
             {needsReview ? (
-              <div className="space-y-3 rounded-lg border border-[#D6202C] bg-white p-4">
-                <h2 className="font-semibold text-[#D6202C]">{tp("priceChangedTitle")}</h2>
+              <div className="space-y-3 rounded-lg border border-[#b42318] bg-white p-4">
+                <h2 className="font-semibold text-[#b42318]">{tp("priceChangedTitle")}</h2>
                 <p className="text-sm text-slate-700">{tp("priceChangedHint")}</p>
                 {priceChanges.length ? (
                   <ul className="space-y-1 text-sm">
@@ -67,7 +67,7 @@ export default async function VendorCartPage({ params, searchParams }: { params:
                   <form action={updateVendorCartLine}>
                     <input type="hidden" name="lineId" value={line.id} />
                     <input type="hidden" name="quantity" value="0" />
-                    <button type="submit" className="min-h-11 rounded-md px-3 text-[#D6202C] underline-offset-4 hover:underline">{tp("removeLine")}</button>
+                    <button type="submit" className="min-h-11 rounded-md px-3 text-[#b42318] underline-offset-4 hover:underline">{tp("removeLine")}</button>
                   </form>
                 </div>
               </article>
@@ -100,8 +100,8 @@ export default async function VendorCartPage({ params, searchParams }: { params:
                 <label className="block text-sm font-medium text-primary">{t("deliveryNotes")}
                   <textarea name="notes" maxLength={500} className="mt-1 min-h-20 w-full rounded-md border border-slate-300 px-3 py-2" />
                 </label>
-                {needsReview ? <p className="text-sm font-semibold text-[#D6202C]">{t("reviewChanges")}</p> : null}
-                <button type="submit" disabled={needsReview} className="min-h-12 w-full rounded-md bg-[#D6202C] px-4 text-lg font-semibold text-white disabled:opacity-50">{t("placeOrder")}</button>
+                {needsReview ? <p className="text-sm font-semibold text-[#b42318]">{t("reviewChanges")}</p> : null}
+                <button type="submit" disabled={needsReview} className="min-h-12 w-full rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 text-lg font-semibold text-white disabled:opacity-50">{t("placeOrder")}</button>
               </form>
             )}
             {canQuote ? (

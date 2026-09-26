@@ -24,7 +24,7 @@ export default async function EnrichmentProgressPage({ params }: { params: Promi
             return (
               <article key={String(row.sales_agent_id)} className="space-y-3 rounded-lg border border-slate-200 bg-white p-5">
                 <div className="flex items-center justify-between"><h2 className="text-lg font-semibold text-primary">{String(row.sales_agent_name ?? row.agent_code)}</h2><bdi className="text-2xl font-bold text-primary">{percent}%</bdi></div>
-                <div className="h-3 overflow-hidden rounded-full bg-[#F1F5F9]" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><div className="h-full bg-primary" style={{ width: `${percent}%` }} /></div>
+                <div className="h-3 overflow-hidden rounded-full bg-[#f1f0ec]" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}><div className="h-full bg-primary" style={{ width: `${percent}%` }} /></div>
                 <p className="text-sm text-muted-foreground">{t("progressOf", { completed: done, total })} · {t("remaining")}: <bdi>{Number(row.remaining_customers ?? 0)}</bdi></p>
               </article>
             );

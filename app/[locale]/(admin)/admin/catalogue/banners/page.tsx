@@ -74,7 +74,7 @@ export default async function BannersPage({ params, searchParams }: { params: Pr
           <label className="text-sm font-medium text-primary">{t("endsAtKarachi")}<input name="endsAt" type="datetime-local" required defaultValue={toKarachiDateTimeLocal(inWeek)} className={input} /></label>
           <label className="text-sm font-medium text-primary">{ta("displayOrder")}<input name="displayOrder" type="number" min={0} defaultValue={0} className={input} /></label>
           <p className="text-sm text-muted-foreground md:col-span-2">{t("scheduleHint")}</p>
-          <div className="md:col-span-2"><button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-5 font-semibold text-white">{t("saveBanner")}</button></div>
+          <div className="md:col-span-2"><button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-5 font-semibold text-white">{t("saveBanner")}</button></div>
         </form>
       </details>
 
@@ -89,7 +89,7 @@ export default async function BannersPage({ params, searchParams }: { params: Pr
                 <div className="flex flex-wrap gap-2">
                   <span className={`rounded-full px-3 py-1 text-sm font-semibold ${b.is_active ? "bg-primary text-white" : "bg-slate-200 text-slate-700"}`}>{b.is_active ? tc("active") : tc("inactive")}</span>
                   <form action={toggleBannerAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="id" value={b.id} /><input type="hidden" name="isActive" value={String(!b.is_active)} /><button type="submit" className="min-h-11 rounded-md border border-slate-300 px-3 text-primary">{b.is_active ? t("deactivate") : t("activate")}</button></form>
-                  <form action={deleteBannerAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="id" value={b.id} /><button type="submit" className="min-h-11 px-3 text-[#D6202C] underline-offset-4 hover:underline">{tc("delete")}</button></form>
+                  <form action={deleteBannerAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="id" value={b.id} /><button type="submit" className="min-h-11 px-3 text-[#b42318] underline-offset-4 hover:underline">{tc("delete")}</button></form>
                 </div>
               </div>
             </li>

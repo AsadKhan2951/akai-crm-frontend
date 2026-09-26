@@ -1,24 +1,24 @@
 import type { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface StatCardProps {
   label: string;
   value: ReactNode;
   hint?: string;
   icon?: ReactNode;
+  tone?: "neutral" | "good" | "warn" | "bad" | "brand";
 }
 
-export function StatCard({ label, value, hint, icon }: StatCardProps) {
+const toneClass = { neutral: "text-muted font-medium", brand: "text-brand font-semibold", good: "text-[#0b7a45] font-semibold", warn: "text-warn font-semibold", bad: "text-bad font-semibold" } as const;
+
+export function StatCard({ label, value, hint, icon, tone = "neutral" }: StatCardProps) {
   return (
-    <Card>
-      <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-semibold text-muted-foreground">{label}</CardTitle>
-        {icon ? <span className="text-primary">{icon}</span> : null}
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold text-primary" data-ltr="true">{value}</div>
-        {hint ? <p className="mt-1 text-sm text-muted-foreground">{hint}</p> : null}
-      </CardContent>
-    </Card>
+    <div className="flex flex-col gap-2 rounded-[10px] border border-line bg-surface p-4">
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-[12.5px] font-medium text-muted">{label}</span>
+        {icon ? <span className="text-muted">{icon}</span> : null}
+      </div>
+      <div className="num text-[22px] font-bold leading-tight text-ink" data-ltr="true">{value}</div>
+      {hint ? <p className={`text-[12.5px] ${toneClass[tone]}`}>{hint}</p> : null}
+    </div>
   );
 }

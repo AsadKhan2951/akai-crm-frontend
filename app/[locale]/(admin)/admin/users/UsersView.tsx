@@ -55,7 +55,7 @@ export function UsersView({ users, roles, invites, customers, canCreate, canUpda
   return (
     <div className="space-y-6">
       <PageHeader title={t("usersTitle")} description={t("usersDescription")} actions={canCreate ? <Button type="button" variant="destructive" onClick={() => setShowForm((value) => !value)}>{t("createUser")}</Button> : undefined} />
-      {message ? <p role="status" className={`rounded-md border bg-white p-3 text-sm font-medium ${message.ok ? "border-slate-300 text-primary" : "border-[#D6202C] text-[#D6202C]"}`}>{message.text}</p> : null}
+      {message ? <p role="status" className={`rounded-md border bg-white p-3 text-sm font-medium ${message.ok ? "border-slate-300 text-primary" : "border-[#b42318] text-[#b42318]"}`}>{message.text}</p> : null}
 
       {showForm && canCreate ? (
         <form onSubmit={submitInvite} className="space-y-4 rounded-lg border border-slate-200 bg-white p-5">
@@ -77,7 +77,7 @@ export function UsersView({ users, roles, invites, customers, canCreate, canUpda
               </select>
             </label>
             {portal === "VENDOR" ? (
-              <div className="space-y-2 rounded-md border border-slate-200 bg-[#F1F5F9] p-3 md:col-span-2">
+              <div className="space-y-2 rounded-md border border-slate-200 bg-[#f1f0ec] p-3 md:col-span-2">
                 <label className="text-sm font-medium text-primary">{tu("findShop")}<input value={customerSearch} onChange={(event) => setCustomerSearch(event.target.value)} className={field} /></label>
                 <label className="text-sm font-medium text-primary">{tu("customerAccount")}
                   <select name="customerId" required className={field}>
@@ -85,7 +85,7 @@ export function UsersView({ users, roles, invites, customers, canCreate, canUpda
                     {customerMatches.map((c) => <option key={c.id} value={c.id}>{c.business_name}{c.area_code ? ` · ${c.area_code}` : ""}</option>)}
                   </select>
                 </label>
-                {customers.length === 0 ? <p className="text-sm text-[#D6202C]">{tu("noCustomersYet")}</p> : null}
+                {customers.length === 0 ? <p className="text-sm text-[#b42318]">{tu("noCustomersYet")}</p> : null}
               </div>
             ) : null}
             {portal === "SALES" ? <label className="text-sm font-medium text-primary">{tu("agentCode")}<input name="agentCode" placeholder="HARIS" className={field} /><span className="mt-1 block text-sm font-normal text-muted-foreground">{tu("agentCodeHint")}</span></label> : null}

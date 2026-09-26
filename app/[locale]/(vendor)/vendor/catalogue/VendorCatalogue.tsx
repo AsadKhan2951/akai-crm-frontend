@@ -9,8 +9,8 @@ export type CatalogueFilters = { q: string; category: string; brand: string; col
 
 const stockClass: Record<string, string> = {
   IN_STOCK: "bg-slate-100 text-primary",
-  LOW_STOCK: "border border-[#D6202C] bg-white text-[#D6202C]",
-  OUT_OF_STOCK: "bg-[#D6202C] text-white",
+  LOW_STOCK: "border border-[#b42318] bg-white text-[#b42318]",
+  OUT_OF_STOCK: "bg-[#b42318] text-white",
 };
 
 /** Server component: renders the vendor catalogue for an already visibility-resolved product list. */
@@ -101,7 +101,7 @@ export async function VendorCatalogue({ locale, products, total, categories, bra
             const name = localName(product, locale) || t("fallbackName");
             return (
               <article key={product.id} className="flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white">
-                <Link href={`/vendor/catalogue/${product.id}` as never} className="block bg-[#F1F5F9]">
+                <Link href={`/vendor/catalogue/${product.id}` as never} className="block bg-[#f1f0ec]">
                   {product.image_url ? <img src={product.image_url} alt={name} loading="lazy" className="h-44 w-full object-contain" /> : <div className="flex h-44 items-center justify-center text-sm text-muted-foreground">{t("imageUnavailable")}</div>}
                 </Link>
                 <div className="flex flex-1 flex-col gap-2 p-4">

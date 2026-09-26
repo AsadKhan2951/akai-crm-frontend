@@ -42,13 +42,13 @@ export function BannerCarousel({ banners }: { banners: VendorBanner[] }) {
   const ctaLabel = banner.cta_type === "BUY_NOW" ? t("buyNow") : banner.cta_type === "REQUEST_QUOTE" ? t("requestQuote") : t("view");
 
   return (
-    <section aria-roledescription="carousel" aria-label={t("promotions")} className="relative overflow-hidden rounded-lg border border-slate-200 bg-[#16233F] text-white">
+    <section aria-roledescription="carousel" aria-label={t("promotions")} className="relative overflow-hidden rounded-lg border border-slate-200 bg-[#15171c] text-white">
       <div className="grid min-h-44 md:grid-cols-2" aria-live="polite" aria-label={t("slidePosition", { current: index + 1, total: count })}>
         <div className="flex flex-col justify-center gap-3 p-6">
           <h2 className="text-xl font-bold">{title}</h2>
           {subtitle ? <p className="text-sm text-slate-200">{subtitle}</p> : null}
-          {href ? <Link href={href as never} className="inline-flex min-h-11 w-fit items-center rounded-md bg-[#D6202C] px-4 font-semibold text-white">{ctaLabel}</Link>
-            : banner.external_url ? <a href={banner.external_url} target="_blank" rel="noreferrer" className="inline-flex min-h-11 w-fit items-center rounded-md bg-[#D6202C] px-4 font-semibold text-white">{ctaLabel}</a> : null}
+          {href ? <Link href={href as never} className="inline-flex min-h-11 w-fit items-center rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{ctaLabel}</Link>
+            : banner.external_url ? <a href={banner.external_url} target="_blank" rel="noreferrer" className="inline-flex min-h-11 w-fit items-center rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{ctaLabel}</a> : null}
         </div>
         {image ? <img src={image} alt="" className="h-44 w-full object-cover md:h-full" loading={index === 0 ? "eager" : "lazy"} /> : null}
       </div>

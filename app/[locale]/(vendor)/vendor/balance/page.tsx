@@ -36,7 +36,7 @@ export default async function VendorBalancePage({ params }: { params: Promise<{ 
         {entries.length === 0 ? <EmptyState title={t("noEntries")} description={t("noEntriesHint")} /> : (
           <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
             <table className="w-full min-w-[640px]">
-              <thead className="bg-[#F1F5F9] text-sm text-primary">
+              <thead className="bg-[#f1f0ec] text-sm text-primary">
                 <tr><th className="p-3 text-start">{t("date")}</th><th className="p-3 text-start">{t("reference")}</th><th className="p-3 text-start">{t("descriptionLabel")}</th><th className="p-3 text-end">{t("amount")}</th></tr>
               </thead>
               <tbody>

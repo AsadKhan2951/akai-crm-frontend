@@ -60,9 +60,9 @@ export default async function PriceListPage({ params, searchParams }: { params: 
       <FlashMessage status={sp.status} code={sp.code} />
       <section className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-4">
         <span className="rounded-full bg-primary px-3 py-1 text-sm font-semibold text-white">{ta(`listStatus.${pl.status}` as never)}</span>
-        <span className="rounded-full bg-[#F1F5F9] px-3 py-1 text-sm text-primary">{ta(`approvalStatus.${pl.approval_status}` as never)}</span>
+        <span className="rounded-full bg-[#f1f0ec] px-3 py-1 text-sm text-primary">{ta(`approvalStatus.${pl.approval_status}` as never)}</span>
         <span className="text-sm text-muted-foreground"><bdi>{items.length}</bdi> {t("products")} · <bdi>{changed}</bdi> {t("priceRowsChanged")}</span>
-        {pl.rejection_reason ? <span className="text-sm text-[#D6202C]">{pl.rejection_reason}</span> : null}
+        {pl.rejection_reason ? <span className="text-sm text-[#b42318]">{pl.rejection_reason}</span> : null}
         <div className="ms-auto flex flex-wrap gap-2">
           {canApprove ? (
             <>
@@ -70,7 +70,7 @@ export default async function PriceListPage({ params, searchParams }: { params: 
               <form action={reviewPriceListAction} className="flex gap-2"><input type="hidden" name="locale" value={locale} /><input type="hidden" name="priceListId" value={pl.id} /><input type="hidden" name="decision" value="reject" /><input name="reason" required placeholder={ta("rejectReason")} aria-label={ta("rejectReason")} className="min-h-11 rounded-md border border-slate-300 px-3" /><button type="submit" className="min-h-11 rounded-md border border-slate-300 px-4 text-primary">{ta("reject")}</button></form>
             </>
           ) : null}
-          {readyToActivate ? <form action={activatePriceListAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="priceListId" value={pl.id} /><button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-4 font-semibold text-white">{t("activatePriceList")}</button></form> : null}
+          {readyToActivate ? <form action={activatePriceListAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="priceListId" value={pl.id} /><button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{t("activatePriceList")}</button></form> : null}
         </div>
       </section>
       {pl.status === "SCHEDULED" ? <p className="text-sm text-muted-foreground">{ta("scheduledHint")}</p> : null}
@@ -95,12 +95,12 @@ export default async function PriceListPage({ params, searchParams }: { params: 
       {shown.length === 0 ? <EmptyState title={ta("noItems")} description={editable ? ta("noItemsHint") : undefined} /> : (
         <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
           <table className="w-full min-w-[860px]">
-            <thead className="bg-[#F1F5F9] text-sm text-primary"><tr><th className="p-3 text-start">{t("product")}</th><th className="p-3 text-end">{t("currentPrice")}</th><th className="p-3 text-start">{t("newPrice")}</th>{canViewCost ? <th className="p-3 text-start">{t("costPKR")}</th> : null}<th className="p-3 text-start">{t("action")}</th></tr></thead>
+            <thead className="bg-[#f1f0ec] text-sm text-primary"><tr><th className="p-3 text-start">{t("product")}</th><th className="p-3 text-end">{t("currentPrice")}</th><th className="p-3 text-start">{t("newPrice")}</th>{canViewCost ? <th className="p-3 text-start">{t("costPKR")}</th> : null}<th className="p-3 text-start">{t("action")}</th></tr></thead>
             <tbody>
               {shown.map((item) => {
                 const isChanged = item.product ? compareDecimal(item.price_pkr, item.product.price_pkr) !== 0 : false;
                 return (
-                  <tr key={item.id} className={`border-t border-slate-100 ${isChanged ? "bg-[#F1F5F9]" : ""}`}>
+                  <tr key={item.id} className={`border-t border-slate-100 ${isChanged ? "bg-[#f1f0ec]" : ""}`}>
                     <td className="p-3"><span className="font-medium text-primary">{locale === "ur" ? item.product?.name_ur || item.product?.name_en : item.product?.name_en}</span><br /><bdi className="text-sm text-muted-foreground">{item.product?.sku}</bdi></td>
                     <td className="p-3 text-end"><bdi>{formatPkr(item.product?.price_pkr, { withSymbol: false })}</bdi></td>
                     <td className="p-3" colSpan={editable ? (canViewCost ? 3 : 2) : 1}>
@@ -112,7 +112,7 @@ export default async function PriceListPage({ params, searchParams }: { params: 
                             {canViewCost ? <input name="costPkr" inputMode="decimal" pattern="\d+(\.\d{1,2})?" defaultValue={costs.get(item.id) ?? ""} aria-label={t("costPKR")} placeholder={t("costPKR")} className={input} /> : null}
                             <button type="submit" className="min-h-11 rounded-md border border-slate-300 px-3 text-primary">{t("saveChanges")}</button>
                           </form>
-                          <form action={removePriceListItemAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="priceListId" value={pl.id} /><input type="hidden" name="productId" value={item.product_id} /><input type="hidden" name="q" value={q} /><button type="submit" className="min-h-11 px-2 text-[#D6202C] underline-offset-4 hover:underline">{t("remove")}</button></form>
+                          <form action={removePriceListItemAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="priceListId" value={pl.id} /><input type="hidden" name="productId" value={item.product_id} /><input type="hidden" name="q" value={q} /><button type="submit" className="min-h-11 px-2 text-[#b42318] underline-offset-4 hover:underline">{t("remove")}</button></form>
                         </div>
                       ) : <bdi className="font-semibold">{formatPkr(item.price_pkr, { withSymbol: false })}</bdi>}
                     </td>

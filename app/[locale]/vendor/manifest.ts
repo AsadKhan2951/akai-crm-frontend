@@ -11,7 +11,7 @@ export default async function manifest({ params }: { params: Promise<{ locale: s
     scope: `/${safeLocale}/vendor/`,
     display: "standalone",
     background_color: "#FFFFFF",
-    theme_color: "#16233F",
+    theme_color: "#15171c",
     lang: safeLocale,
     dir: safeLocale === "ur" ? "rtl" : "ltr",
     icons: [

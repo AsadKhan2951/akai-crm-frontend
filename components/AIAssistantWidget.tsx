@@ -80,7 +80,7 @@ export function AIAssistantWidget({ portal }: Props) {
       <div className="max-h-[min(60vh,480px)] space-y-3 overflow-y-auto p-4" aria-live="polite">
         {lines.length === 0 ? <div className="rounded-md bg-slate-50 p-3 text-sm text-slate-700"><p className="font-semibold text-primary">{t("draft")}</p><p className="mt-1">{intro}</p><p className="mt-2 text-slate-500">{t("empty")}</p></div> : null}
         {lines.map((line, index) => <div key={`${line.role}-${index}`} className={cn("rounded-md p-3 text-sm", line.role === "user" ? "ms-8 bg-primary text-white" : "me-8 bg-slate-100 text-slate-800")}><p className="whitespace-pre-wrap">{line.text || (pending && index === lines.length - 1 ? t("thinking") : "")}</p></div>)}
-        {error ? <p className="text-sm text-[#D6202C]">{error}</p> : null}
+        {error ? <p className="text-sm text-[#b42318]">{error}</p> : null}
       </div>
       <form onSubmit={ask} className="flex gap-2 border-t border-slate-200 p-3">
         <input value={question} onChange={(event) => setQuestion(event.target.value)} disabled={pending} placeholder={t("placeholder")} aria-label={t("question")} className="min-h-11 min-w-0 flex-1 rounded-md border border-slate-300 px-3 text-sm" />

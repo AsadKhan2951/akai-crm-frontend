@@ -3,17 +3,17 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva("inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50", {
+const buttonVariants = cva("inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:pointer-events-none disabled:opacity-50", {
   variants: {
     variant: {
-      default: "bg-primary text-white hover:bg-primary/90",
-      destructive: "bg-[#D6202C] text-white hover:bg-[#D6202C]/90",
-      outline: "border border-slate-300 bg-white text-primary hover:bg-slate-50",
-      secondary: "bg-slate-100 text-primary hover:bg-slate-200",
-      ghost: "text-primary hover:bg-slate-100",
-      link: "text-primary underline-offset-4 hover:underline"
+      default: "border-transparent bg-ink text-white hover:bg-[#2b2f37]",
+      destructive: "border-transparent bg-bad text-white hover:bg-[#9a1d13]",
+      outline: "border-line bg-surface text-ink hover:bg-sunken",
+      secondary: "border-transparent bg-[#f1f0ec] text-ink hover:bg-[#e8e7e2]",
+      ghost: "border-transparent bg-transparent text-ink hover:bg-[#f0efeb]",
+      link: "border-transparent text-brand underline-offset-4 hover:underline"
     },
-    size: { default: "h-11 px-4 py-2", sm: "h-10 rounded-md px-3", lg: "h-12 rounded-md px-8", icon: "h-11 w-11" }
+    size: { default: "h-10 px-4", sm: "h-9 px-3 text-[13px]", lg: "h-12 px-6", icon: "h-10 w-10" }
   },
   defaultVariants: { variant: "default", size: "default" }
 });

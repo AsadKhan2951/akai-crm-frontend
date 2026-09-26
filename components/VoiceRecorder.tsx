@@ -97,7 +97,7 @@ export function VoiceRecorder({ customerId = null, onDraft, onVoiceNoteId }: Pro
 
   return <section className="space-y-2 rounded-md border border-slate-200 bg-slate-50 p-3">
     <div className="flex items-center gap-3">
-      <button type="button" aria-label={recording ? t("voiceReleaseToStop") : t("voiceHoldToRecord")} onPointerDown={() => void startRecording()} onPointerUp={() => void stopRecording()} onPointerLeave={() => { if (recording) void stopRecording(); }} onPointerCancel={() => void stopRecording()} onKeyDown={keyDown} onKeyUp={keyUp} disabled={working} className={`min-h-11 min-w-11 rounded-full px-4 font-semibold text-white ${recording ? "bg-[#D6202C]" : "bg-primary"}`}>
+      <button type="button" aria-label={recording ? t("voiceReleaseToStop") : t("voiceHoldToRecord")} onPointerDown={() => void startRecording()} onPointerUp={() => void stopRecording()} onPointerLeave={() => { if (recording) void stopRecording(); }} onPointerCancel={() => void stopRecording()} onKeyDown={keyDown} onKeyUp={keyUp} disabled={working} className={`min-h-11 min-w-11 rounded-full px-4 font-semibold text-white ${recording ? "bg-[#b42318]" : "bg-primary"}`}>
         {recording ? <><span aria-hidden="true">●</span> <bdi>{seconds}s</bdi></> : t("voiceRecord")}
       </button>
       <div className="text-sm text-primary"><p className="font-semibold">{recording ? t("voiceReleaseToStop") : t("voiceHoldToRecord")}</p><p className="text-muted-foreground">{t("voiceMaxTwoMinutes")}</p></div>

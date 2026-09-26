@@ -11,7 +11,7 @@ export function CheckoutPaymentFields({ labels, balanceText, creditLimitText, ba
 }) {
   const [method, setMethod] = useState<"BALANCE" | "CREDIT">("BALANCE");
   const option = (value: "BALANCE" | "CREDIT", label: string) => (
-    <label className={`flex min-h-11 flex-1 cursor-pointer items-center gap-2 rounded-md border px-3 ${method === value ? "border-primary bg-[#F1F5F9]" : "border-slate-300"}`}>
+    <label className={`flex min-h-11 flex-1 cursor-pointer items-center gap-2 rounded-md border px-3 ${method === value ? "border-primary bg-[#f1f0ec]" : "border-slate-300"}`}>
       <input type="radio" name="paymentMethod" value={value} checked={method === value} onChange={() => setMethod(value)} className="h-5 w-5" />
       <span className="font-medium text-primary">{label}</span>
     </label>

@@ -34,7 +34,7 @@ export function BannerImageField({ name, label, required = false, supabaseUrl }:
       </label>
       <input type="file" accept="image/jpeg,image/png,image/webp" aria-label={t("upload")} disabled={pending} onChange={(event) => { const file = event.target.files?.[0]; if (file) upload(file); }} className="block min-h-11 w-full rounded-md border border-slate-300 bg-white p-2 text-sm" />
       {pending ? <p className="text-sm text-muted-foreground">{t("uploading")}</p> : null}
-      {error ? <p role="alert" className="text-sm text-[#D6202C]">{error}</p> : null}
+      {error ? <p role="alert" className="text-sm text-[#b42318]">{error}</p> : null}
       {url ? <img src={url} alt="" className="h-24 rounded-md border border-slate-200 object-cover" /> : null}
     </div>
   );

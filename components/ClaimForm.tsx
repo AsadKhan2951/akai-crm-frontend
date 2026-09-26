@@ -50,7 +50,7 @@ export function ClaimForm({ customerId, orderId, productId, voiceEnabled = true 
       <div>
         <label className="mb-2 block text-sm font-medium text-primary">{t("type")}</label>
         <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-          {CLAIM_TYPES.map((claimType) => <button key={claimType} type="button" onClick={() => setType(claimType)} className={`min-h-11 rounded-md border px-3 text-left text-sm ${type === claimType ? "border-[#16233F] bg-[#F1F5F9] font-semibold text-primary" : "border-slate-200 text-slate-600"}`}>{t(`types.${claimType}`)}</button>)}
+          {CLAIM_TYPES.map((claimType) => <button key={claimType} type="button" onClick={() => setType(claimType)} className={`min-h-11 rounded-md border px-3 text-left text-sm ${type === claimType ? "border-[#15171c] bg-[#f1f0ec] font-semibold text-primary" : "border-slate-200 text-slate-600"}`}>{t(`types.${claimType}`)}</button>)}
         </div>
       </div>
       <label className="block text-sm font-medium text-primary">{t("product")}<input required value={product} onChange={(event) => setProduct(event.target.value)} placeholder={t("productIdPlaceholder")} className="mt-1 min-h-11 w-full rounded-md border border-slate-300 px-3" /></label>
@@ -63,7 +63,7 @@ export function ClaimForm({ customerId, orderId, productId, voiceEnabled = true 
         {photoUrls.map((url, index) => <input key={index} value={url} onChange={(event) => setPhotoUrls((current) => current.map((item, itemIndex) => itemIndex === index ? event.target.value : item))} placeholder={t("photoUrlPlaceholder")} className="mt-2 min-h-11 w-full rounded-md border border-slate-300 px-3" />)}
         {photoUrls.length < 5 ? <button type="button" onClick={() => setPhotoUrls((current) => [...current, ""])} className="mt-2 min-h-11 rounded-md border border-slate-300 px-3 text-sm text-primary">{t("addPhoto")}</button> : null}
       </div>
-      <button disabled={isPending} className="min-h-11 rounded-md bg-[#D6202C] px-4 font-semibold text-white disabled:opacity-60" type="submit">{isPending ? t("loading") : t("submit")}</button>
+      <button disabled={isPending} className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white disabled:opacity-60" type="submit">{isPending ? t("loading") : t("submit")}</button>
       {message ? <p role="status" className="text-sm font-medium text-primary">{message}</p> : null}
     </form>
   );

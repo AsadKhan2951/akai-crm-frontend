@@ -39,7 +39,7 @@ export default async function VendorHomePage({ params }: { params: Promise<{ loc
 
       <nav className="grid grid-cols-2 gap-3 md:grid-cols-4" aria-label={t("title")}>
         {cards.map(({ href, label, icon: Icon, accent, value }) => (
-          <Link key={href} href={href as never} className={`flex min-h-28 flex-col justify-between rounded-lg border p-4 ${accent ? "border-[#D6202C] bg-[#D6202C] text-white" : "border-slate-200 bg-white text-primary"}`}>
+          <Link key={href} href={href as never} className={`flex min-h-28 flex-col justify-between rounded-[10px] border p-4 ${accent ? "border-brand bg-brand text-white" : "border-line bg-surface text-ink hover:border-[#cfcdc6]"}`}>
             <Icon className="h-6 w-6" aria-hidden="true" />
             <span>
               <span className="block text-lg font-semibold">{label}</span>

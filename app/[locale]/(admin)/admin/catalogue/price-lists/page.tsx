@@ -36,7 +36,7 @@ export default async function PriceListsPage({ params, searchParams }: { params:
           <label className="text-sm font-medium text-primary">{t("name")}<input name="name" required placeholder={t("priceListNamePlaceholder")} className={input} /></label>
           <label className="text-sm font-medium text-primary">{t("effectiveFrom")}<input name="effectiveFrom" type="datetime-local" required defaultValue={toKarachiDateTimeLocal()} className={input} /></label>
           <label className="flex min-h-11 items-center gap-2 text-sm font-medium text-primary"><input type="checkbox" name="cloneActive" defaultChecked className="h-5 w-5" />{t("cloneActive")}</label>
-          <button type="submit" className="min-h-11 rounded-md bg-[#D6202C] px-4 font-semibold text-white">{t("createPriceList")}</button>
+          <button type="submit" className="min-h-11 rounded-lg bg-brand hover:bg-[#1a3ca8] px-4 font-semibold text-white">{t("createPriceList")}</button>
         </form>
       ) : null}
       {(lists ?? []).length === 0 ? <EmptyState title={t("noPriceLists")} /> : (
@@ -51,8 +51,8 @@ export default async function PriceListsPage({ params, searchParams }: { params:
                     <p className="text-sm text-muted-foreground">{t("effectiveFrom")}: <bdi>{formatKarachiDateTime(list.effective_from, locale)}</bdi> · <bdi>{items}</bdi> {t("products")}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <span className={`rounded-full px-3 py-1 text-sm font-semibold ${list.status === "ACTIVE" ? "bg-primary text-white" : list.status === "DRAFT" ? "border border-slate-300 bg-white text-primary" : "bg-[#F1F5F9] text-primary"}`}>{ta(`listStatus.${list.status}` as never)}</span>
-                    {list.status !== "ACTIVE" && list.status !== "SUPERSEDED" ? <span className="rounded-full bg-[#F1F5F9] px-3 py-1 text-sm text-primary">{ta(`approvalStatus.${list.approval_status}` as never)}</span> : null}
+                    <span className={`rounded-full px-3 py-1 text-sm font-semibold ${list.status === "ACTIVE" ? "bg-primary text-white" : list.status === "DRAFT" ? "border border-slate-300 bg-white text-primary" : "bg-[#f1f0ec] text-primary"}`}>{ta(`listStatus.${list.status}` as never)}</span>
+                    {list.status !== "ACTIVE" && list.status !== "SUPERSEDED" ? <span className="rounded-full bg-[#f1f0ec] px-3 py-1 text-sm text-primary">{ta(`approvalStatus.${list.approval_status}` as never)}</span> : null}
                   </div>
                 </Link>
               </li>

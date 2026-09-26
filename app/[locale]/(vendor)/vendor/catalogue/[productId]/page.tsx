@@ -34,7 +34,7 @@ export default async function VendorProductPage({ params }: { params: Promise<{ 
       {back}
       <div className="grid gap-6 md:grid-cols-2">
         <section aria-label={t("imageGallery")} className="space-y-3">
-          <div className="flex h-72 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-[#F1F5F9]">
+          <div className="flex h-72 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-[#f1f0ec]">
             {primary ? <img src={primary.url} alt={(locale === "ur" ? primary.alt_text_ur : primary.alt_text_en) || name} className="h-full w-full object-contain" /> : <span className="text-muted-foreground">{t("imageUnavailable")}</span>}
           </div>
           {images.length > 1 ? (

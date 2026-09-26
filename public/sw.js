@@ -1,4 +1,4 @@
-const STATIC_CACHE = "akai-static-v1";
+const STATIC_CACHE = "akai-static-v2";
 const IMAGE_CACHE = "akai-images-v1";
 const API_CACHE_PREFIX = "akai-api-v1-";
 const OFFLINE_URLS = ["/en/offline", "/ur/offline"];
@@ -9,7 +9,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("akai-static-") && key !== STATIC_CACHE).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
 });
 
 self.addEventListener("message", (event) => {
@@ -21,11 +21,12 @@ self.addEventListener("message", (event) => {
   }
 });
 
-async function networkFirst(request) {
+async function networkFirst(request, event) {
   const cache = userScope ? await caches.open(`${API_CACHE_PREFIX}${userScope}`) : null;
   try {
     const response = await fetch(request);
-    if (cache && response.ok) await cache.put(request, response.clone());
+    // Save a copy in the background; never make the page wait for the cache write.
+    if (cache && response.ok) event.waitUntil(cache.put(request, response.clone()).catch(() => undefined));
     return response;
   } catch {
     const cached = cache ? await cache.match(request) : null;
@@ -48,14 +49,14 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith("/api/")) {
-    event.respondWith(networkFirst(request));
+    event.respondWith(networkFirst(request, event));
     return;
   }
   if (request.destination === "image" || url.pathname.startsWith("/icons/")) {
     event.respondWith(cacheFirst(request));
     return;
   }
-  if (request.destination === "script" || request.destination === "style" || request.destination === "font") {
+  if (url.pathname.startsWith("/_next/static/") && (request.destination === "script" || request.destination === "style" || request.destination === "font")) {
     event.respondWith(caches.match(request).then((cached) => cached || fetch(request).then((response) => caches.open(STATIC_CACHE).then((cache) => { if (response.ok) void cache.put(request, response.clone()); return response; }))));
     return;
   }
@@ -64,7 +65,8 @@ self.addEventListener("fetch", (event) => {
       const cache = userScope ? await caches.open(`${API_CACHE_PREFIX}${userScope}`) : null;
       try {
         const response = await fetch(request);
-        if (cache && response.ok) await cache.put(request, response.clone());
+        // Stream the page to the browser right away (loading skeletons, streaming); cache a copy in the background.
+        if (cache && response.ok) event.waitUntil(cache.put(request, response.clone()).catch(() => undefined));
         return response;
       } catch {
         const fallback = url.pathname.startsWith("/ur") ? "/ur/offline" : "/en/offline";

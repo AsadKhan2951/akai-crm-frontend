@@ -46,12 +46,12 @@ export function TodayView({ locale, data }: { locale: string; data: Awaited<Retu
               const primaryPhone = followUp.customer?.primary_phone ?? followUp.lead?.phone ?? null;
               const whatsappPhone = followUp.customer?.whatsapp_phone ?? null;
               return (
-                <article key={followUp.id} className={`rounded-lg border bg-white p-4 shadow-sm ${followUp.isOverdue ? "border-[#D6202C]" : "border-slate-200"}`}>
+                <article key={followUp.id} className={`rounded-lg border bg-white p-4 shadow-sm ${followUp.isOverdue ? "border-[#b42318]" : "border-slate-200"}`}>
                   <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <div className="min-w-0">
                       <p className="font-semibold text-primary">{contact?.business_name ?? t("noCustomerData")}</p>
                       <p className="text-sm text-muted-foreground">{followUp.note}</p>
-                      <p className={`mt-1 text-sm ${followUp.isOverdue ? "font-semibold text-[#D6202C]" : "text-muted-foreground"}`}>
+                      <p className={`mt-1 text-sm ${followUp.isOverdue ? "font-semibold text-[#b42318]" : "text-muted-foreground"}`}>
                         {followUp.isOverdue ? `${t("overdue")} · ` : ""}<bdi>{formatDate(followUp.due_at, locale)}</bdi>
                       </p>
                     </div>

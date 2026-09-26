@@ -42,7 +42,7 @@ export default async function EditProductPage({ params, searchParams }: { params
               <img src={img.url} alt="" className="h-32 w-32 rounded-md border border-slate-200 object-contain" />
               <figcaption className="flex items-center justify-between text-sm">
                 {img.is_primary ? <span className="font-semibold text-primary">{t("primary")}</span> : <span />}
-                {canImages ? <form action={deleteProductImageAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="productId" value={productId} /><input type="hidden" name="imageId" value={img.id} /><button type="submit" className="min-h-11 px-1 text-[#D6202C] underline-offset-4 hover:underline">{t("remove")}</button></form> : null}
+                {canImages ? <form action={deleteProductImageAction}><input type="hidden" name="locale" value={locale} /><input type="hidden" name="productId" value={productId} /><input type="hidden" name="imageId" value={img.id} /><button type="submit" className="min-h-11 px-1 text-[#b42318] underline-offset-4 hover:underline">{t("remove")}</button></form> : null}
               </figcaption>
             </figure>
           ))}
