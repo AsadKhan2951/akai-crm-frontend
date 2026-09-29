@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { hashDriverToken } from "@/lib/delivery/tokens";
 
 const payloadSchema = z.object({
   stopId: z.uuid(),
@@ -16,7 +17,9 @@ const payloadSchema = z.object({
 }).strict();
 
 export async function POST(request: Request, { params }: { params: Promise<{ token: string }> }) {
-  const { token } = await params;
+  const { token: rawToken } = await params;
+  const token = hashDriverToken(rawToken);
+  if (!token) return Response.json({ error: "This driver link is invalid or expired." }, { status: 403 });
   const supabase = await getSupabaseServerClient();
   const { data: tokenRun, error: tokenError } = await supabase.rpc("get_delivery_run_by_token", { p_token_hash: token });
   if (tokenError || !tokenRun?.[0]) return Response.json({ error: "This driver link is invalid or expired." }, { status: 403 });

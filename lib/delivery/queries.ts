@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { hashDriverToken } from "@/lib/delivery/tokens";
 
 export async function getDeliveryAdminData() {
   const supabase = await getSupabaseServerClient();
@@ -23,13 +24,16 @@ export async function getDeliveryRun(runId: string) {
   return { run, stops: stops ?? [] };
 }
 
-export async function getDriverRunByToken(tokenHash: string) {
+export async function getDriverRunByToken(rawToken: string) {
+  // The URL holds the raw token; the RPCs look runs up by its hash (it was passed raw before, so every link failed).
+  const tokenHash = hashDriverToken(rawToken);
+  if (!tokenHash) return { run: null, stops: [] };
   const supabase = await getSupabaseServerClient();
   const [{ data: run, error: runError }, { data: stops, error: stopError }] = await Promise.all([
     supabase.rpc("get_delivery_run_by_token", { p_token_hash: tokenHash }),
     supabase.rpc("get_delivery_stops_by_token", { p_token_hash: tokenHash }),
   ]);
-  if (runError || stopError) throw new Error("This driver link is invalid or expired.");
+  if (runError || stopError) return { run: null, stops: [] };
   type DriverStop = { stop_id: string; [key: string]: unknown };
   const stopRows = (stops ?? []) as DriverStop[];
   const withLines = await Promise.all(stopRows.map(async (stop: DriverStop) => {
