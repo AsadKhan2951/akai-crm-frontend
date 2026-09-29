@@ -76,7 +76,7 @@ export default async function VendorOrderPage({ params }: { params: Promise<{ lo
           <tbody>
             {lines.map((line) => (
               <tr key={line.id} className="border-t border-slate-100">
-                <td className="p-3"><span className="font-medium text-primary">{localName(line.product, locale)}</span><br /><bdi className="text-sm text-muted-foreground">{line.product?.sku}</bdi>{line.is_free_item ? <span className="ms-2 rounded-full bg-[#b42318] px-2 py-0.5 text-sm text-white">{tp("freeItem")}</span> : null}</td>
+                <td className="p-3"><span className="font-medium text-primary">{localName(line.product, locale)}</span><br /><bdi className="text-sm text-muted-foreground">{line.product?.sku}</bdi>{line.is_free_item ? <span className="ms-2 rounded-full bg-good-soft px-2 py-0.5 text-xs font-semibold text-good">{tp("freeItem")}</span> : null}</td>
                 <td className="p-3"><bdi>{formatQuantity(line.quantity)}</bdi></td>
                 <td className="p-3"><bdi>{formatPkr(line.unit_price_pkr)}</bdi></td>
                 <td className="p-3 font-semibold"><bdi>{formatPkr(line.line_total_pkr)}</bdi></td>

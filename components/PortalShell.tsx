@@ -14,7 +14,7 @@ import type { PermissionKey } from "@/lib/auth/permissions";
 export type PortalShellName = "admin" | "sales" | "vendor";
 type ShellPortal = Exclude<PortalShellName, "admin">;
 
-type NavKey = "overview" | "settings" | "profile" | "catalogue" | "cart" | "progress" | "enrichment" | "leads" | "customers" | "quotes" | "approvals" | "reports" | "recovery" | "communications" | "schemes" | "offers" | "delivery" | "points" | "rewards" | "claims" | "warranty" | "beats" | "beat" | "orders";
+type NavKey = "overview" | "settings" | "profile" | "catalogue" | "cart" | "progress" | "enrichment" | "leads" | "customers" | "quotes" | "approvals" | "reports" | "recovery" | "communications" | "schemes" | "offers" | "delivery" | "points" | "rewards" | "claims" | "warranty" | "beats" | "beat" | "orders" | "salesOrders";
 const navItems: ReadonlyArray<{ key: NavKey; path: string; icon: LucideIcon; permission?: PermissionKey; portals?: PortalShellName[] }> = [
   { key: "overview", path: "", icon: LayoutDashboard },
   { key: "approvals", path: "/approvals", icon: ClipboardCheck, permission: "order.approve", portals: ["admin"] },
@@ -36,6 +36,7 @@ const navItems: ReadonlyArray<{ key: NavKey; path: string; icon: LucideIcon; per
   { key: "points", path: "/points", icon: Gift, permission: "loyalty.view", portals: ["vendor"] },
   { key: "cart", path: "/cart", icon: ShoppingCart, permission: "order.create", portals: ["vendor"] },
   { key: "orders", path: "/orders", icon: ListTodo, permission: "order.view", portals: ["vendor"] },
+  { key: "salesOrders", path: "/orders", icon: ListTodo, permission: "order.view", portals: ["sales"] },
   { key: "enrichment", path: "/customers/enrichment", icon: ClipboardCheck, permission: "customer.enrich", portals: ["sales"] },
   { key: "progress", path: "/customers/progress", icon: UsersRound, permission: "customer.view", portals: ["admin"] },
   { key: "settings", path: "/settings", icon: Settings, permission: "settings.manage", portals: ["admin"] },
@@ -47,7 +48,7 @@ const mobileNav: Record<Exclude<PortalShellName, "admin">, ReadonlyArray<{ label
     { label: "mobileToday", path: "/sales", icon: Home },
     { label: "mobileLeads", path: "/sales/leads", icon: GitBranch },
     { label: "mobileCustomers", path: "/sales/customers", icon: Users },
-    { label: "mobileOrders", path: "/sales/orders/new", icon: ListTodo },
+    { label: "mobileOrders", path: "/sales/orders", icon: ListTodo },
     { label: "mobileBeat", path: "/sales/beat", icon: ClipboardCheck },
   ],
   vendor: [
@@ -90,7 +91,10 @@ export function PortalShell({ portal, children }: Readonly<{ portal: ShellPortal
         <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-3" aria-label={t(portal)}>
           {visibleNavItems.map(({ key, path, icon: Icon }) => {
             const href = `/${portal}${path}`;
-            const active = path === "" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+            // Longest matching item wins, so /sales/customers/enrichment highlights only "Customer enrichment".
+            const matches = (candidate: string) => { const h = `/${portal}${candidate}`; return candidate === "" ? pathname === h : pathname === h || pathname.startsWith(`${h}/`); };
+            const longer = visibleNavItems.some((other) => other.path.length > path.length && other.path.startsWith(path) && matches(other.path));
+            const active = matches(path) && !longer;
             return (
               <Link key={key} href={href as never} aria-current={active ? "page" : undefined}
                 className={`flex min-h-[36px] items-center gap-2.5 rounded-[7px] px-2.5 text-[13.5px] ${active ? "bg-ink font-semibold text-white" : "font-medium text-[#2b2f37] hover:bg-[#f0efeb]"}`}>

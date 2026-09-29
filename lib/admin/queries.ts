@@ -65,7 +65,9 @@ export async function getAdminCustomerDetail(customerId: string) {
     supabase.from("audit_logs").select("id,user_id,action,entity_type,entity_id,changes_json,created_at").eq("entity_type", "CUSTOMER").eq("entity_id", customerId).order("created_at", { ascending: false }).limit(100),
     supabase.from("voice_notes").select("id,processing_status,transcript,created_at,duration_seconds").eq("customer_id", customerId).order("created_at", { ascending: false }).limit(100),
   ]);
-  if (customerError || ordersError || quotesError || activitiesError || ledgerError || followUpError || auditError || voiceNotesError || !customer) throw new Error("Customer detail could not be loaded.");
+  if (customerError || !customer) throw new Error("Customer detail could not be loaded.");
+  // A tab the role cannot read (e.g. voice notes, ledger) shows as empty instead of failing the whole page.
+  void ordersError; void quotesError; void activitiesError; void ledgerError; void followUpError; void auditError; void voiceNotesError;
   return { customer, orders: orders ?? [], quotes: quotes ?? [], activities: activities ?? [], ledger: ledger ?? [], followUps: followUps ?? [], audit: audit ?? [], voiceNotes: voiceNotes ?? [] };
 }
 

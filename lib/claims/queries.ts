@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { withSignedClaimPhotos } from "@/lib/claims/options";
 
 export async function getClaimsForCurrentUser() {
   const supabase = await getSupabaseServerClient();
@@ -10,7 +11,7 @@ export async function getClaimsForCurrentUser() {
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) throw new Error("Claims could not be loaded. Refresh and try again.");
-  return data ?? [];
+  return withSignedClaimPhotos(data ?? []);
 }
 
 export async function getClaimForCurrentUser(claimId: string) {
@@ -21,7 +22,7 @@ export async function getClaimForCurrentUser(claimId: string) {
     .eq("id", claimId)
     .maybeSingle();
   if (error || !data) throw new Error("Claim could not be loaded. Check the claim number and try again.");
-  return data;
+  return (await withSignedClaimPhotos([data]))[0];
 }
 
 export async function getClaimsAnalytics() {

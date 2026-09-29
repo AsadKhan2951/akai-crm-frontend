@@ -54,7 +54,7 @@ export function UsersView({ users, roles, invites, customers, canCreate, canUpda
 
   return (
     <div className="space-y-6">
-      <PageHeader title={t("usersTitle")} description={t("usersDescription")} actions={canCreate ? <Button type="button" variant="destructive" onClick={() => setShowForm((value) => !value)}>{t("createUser")}</Button> : undefined} />
+      <PageHeader title={t("usersTitle")} description={t("usersDescription")} actions={canCreate ? <Button type="button" onClick={() => setShowForm((value) => !value)}>{t("createUser")}</Button> : undefined} />
       {message ? <p role="status" className={`rounded-md border bg-white p-3 text-sm font-medium ${message.ok ? "border-slate-300 text-primary" : "border-[#b42318] text-[#b42318]"}`}>{message.text}</p> : null}
 
       {showForm && canCreate ? (
@@ -91,7 +91,7 @@ export function UsersView({ users, roles, invites, customers, canCreate, canUpda
             {portal === "SALES" ? <label className="text-sm font-medium text-primary">{tu("agentCode")}<input name="agentCode" placeholder="HARIS" className={field} /><span className="mt-1 block text-sm font-normal text-muted-foreground">{tu("agentCodeHint")}</span></label> : null}
           </div>
           <div className="flex gap-2">
-            <Button type="submit" variant="destructive" disabled={pending}>{t("createUser")}</Button>
+            <Button type="submit" disabled={pending}>{t("createUser")}</Button>
             <Button type="button" variant="outline" onClick={() => setShowForm(false)}>{t("cancel")}</Button>
           </div>
         </form>

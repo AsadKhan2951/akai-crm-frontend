@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -8,6 +8,8 @@ import { PermissionProvider } from "@/components/providers/PermissionProvider";
 import { PWAClient } from "@/components/pwa/PWAClient";
 import { fontVariables } from "@/lib/fonts";
 import "./globals.css";
+
+export const metadata: Metadata = { title: { default: "AKAI CRM", template: "%s · AKAI CRM" }, description: "AKAI sales, dealer ordering and recovery CRM.", applicationName: "AKAI CRM" };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#15171c" };
 

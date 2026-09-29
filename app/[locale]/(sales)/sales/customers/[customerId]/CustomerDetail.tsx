@@ -28,6 +28,7 @@ function date(value: string | null, locale: string) {
 export function CustomerDetail({ locale, data, canAi, schemes }: { locale: string; data: DetailData; canAi: boolean; schemes: VisibleScheme[] }) {
   const t = useTranslations("sales");
   const schemeT = useTranslations("scheme");
+  const profileT = useTranslations("customerProfile");
   const customer = data.customer;
   const [tab, setTab] = useState<Tab>("overview");
   const [brief, setBrief] = useState<string[]>([]);
@@ -45,7 +46,7 @@ export function CustomerDetail({ locale, data, canAi, schemes }: { locale: strin
         description={`${String(customer.area_code)} · ${t(`types.${String(customer.customer_type)}` as never)}`}
         actions={
           <>
-            <Link href="/sales/activity" className="inline-flex min-h-11 items-center rounded-md bg-primary px-4 text-sm font-semibold text-white">{t("logActivity")}</Link>
+            <Link href={`/sales/customers/enrichment?customerId=${customerId}` as never} className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-4 text-sm font-semibold text-ink hover:bg-sunken">{profileT("editCustomer")}</Link><Link href={`/sales/claims?customerId=${customerId}` as never} className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-4 text-sm font-semibold text-ink hover:bg-sunken">{profileT("raiseClaim")}</Link><Link href="/sales/activity" className="inline-flex min-h-11 items-center rounded-md bg-primary px-4 text-sm font-semibold text-white">{t("logActivity")}</Link>
             {customer.primary_phone ? <a href={manualCallProvider.createTelLink(String(customer.primary_phone))} onClick={() => manualCallProvider.rememberCall({ customerId, phone: String(customer.primary_phone), label: String(customer.business_name), startedAt: Date.now() })} className="inline-flex min-h-11 items-center rounded-md border border-slate-300 px-4 text-sm font-semibold text-primary">{t("call")}</a> : null}
             {canAi ? (
               <>

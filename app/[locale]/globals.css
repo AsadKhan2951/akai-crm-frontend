@@ -30,9 +30,9 @@
   html[lang="ur"] .eyebrow { letter-spacing: 0; text-transform: none; }
   button { cursor: pointer; }
   :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
-  /* Inputs: kit look for every form field. :where() keeps specificity at zero so any
-     utility class on the element still wins. */
-  :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"]), select, textarea) {
+  /* Inputs: kit look for every form field. Element-level specificity (0,0,1) beats the
+     Tailwind preflight reset but any utility class on the element still wins. */
+  input:where(:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"], [type="hidden"])), select, textarea {
     border: 1px solid var(--color-line); border-radius: 8px; background-color: #fff; color: var(--color-ink); font-size: 14px; padding: 0.5rem 0.75rem;
   }
   :where(input, select, textarea):focus { outline: none; border-color: var(--color-muted); box-shadow: 0 0 0 3px rgba(31, 71, 198, 0.12); }
