@@ -5,15 +5,15 @@ import { hashDriverToken } from "@/lib/delivery/tokens";
 const payloadSchema = z.object({
   stopId: z.uuid(),
   status: z.enum(["DELIVERED", "PARTIAL", "FAILED", "RESCHEDULED"]),
-  receivedByName: z.string().trim().max(120).optional(),
-  signatureUrl: z.string().max(2_000_000).optional(),
-  photoUrl: z.string().max(2_000_000).optional(),
+  receivedByName: z.string().trim().max(120).nullish(),
+  signatureUrl: z.string().max(2_000_000).nullish(),
+  photoUrl: z.string().max(2_000_000).nullish(),
   latitude: z.number().finite().min(-90).max(90).nullable().optional(),
   longitude: z.number().finite().min(-180).max(180).nullable().optional(),
   codCollected: z.boolean().default(false),
-  failureReason: z.string().trim().max(240).optional(),
-  notes: z.string().trim().max(2000).optional(),
-  lines: z.array(z.object({ orderLineId: z.uuid(), quantityDelivered: z.string().regex(/^\d+(\.\d{1,3})?$/), quantityShort: z.string().regex(/^\d+(\.\d{1,3})?$/), shortReason: z.string().trim().max(240).optional() })).max(200).default([]),
+  failureReason: z.string().trim().max(240).nullish(),
+  notes: z.string().trim().max(2000).nullish(),
+  lines: z.array(z.object({ orderLineId: z.uuid(), quantityDelivered: z.coerce.string().regex(/^\d+(\.\d{1,3})?$/), quantityShort: z.coerce.string().regex(/^\d+(\.\d{1,3})?$/), shortReason: z.string().trim().max(240).nullish() })).max(200).default([]),
 }).strict();
 
 export async function POST(request: Request, { params }: { params: Promise<{ token: string }> }) {

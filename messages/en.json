@@ -1566,7 +1566,8 @@
     "pickedQty": "Picked",
     "shortQty": "Short",
     "driverLinkCopied": "Driver link (copied). Valid for today only.",
-    "shareWhatsApp": "Send on WhatsApp"
+    "shareWhatsApp": "Send on WhatsApp",
+    "captureGps": "Capture GPS location"
   },
   "loyalty": {
     "title": "My points",

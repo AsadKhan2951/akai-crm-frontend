@@ -1566,7 +1566,8 @@
     "pickedQty": "پیک کیا",
     "shortQty": "کمی",
     "driverLinkCopied": "ڈرائیور لنک (کاپی ہو گیا)۔ صرف آج کے لیے۔",
-    "shareWhatsApp": "واٹس ایپ پر بھیجیں"
+    "shareWhatsApp": "واٹس ایپ پر بھیجیں",
+    "captureGps": "جی پی ایس لوکیشن لیں"
   },
   "loyalty": {
     "title": "میرے پوائنٹس",
