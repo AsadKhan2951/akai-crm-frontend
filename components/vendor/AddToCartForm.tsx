@@ -3,7 +3,11 @@
 import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Minus, Plus } from "lucide-react";
-import { addVendorCartLine, requestVendorQuoteForProduct } from "@/app/[locale]/(vendor)/vendor/actions";
+import { addVendorCartLine as addVendorCartLine__server, requestVendorQuoteForProduct as requestVendorQuoteForProduct__server } from "@/app/[locale]/(vendor)/vendor/actions";
+import { unwrap } from "@/lib/actions/client";
+
+const addVendorCartLine = unwrap(addVendorCartLine__server);
+const requestVendorQuoteForProduct = unwrap(requestVendorQuoteForProduct__server);
 
 export function AddToCartForm({ productId, quoteOnly, canOrder = true, canQuote = true, compact = false }: { productId: string; quoteOnly: boolean; canOrder?: boolean; canQuote?: boolean; compact?: boolean }) {
   const t = useTranslations("vendorCatalogue");

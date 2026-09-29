@@ -3,11 +3,15 @@
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
-import { hardDeleteAdminCustomer, recordAdminLedgerPayment } from "../../actions";
+import { hardDeleteAdminCustomer as hardDeleteAdminCustomer__server, recordAdminLedgerPayment as recordAdminLedgerPayment__server } from "../../actions";
 import { VoicePlayback } from "@/components/VoicePlayback";
 import { CustomerProfileForm, type ProfileCustomer } from "@/components/customers/CustomerProfileForm";
 import { Badge } from "@/components/admin/ui/Badge";
 import { formatPkr } from "@/lib/format/money";
+import { unwrap } from "@/lib/actions/client";
+
+const hardDeleteAdminCustomer = unwrap(hardDeleteAdminCustomer__server);
+const recordAdminLedgerPayment = unwrap(recordAdminLedgerPayment__server);
 
 type Row = Record<string, unknown>;
 type Detail = { customer: Row; orders: Row[]; quotes: Row[]; activities: Row[]; ledger: Row[]; followUps: Row[]; audit: Row[]; voiceNotes: Array<{ id: string; processing_status: string; transcript: string | null; created_at: string; duration_seconds: number }> };

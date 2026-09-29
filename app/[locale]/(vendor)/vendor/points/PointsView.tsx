@@ -2,7 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { requestLoyaltyRedemptionAction } from "./actions";
+import { requestLoyaltyRedemptionAction as requestLoyaltyRedemptionAction__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const requestLoyaltyRedemptionAction = unwrap(requestLoyaltyRedemptionAction__server);
 
 type Reward = { id: string; name_en: string; name_ur: string; description_en: string | null; description_ur: string | null; reward_type: string; points_cost: number; discount_value_pkr: string | null; discount_percent: string | null; stock_limit: number | null; redeemed_count: number; ends_at: string | null };
 type Transaction = { id: string; points: number; reason: string; created_at: string };

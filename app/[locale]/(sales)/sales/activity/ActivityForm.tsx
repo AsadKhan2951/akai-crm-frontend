@@ -5,10 +5,13 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui-kit";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
-import { logSalesActivity } from "../actions";
+import { logSalesActivity as logSalesActivity__server } from "../actions";
 import { enqueueOfflineOperation } from "@/lib/pwa/offline-queue";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
 import type { VoiceDraft } from "@/lib/voice/types";
+import { unwrap } from "@/lib/actions/client";
+
+const logSalesActivity = unwrap(logSalesActivity__server);
 
 type ContactData = { customers: Array<{ customer_id: string; business_name: string; area_code: string; primary_phone: string | null; whatsapp_phone: string | null }>; leads: Array<{ id: string; business_name: string; area_code: string; phone: string; stage: string }> };
 

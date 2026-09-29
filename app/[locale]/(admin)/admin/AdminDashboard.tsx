@@ -5,7 +5,10 @@ import { useTranslations } from "next-intl";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { EmptyState } from "@/components/ui-kit";
-import { acknowledgeAdminAnomaly } from "./actions";
+import { acknowledgeAdminAnomaly as acknowledgeAdminAnomaly__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const acknowledgeAdminAnomaly = unwrap(acknowledgeAdminAnomaly__server);
 
 type Row = Record<string, string | number | null>;
 type Analytics = Record<string, Row[]>;

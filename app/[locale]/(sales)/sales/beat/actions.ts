@@ -1,11 +1,13 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { normalizeBeatError } from "@/lib/beat/queries";
 
-export async function markBeatVisitAction(formData: FormData) {
+async function markBeatVisitAction__run(formData: FormData) {
   await requirePermission("beat.visit");
   const visitId = String(formData.get("visitId") ?? "");
   const status = String(formData.get("status") ?? "VISITED");
@@ -32,7 +34,7 @@ export async function markBeatVisitAction(formData: FormData) {
   revalidatePath("/[locale]/sales", "page");
 }
 
-export async function rescheduleBeatVisitAction(formData: FormData) {
+async function rescheduleBeatVisitAction__run(formData: FormData) {
   await requirePermission("beat.visit");
   const visitId = String(formData.get("visitId") ?? "");
   const newDateLocal = String(formData.get("newDate") ?? "");
@@ -43,3 +45,7 @@ export async function rescheduleBeatVisitAction(formData: FormData) {
   if (error) throw new Error(normalizeBeatError(error));
   revalidatePath("/[locale]/sales/beat", "page");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function markBeatVisitAction(...args: Parameters<typeof markBeatVisitAction__run>) { return runAction(markBeatVisitAction__run, args); }
+export async function rescheduleBeatVisitAction(...args: Parameters<typeof rescheduleBeatVisitAction__run>) { return runAction(rescheduleBeatVisitAction__run, args); }

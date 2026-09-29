@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { resetWhatsAppSession, setWhatsAppKillSwitch, setWhatsAppOrderCeiling } from "./actions";
+import { resetWhatsAppSession as resetWhatsAppSession__server, setWhatsAppKillSwitch as setWhatsAppKillSwitch__server, setWhatsAppOrderCeiling as setWhatsAppOrderCeiling__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const resetWhatsAppSession = unwrap(resetWhatsAppSession__server);
+const setWhatsAppKillSwitch = unwrap(setWhatsAppKillSwitch__server);
+const setWhatsAppOrderCeiling = unwrap(setWhatsAppOrderCeiling__server);
 
 type Session = { phone: string; state: string; last_message_at: string; customerName: string; customerId: string | null };
 

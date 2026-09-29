@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -26,7 +28,7 @@ async function getCustomerPage(supabase: Awaited<ReturnType<typeof getSupabaseSe
   return (data ?? []) as CampaignCustomer[];
 }
 
-export async function retryCommunicationMessage(formData: FormData) {
+async function retryCommunicationMessage__run(formData: FormData) {
   await requirePermission("message.send");
   const id = text(formData, "messageId");
   if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error("Choose a valid failed message before retrying.");
@@ -36,7 +38,7 @@ export async function retryCommunicationMessage(formData: FormData) {
   revalidatePath("/[locale]/admin/communications", "page");
 }
 
-export async function saveWhatsAppTemplate(formData: FormData) {
+async function saveWhatsAppTemplate__run(formData: FormData) {
   await requirePermission("whatsapp.manage_templates");
   const key = text(formData, "templateKey");
   const locale = text(formData, "locale");
@@ -51,7 +53,7 @@ export async function saveWhatsAppTemplate(formData: FormData) {
   revalidatePath("/[locale]/admin/communications", "page");
 }
 
-export async function queueCommunicationCampaign(formData: FormData) {
+async function queueCommunicationCampaign__run(formData: FormData) {
   await requirePermission("message.campaign");
   await requirePermission("customer.view");
   const name = text(formData, "name");
@@ -115,7 +117,7 @@ export async function queueCommunicationCampaign(formData: FormData) {
   return { campaignId: campaign.id, queued };
 }
 
-export async function setWhatsAppKillSwitch(formData: FormData) {
+async function setWhatsAppKillSwitch__run(formData: FormData) {
   await requirePermission("whatsapp.kill_switch");
   const enabled = String(formData.get("enabled") ?? "false") === "true";
   const supabase = await getSupabaseServerClient();
@@ -124,7 +126,7 @@ export async function setWhatsAppKillSwitch(formData: FormData) {
   revalidatePath("/[locale]/admin/communications", "page");
 }
 
-export async function resetWhatsAppSession(formData: FormData) {
+async function resetWhatsAppSession__run(formData: FormData) {
   await requirePermission("whatsapp.kill_switch");
   const phone = text(formData, "phone");
   if (!/^\+92\d{10}$/.test(phone)) throw new Error("Choose a valid Pakistani WhatsApp number.");
@@ -134,7 +136,7 @@ export async function resetWhatsAppSession(formData: FormData) {
   revalidatePath("/[locale]/admin/communications", "page");
 }
 
-export async function setWhatsAppOrderCeiling(formData: FormData) {
+async function setWhatsAppOrderCeiling__run(formData: FormData) {
   await requirePermission("whatsapp.kill_switch");
   const ceiling = String(formData.get("ceiling") ?? "").trim();
   if (!/^\d+(?:\.\d{1,2})?$/.test(ceiling) || /^0+(?:\.0{1,2})?$/.test(ceiling)) throw new Error("Enter a positive PKR amount.");
@@ -143,3 +145,11 @@ export async function setWhatsAppOrderCeiling(formData: FormData) {
   if (error) throw new Error("The WhatsApp order ceiling could not be saved. Check the amount and try again.");
   revalidatePath("/[locale]/admin/communications", "page");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function resetWhatsAppSession(...args: Parameters<typeof resetWhatsAppSession__run>) { return runAction(resetWhatsAppSession__run, args); }
+export async function setWhatsAppKillSwitch(...args: Parameters<typeof setWhatsAppKillSwitch__run>) { return runAction(setWhatsAppKillSwitch__run, args); }
+export async function setWhatsAppOrderCeiling(...args: Parameters<typeof setWhatsAppOrderCeiling__run>) { return runAction(setWhatsAppOrderCeiling__run, args); }
+export async function queueCommunicationCampaign(...args: Parameters<typeof queueCommunicationCampaign__run>) { return runAction(queueCommunicationCampaign__run, args); }
+export async function retryCommunicationMessage(...args: Parameters<typeof retryCommunicationMessage__run>) { return runAction(retryCommunicationMessage__run, args); }
+export async function saveWhatsAppTemplate(...args: Parameters<typeof saveWhatsAppTemplate__run>) { return runAction(saveWhatsAppTemplate__run, args); }

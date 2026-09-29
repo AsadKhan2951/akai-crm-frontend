@@ -2,7 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { draftAdminAnalyticsAction } from "./actions";
+import { draftAdminAnalyticsAction as draftAdminAnalyticsAction__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const draftAdminAnalyticsAction = unwrap(draftAdminAnalyticsAction__server);
 
 /** "Ask AKAI" bar: the existing read-only analytics assistant in the kit's look. */
 export function OverviewAsk({ rangeStart, rangeEnd }: { rangeStart: string; rangeEnd: string }) {

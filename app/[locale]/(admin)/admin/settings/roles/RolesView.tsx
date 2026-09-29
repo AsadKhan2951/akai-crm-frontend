@@ -4,8 +4,13 @@ import { useMemo, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { createAdminRole, deleteAdminRole, updateAdminRole } from "../../actions";
+import { createAdminRole as createAdminRole__server, deleteAdminRole as deleteAdminRole__server, updateAdminRole as updateAdminRole__server } from "../../actions";
 import { RoleAiDraft } from "./RoleAiDraft";
+import { unwrap } from "@/lib/actions/client";
+
+const createAdminRole = unwrap(createAdminRole__server);
+const deleteAdminRole = unwrap(deleteAdminRole__server);
+const updateAdminRole = unwrap(updateAdminRole__server);
 
 type Role = { id: string; name: string; description: string | null; data_scope: string; portal_access: string; is_system_role: boolean; is_active: boolean };
 type Permission = { id: string; key: string; module: string; label_en: string; label_ur: string; description: string | null; is_sensitive: boolean; display_order: number };

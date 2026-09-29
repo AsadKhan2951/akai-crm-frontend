@@ -5,8 +5,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { markBeatVisitAction, rescheduleBeatVisitAction } from "./actions";
+import { markBeatVisitAction as markBeatVisitAction__server, rescheduleBeatVisitAction as rescheduleBeatVisitAction__server } from "./actions";
 import type { SalesBeatData, BeatVisitRow } from "@/lib/beat/queries";
+import { unwrap } from "@/lib/actions/client";
+
+const markBeatVisitAction = unwrap(markBeatVisitAction__server);
+const rescheduleBeatVisitAction = unwrap(rescheduleBeatVisitAction__server);
 
 const dispositions = ["CONNECTED", "NO_ANSWER", "ORDER_PLACED", "PAYMENT_COLLECTED", "FOLLOW_UP_SCHEDULED", "COMPLAINT"] as const;
 

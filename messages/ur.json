@@ -1561,7 +1561,12 @@
     "gpsError": "GPS محفوظ نہیں ہو سکا۔ آپ پھر بھی delivery محفوظ کر سکتے ہیں۔",
     "saveError": "Delivery update محفوظ نہیں ہو سکی۔ fields چیک کر کے دوبارہ کوشش کریں۔",
     "driverUnavailable": "Driver link دستیاب نہیں",
-    "driverUnavailableHint": "یہ link invalid یا expire ہو چکا ہے۔ آج کے لیے Admin سے نیا link لیں۔"
+    "driverUnavailableHint": "یہ link invalid یا expire ہو چکا ہے۔ آج کے لیے Admin سے نیا link لیں۔",
+    "required": "درکار",
+    "pickedQty": "پیک کیا",
+    "shortQty": "کمی",
+    "driverLinkCopied": "ڈرائیور لنک (کاپی ہو گیا)۔ صرف آج کے لیے۔",
+    "shareWhatsApp": "واٹس ایپ پر بھیجیں"
   },
   "loyalty": {
     "title": "میرے پوائنٹس",

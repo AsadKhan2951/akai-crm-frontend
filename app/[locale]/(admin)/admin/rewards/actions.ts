@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -8,7 +10,7 @@ function value(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
 }
 
-export async function createRewardAction(formData: FormData) {
+async function createRewardAction__run(formData: FormData) {
   await requirePermission("reward.manage");
   const supabase = await getSupabaseServerClient();
   const payload = {
@@ -19,7 +21,7 @@ export async function createRewardAction(formData: FormData) {
   revalidatePath("/[locale]/admin/rewards", "page");
 }
 
-export async function approveRedemptionAction(formData: FormData) {
+async function approveRedemptionAction__run(formData: FormData) {
   await requirePermission("redemption.approve");
   const redemptionId = value(formData, "redemptionId");
   const orderId = value(formData, "orderId") || null;
@@ -30,7 +32,7 @@ export async function approveRedemptionAction(formData: FormData) {
   revalidatePath("/[locale]/admin/rewards", "page");
 }
 
-export async function rejectRedemptionAction(formData: FormData) {
+async function rejectRedemptionAction__run(formData: FormData) {
   await requirePermission("redemption.approve");
   const redemptionId = value(formData, "redemptionId");
   const reason = value(formData, "reason");
@@ -41,7 +43,7 @@ export async function rejectRedemptionAction(formData: FormData) {
   revalidatePath("/[locale]/admin/rewards", "page");
 }
 
-export async function adjustLoyaltyPointsAction(formData: FormData) {
+async function adjustLoyaltyPointsAction__run(formData: FormData) {
   await requirePermission("loyalty.adjust");
   const customerId = value(formData, "customerId");
   const delta = value(formData, "delta");
@@ -52,3 +54,9 @@ export async function adjustLoyaltyPointsAction(formData: FormData) {
   if (error) throw new Error("The points adjustment could not be saved. Check the customer and reason.");
   revalidatePath("/[locale]/admin/rewards", "page");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function approveRedemptionAction(...args: Parameters<typeof approveRedemptionAction__run>) { return runAction(approveRedemptionAction__run, args); }
+export async function adjustLoyaltyPointsAction(...args: Parameters<typeof adjustLoyaltyPointsAction__run>) { return runAction(adjustLoyaltyPointsAction__run, args); }
+export async function createRewardAction(...args: Parameters<typeof createRewardAction__run>) { return runAction(createRewardAction__run, args); }
+export async function rejectRedemptionAction(...args: Parameters<typeof rejectRedemptionAction__run>) { return runAction(rejectRedemptionAction__run, args); }

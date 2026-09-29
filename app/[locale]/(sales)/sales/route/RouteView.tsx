@@ -4,7 +4,10 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { findSalesCustomersNearMe } from "../actions";
+import { findSalesCustomersNearMe as findSalesCustomersNearMe__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const findSalesCustomersNearMe = unwrap(findSalesCustomersNearMe__server);
 
 type Customer = { customer_id: string; business_name: string; area_code: string; latitude: string | number | null; longitude: string | number | null; last_order_at: string | null };
 type Nearby = { customer_id: string; business_name: string; area_code: string; distance_meters: string | number };

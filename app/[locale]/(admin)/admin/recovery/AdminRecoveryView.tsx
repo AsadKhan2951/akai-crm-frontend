@@ -5,7 +5,12 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { bounceRecoveryCheque, clearRecoveryCheque, verifyRecoveryDeposit } from "@/app/[locale]/(sales)/sales/recovery/actions";
+import { bounceRecoveryCheque as bounceRecoveryCheque__server, clearRecoveryCheque as clearRecoveryCheque__server, verifyRecoveryDeposit as verifyRecoveryDeposit__server } from "@/app/[locale]/(sales)/sales/recovery/actions";
+import { unwrap } from "@/lib/actions/client";
+
+const bounceRecoveryCheque = unwrap(bounceRecoveryCheque__server);
+const clearRecoveryCheque = unwrap(clearRecoveryCheque__server);
+const verifyRecoveryDeposit = unwrap(verifyRecoveryDeposit__server);
 
 type AdminRecoveryData = { ageing: Array<Record<string, unknown>>; progress: Array<Record<string, unknown>>; deposits: Array<Record<string, unknown>>; bounced: Array<Record<string, unknown>>; depositedCheques: Array<Record<string, unknown>>; overdue: Array<Record<string, unknown>> };
 

@@ -5,10 +5,14 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { draftSalesCustomerBrief, draftSalesFollowUp } from "../../actions";
+import { draftSalesCustomerBrief as draftSalesCustomerBrief__server, draftSalesFollowUp as draftSalesFollowUp__server } from "../../actions";
 import { manualCallProvider } from "@/lib/messaging/calls";
 import type { VisibleScheme } from "@/lib/schemes/queries";
 import { VoicePlayback } from "@/components/VoicePlayback";
+import { unwrap } from "@/lib/actions/client";
+
+const draftSalesCustomerBrief = unwrap(draftSalesCustomerBrief__server);
+const draftSalesFollowUp = unwrap(draftSalesFollowUp__server);
 
 type DetailData = {
   customer: Record<string, string | boolean | null> | null;

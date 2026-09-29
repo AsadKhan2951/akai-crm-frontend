@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requirePermission, hasCurrentUserPermission } from "@/lib/auth/server";
@@ -168,7 +170,7 @@ export async function saveProductAction(formData: FormData) {
 }
 
 /** Called after the browser uploaded the file through /api/uploads/product. */
-export async function setProductPrimaryImageAction(productId: string, storagePath: string) {
+async function setProductPrimaryImageAction__run(productId: string, storagePath: string) {
   await requirePermission("product.manage_images");
   if (!isUuid(productId) || !storagePath || storagePath.includes("..")) throw new Error("The image could not be attached.");
   const supabase = await getSupabaseServerClient();
@@ -265,3 +267,6 @@ export async function activatePriceListAction(formData: FormData) {
   revalidatePath("/[locale]/admin/catalogue", "layout");
   done(locale, `/admin/catalogue/price-lists/${listId}`, "activated");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function setProductPrimaryImageAction(...args: Parameters<typeof setProductPrimaryImageAction__run>) { return runAction(setProductPrimaryImageAction__run, args); }

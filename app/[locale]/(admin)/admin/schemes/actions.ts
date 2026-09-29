@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -15,7 +17,7 @@ function jsonArray(formData: FormData, key: string) {
   }
 }
 
-export async function createTradeScheme(formData: FormData) {
+async function createTradeScheme__run(formData: FormData) {
   await requirePermission("scheme.create");
   const startsAt = karachiLocalToUtcIso(text(formData, "startsAt"));
   const endsAt = karachiLocalToUtcIso(text(formData, "endsAt"));
@@ -45,3 +47,6 @@ export async function activateTradeScheme(formData: FormData) {
   if (error) throw new Error("The scheme could not be activated. Check its schedule and approval permission.");
   revalidatePath("/[locale]/admin/schemes", "page");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function createTradeScheme(...args: Parameters<typeof createTradeScheme__run>) { return runAction(createTradeScheme__run, args); }

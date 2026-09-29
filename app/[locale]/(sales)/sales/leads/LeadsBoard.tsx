@@ -4,7 +4,15 @@ import { useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { createSalesLead, convertSalesLead, importSalesLeads, previewSalesLeadDuplicates, rollbackSalesLeadImport, updateSalesLeadStage } from "../actions";
+import { createSalesLead as createSalesLead__server, convertSalesLead as convertSalesLead__server, importSalesLeads as importSalesLeads__server, previewSalesLeadDuplicates as previewSalesLeadDuplicates__server, rollbackSalesLeadImport as rollbackSalesLeadImport__server, updateSalesLeadStage as updateSalesLeadStage__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const createSalesLead = unwrap(createSalesLead__server);
+const convertSalesLead = unwrap(convertSalesLead__server);
+const importSalesLeads = unwrap(importSalesLeads__server);
+const previewSalesLeadDuplicates = unwrap(previewSalesLeadDuplicates__server);
+const rollbackSalesLeadImport = unwrap(rollbackSalesLeadImport__server);
+const updateSalesLeadStage = unwrap(updateSalesLeadStage__server);
 
 const STAGES = ["NEW", "CONTACTED", "QUALIFIED", "PROPOSAL_SENT", "NEGOTIATION", "WON", "LOST"] as const;
 type Stage = typeof STAGES[number];

@@ -5,7 +5,13 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { changeAdminUserRole, createAdminInvite, linkInvitedUser, setAdminUserActive } from "../actions";
+import { changeAdminUserRole as changeAdminUserRole__server, createAdminInvite as createAdminInvite__server, linkInvitedUser as linkInvitedUser__server, setAdminUserActive as setAdminUserActive__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const changeAdminUserRole = unwrap(changeAdminUserRole__server);
+const createAdminInvite = unwrap(createAdminInvite__server);
+const linkInvitedUser = unwrap(linkInvitedUser__server);
+const setAdminUserActive = unwrap(setAdminUserActive__server);
 
 type Row = Record<string, unknown>;
 type CustomerOption = { id: string; business_name: string; area_code: string | null };

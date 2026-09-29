@@ -4,8 +4,14 @@ import { useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { createBeatAction, createBeatFrequencyTargetAction, planBeatAction, toggleBeatAction } from "./actions";
+import { createBeatAction as createBeatAction__server, createBeatFrequencyTargetAction as createBeatFrequencyTargetAction__server, planBeatAction as planBeatAction__server, toggleBeatAction as toggleBeatAction__server } from "./actions";
 import type { AdminBeatData } from "@/lib/beat/queries";
+import { unwrap } from "@/lib/actions/client";
+
+const createBeatAction = unwrap(createBeatAction__server);
+const createBeatFrequencyTargetAction = unwrap(createBeatFrequencyTargetAction__server);
+const planBeatAction = unwrap(planBeatAction__server);
+const toggleBeatAction = unwrap(toggleBeatAction__server);
 
 const dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
 type CoverageRow = { agent_id: string; agent_name: string; on_a_beat: number | string; not_on_a_beat: number | string; coverage_percent: number | string };

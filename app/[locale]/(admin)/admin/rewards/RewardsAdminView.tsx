@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { approveRedemptionAction, adjustLoyaltyPointsAction, createRewardAction, rejectRedemptionAction } from "./actions";
+import { approveRedemptionAction as approveRedemptionAction__server, adjustLoyaltyPointsAction as adjustLoyaltyPointsAction__server, createRewardAction as createRewardAction__server, rejectRedemptionAction as rejectRedemptionAction__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const approveRedemptionAction = unwrap(approveRedemptionAction__server);
+const adjustLoyaltyPointsAction = unwrap(adjustLoyaltyPointsAction__server);
+const createRewardAction = unwrap(createRewardAction__server);
+const rejectRedemptionAction = unwrap(rejectRedemptionAction__server);
 
 type Reward = { id: string; name_en: string; name_ur: string; reward_type: string; points_cost: number; discount_value_pkr: string | null; discount_percent: string | null; stock_limit: number | null; redeemed_count: number; is_active: boolean };
 type Redemption = { id: string; customer_id: string; points_spent: number; status: string; requested_at: string; customer?: { business_name?: string } | null; reward?: { name_en?: string; name_ur?: string } | null };

@@ -4,8 +4,11 @@ import { useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { ImagePlus, X } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
-import { createClaimAction } from "@/lib/claims/actions";
+import { createClaimAction as createClaimAction__server } from "@/lib/claims/actions";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
+import { unwrap } from "@/lib/actions/client";
+
+const createClaimAction = unwrap(createClaimAction__server);
 
 const CLAIM_TYPES = ["DAMAGED", "SHORT_SUPPLY", "WRONG_ITEM", "EXPIRED", "WARRANTY", "QUALITY"] as const;
 const MAX_PHOTOS = 5;

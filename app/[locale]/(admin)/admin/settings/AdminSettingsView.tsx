@@ -4,7 +4,10 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui-kit";
-import { updateAdminSetting } from "../actions";
+import { updateAdminSetting as updateAdminSetting__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const updateAdminSetting = unwrap(updateAdminSetting__server);
 
 type Setting = { key: string; value_json: unknown };
 function valueOf(settings: Setting[], key: string, fallback: string) { const setting = settings.find((item) => item.key === key); const value = setting?.value_json; return value && typeof value === "object" && "value" in value ? String((value as { value?: unknown }).value ?? fallback) : fallback; }

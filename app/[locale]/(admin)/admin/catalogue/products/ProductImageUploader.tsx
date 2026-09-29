@@ -3,7 +3,10 @@
 import { useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { setProductPrimaryImageAction } from "../actions";
+import { setProductPrimaryImageAction as setProductPrimaryImageAction__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const setProductPrimaryImageAction = unwrap(setProductPrimaryImageAction__server);
 
 export function ProductImageUploader({ productId }: { productId: string }) {
   const t = useTranslations("common");

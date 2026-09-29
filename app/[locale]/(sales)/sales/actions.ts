@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { requirePermission } from "@/lib/auth/server";
@@ -14,7 +16,7 @@ function nullableText(formData: FormData, key: string) {
   return value || null;
 }
 
-export async function markSalesFollowUpDone(formData: FormData) {
+async function markSalesFollowUpDone__run(formData: FormData) {
   await requirePermission("followup.manage");
   const id = textValue(formData, "followUpId");
   if (!id) throw new Error("Choose a follow-up before marking it done.");
@@ -28,7 +30,7 @@ export async function markSalesFollowUpDone(formData: FormData) {
   revalidatePath("/[locale]/sales", "layout");
 }
 
-export async function createSalesLead(formData: FormData) {
+async function createSalesLead__run(formData: FormData) {
   await requirePermission("lead.create");
   const businessName = textValue(formData, "businessName");
   const contactName = textValue(formData, "contactName");
@@ -61,7 +63,7 @@ export async function createSalesLead(formData: FormData) {
   revalidatePath("/[locale]/sales/leads", "page");
 }
 
-export async function updateSalesLeadStage(formData: FormData) {
+async function updateSalesLeadStage__run(formData: FormData) {
   await requirePermission("lead.update");
   const id = textValue(formData, "leadId");
   const stage = textValue(formData, "stage");
@@ -75,7 +77,7 @@ export async function updateSalesLeadStage(formData: FormData) {
   revalidatePath("/[locale]/sales/leads", "page");
 }
 
-export async function convertSalesLead(formData: FormData) {
+async function convertSalesLead__run(formData: FormData) {
   await requirePermission("lead.update");
   await requirePermission("customer.create");
   const id = textValue(formData, "leadId");
@@ -88,7 +90,7 @@ export async function convertSalesLead(formData: FormData) {
   revalidatePath("/[locale]/sales/customers", "page");
 }
 
-export async function importSalesLeads(formData: FormData) {
+async function importSalesLeads__run(formData: FormData) {
   await requirePermission("lead.import");
   const batchId = textValue(formData, "batchId");
   const assignedAgentId = textValue(formData, "assignedAgentId");
@@ -114,7 +116,7 @@ export async function importSalesLeads(formData: FormData) {
   return { insertedCount: data ?? 0, batchId };
 }
 
-export async function rollbackSalesLeadImport(formData: FormData) {
+async function rollbackSalesLeadImport__run(formData: FormData) {
   await requirePermission("lead.import");
   const batchId = textValue(formData, "batchId");
   if (!batchId) throw new Error("Choose an import batch before rolling it back.");
@@ -125,7 +127,7 @@ export async function rollbackSalesLeadImport(formData: FormData) {
   return { deletedCount: data ?? 0 };
 }
 
-export async function logSalesActivity(formData: FormData) {
+async function logSalesActivity__run(formData: FormData) {
   await requirePermission("activity.create");
   const type = textValue(formData, "type");
   const disposition = textValue(formData, "disposition");
@@ -167,7 +169,7 @@ export async function logSalesActivity(formData: FormData) {
   return { activityId };
 }
 
-export async function previewSalesLeadDuplicates(rows: unknown[]) {
+async function previewSalesLeadDuplicates__run(rows: unknown[]) {
   await requirePermission("lead.import");
   if (!Array.isArray(rows) || rows.length === 0 || rows.length > 5000) throw new Error("The CSV preview must contain between 1 and 5,000 rows.");
   const supabase = await getSupabaseServerClient();
@@ -176,7 +178,7 @@ export async function previewSalesLeadDuplicates(rows: unknown[]) {
   return data ?? [];
 }
 
-export async function createSalesCalendarFeedToken() {
+async function createSalesCalendarFeedToken__run() {
   await requirePermission("followup.view");
   const { randomBytes, createHash } = await import("node:crypto");
   const supabase = await getSupabaseServerClient();
@@ -191,7 +193,7 @@ export async function createSalesCalendarFeedToken() {
   return { ok: true, token };
 }
 
-export async function findSalesCustomersNearMe(latitude: string, longitude: string) {
+async function findSalesCustomersNearMe__run(latitude: string, longitude: string) {
   await requirePermission("customer.view");
   if (!/^-?\d+(\.\d+)?$/.test(latitude) || !/^-?\d+(\.\d+)?$/.test(longitude)) throw new Error("A valid location is required to find nearby customers.");
   const supabase = await getSupabaseServerClient();
@@ -200,7 +202,7 @@ export async function findSalesCustomersNearMe(latitude: string, longitude: stri
   return data ?? [];
 }
 
-export async function createSalesOrderOnBehalf(formData: FormData) {
+async function createSalesOrderOnBehalf__run(formData: FormData) {
   await requirePermission("order.create");
   const customerId = textValue(formData, "customerId");
   const rawLines = textValue(formData, "linesJson");
@@ -217,19 +219,19 @@ export async function createSalesOrderOnBehalf(formData: FormData) {
   return { orderId: data };
 }
 
-export async function draftSalesCustomerBrief(customerId: string, locale: string) {
+async function draftSalesCustomerBrief__run(customerId: string, locale: string) {
   await requirePermission("ai.chat");
   const { draftCustomerBrief } = await import("@/lib/ai/sales");
   return draftCustomerBrief(customerId, locale === "ur" ? "ur" : "en");
 }
 
-export async function draftSalesFollowUp(customerId: string, locale: string) {
+async function draftSalesFollowUp__run(customerId: string, locale: string) {
   await requirePermission("ai.chat");
   const { draftSalesFollowUp } = await import("@/lib/ai/sales");
   return draftSalesFollowUp(customerId, locale === "ur" ? "ur" : "en");
 }
 
-export async function priceSalesQuote(formData: FormData) {
+async function priceSalesQuote__run(formData: FormData) {
   await requirePermission("quote.price");
   const quoteId = textValue(formData, "quoteId");
   const rawLines = textValue(formData, "linesJson");
@@ -245,3 +247,19 @@ export async function priceSalesQuote(formData: FormData) {
   revalidatePath("/[locale]/admin/quotes", "page");
   return { pricedCount: data };
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function markSalesFollowUpDone(...args: Parameters<typeof markSalesFollowUpDone__run>) { return runAction(markSalesFollowUpDone__run, args); }
+export async function logSalesActivity(...args: Parameters<typeof logSalesActivity__run>) { return runAction(logSalesActivity__run, args); }
+export async function findSalesCustomersNearMe(...args: Parameters<typeof findSalesCustomersNearMe__run>) { return runAction(findSalesCustomersNearMe__run, args); }
+export async function createSalesOrderOnBehalf(...args: Parameters<typeof createSalesOrderOnBehalf__run>) { return runAction(createSalesOrderOnBehalf__run, args); }
+export async function priceSalesQuote(...args: Parameters<typeof priceSalesQuote__run>) { return runAction(priceSalesQuote__run, args); }
+export async function draftSalesCustomerBrief(...args: Parameters<typeof draftSalesCustomerBrief__run>) { return runAction(draftSalesCustomerBrief__run, args); }
+export async function draftSalesFollowUp(...args: Parameters<typeof draftSalesFollowUp__run>) { return runAction(draftSalesFollowUp__run, args); }
+export async function createSalesLead(...args: Parameters<typeof createSalesLead__run>) { return runAction(createSalesLead__run, args); }
+export async function convertSalesLead(...args: Parameters<typeof convertSalesLead__run>) { return runAction(convertSalesLead__run, args); }
+export async function importSalesLeads(...args: Parameters<typeof importSalesLeads__run>) { return runAction(importSalesLeads__run, args); }
+export async function previewSalesLeadDuplicates(...args: Parameters<typeof previewSalesLeadDuplicates__run>) { return runAction(previewSalesLeadDuplicates__run, args); }
+export async function rollbackSalesLeadImport(...args: Parameters<typeof rollbackSalesLeadImport__run>) { return runAction(rollbackSalesLeadImport__run, args); }
+export async function updateSalesLeadStage(...args: Parameters<typeof updateSalesLeadStage__run>) { return runAction(updateSalesLeadStage__run, args); }
+export async function createSalesCalendarFeedToken(...args: Parameters<typeof createSalesCalendarFeedToken__run>) { return runAction(createSalesCalendarFeedToken__run, args); }

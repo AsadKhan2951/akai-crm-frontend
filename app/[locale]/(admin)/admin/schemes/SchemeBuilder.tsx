@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { createTradeScheme } from "./actions";
+import { createTradeScheme as createTradeScheme__server } from "./actions";
 import { Button } from "@/components/ui/button";
+import { unwrap } from "@/lib/actions/client";
+
+const createTradeScheme = unwrap(createTradeScheme__server);
 
 const emptyTier = { minQuantity: "", minValuePKR: "", freeProductId: "", freeQuantity: "", discountPercent: "", discountAmountPKR: "", displayOrder: 0 };
 

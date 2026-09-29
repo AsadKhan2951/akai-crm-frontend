@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { requirePermission } from "@/lib/auth/server";
@@ -30,7 +32,7 @@ export async function rejectAdminOrder(formData: FormData) {
   revalidatePath("/[locale]/admin/approvals", "page");
 }
 
-export async function recordAdminLedgerPayment(formData: FormData) {
+async function recordAdminLedgerPayment__run(formData: FormData) {
   await requirePermission("ledger.record_payment");
   const customerId = textValue(formData, "customerId");
   const amountPKR = textValue(formData, "amountPKR");
@@ -54,7 +56,7 @@ export async function reassignAdminCustomer(formData: FormData) {
   revalidatePath("/[locale]/admin/customers", "page");
 }
 
-export async function updateAdminSetting(formData: FormData) {
+async function updateAdminSetting__run(formData: FormData) {
   await requirePermission("settings.manage");
   const key = textValue(formData, "key");
   const value = jsonValue(formData, "valueJson");
@@ -71,7 +73,7 @@ export async function updateAdminSetting(formData: FormData) {
   revalidatePath("/[locale]/admin/settings", "page");
 }
 
-export async function saveAdminReportDefinition(formData: FormData) {
+async function saveAdminReportDefinition__run(formData: FormData) {
   await requirePermission("report.build");
   const id = textValue(formData, "id");
   const name = textValue(formData, "name");
@@ -92,7 +94,7 @@ export async function saveAdminReportDefinition(formData: FormData) {
   revalidatePath("/[locale]/admin/reports", "page");
 }
 
-export async function createAdminRole(formData: FormData) {
+async function createAdminRole__run(formData: FormData) {
   await requirePermission("role.create");
   const keys = jsonValue(formData, "permissionKeys");
   await assertMayCreateRole(keys as PermissionKey[]);
@@ -113,7 +115,7 @@ export async function createAdminRole(formData: FormData) {
   revalidatePath("/[locale]/admin/settings/roles", "page");
 }
 
-export async function deleteAdminRole(formData: FormData) {
+async function deleteAdminRole__run(formData: FormData) {
   await requirePermission("role.delete");
   const roleId = textValue(formData, "roleId");
   if (!roleId) throw new Error("Choose a role before deleting it.");
@@ -127,7 +129,7 @@ export async function deleteAdminRole(formData: FormData) {
   revalidatePath("/[locale]/admin/settings/roles", "page");
 }
 
-export async function changeAdminUserRole(formData: FormData) {
+async function changeAdminUserRole__run(formData: FormData) {
   await requirePermission("user.update");
   const targetUserId = textValue(formData, "userId");
   const roleId = textValue(formData, "roleId");
@@ -140,7 +142,7 @@ export async function changeAdminUserRole(formData: FormData) {
   revalidatePath("/[locale]/admin/users", "page");
 }
 
-export async function startAdminImpersonation(formData: FormData) {
+async function startAdminImpersonation__run(formData: FormData) {
   await requirePermission("impersonate.vendor");
   const mode = textValue(formData, "mode");
   const targetUserId = textValue(formData, "targetUserId") || null;
@@ -160,7 +162,7 @@ export async function endAdminImpersonation(formData: FormData) {
   if (error) throw new Error("Preview could not be ended. Refresh and try again.");
 }
 
-export async function acknowledgeAdminAnomaly(formData: FormData) {
+async function acknowledgeAdminAnomaly__run(formData: FormData) {
   await requirePermission("dashboard.view");
   const alertId = textValue(formData, "alertId");
   const status = textValue(formData, "status");
@@ -171,7 +173,7 @@ export async function acknowledgeAdminAnomaly(formData: FormData) {
   revalidatePath("/[locale]/admin", "page");
 }
 
-export async function createAdminInvite(formData: FormData): Promise<{ status: "LINKED" | "WAITING_FOR_LOGIN" | "ALREADY_ACTIVE" | "NO_INVITE" }> {
+async function createAdminInvite__run(formData: FormData): Promise<{ status: "LINKED" | "WAITING_FOR_LOGIN" | "ALREADY_ACTIVE" | "NO_INVITE" }> {
   await requirePermission("user.create");
   const email = textValue(formData, "email").toLowerCase();
   const fullName = textValue(formData, "fullName");
@@ -196,7 +198,7 @@ export async function createAdminInvite(formData: FormData): Promise<{ status: "
   return { status: (status ?? "WAITING_FOR_LOGIN") as "LINKED" | "WAITING_FOR_LOGIN" | "ALREADY_ACTIVE" | "NO_INVITE" };
 }
 
-export async function linkInvitedUser(formData: FormData): Promise<{ status: string }> {
+async function linkInvitedUser__run(formData: FormData): Promise<{ status: string }> {
   await requirePermission("user.create");
   const email = textValue(formData, "email").toLowerCase();
   const supabase = await getSupabaseServerClient();
@@ -206,7 +208,7 @@ export async function linkInvitedUser(formData: FormData): Promise<{ status: str
   return { status: String(data ?? "WAITING_FOR_LOGIN") };
 }
 
-export async function updateAdminRole(formData: FormData) {
+async function updateAdminRole__run(formData: FormData) {
   await requirePermission("role.update");
   const roleId = textValue(formData, "roleId");
   const keys = jsonValue(formData, "permissionKeys");
@@ -227,7 +229,7 @@ export async function updateAdminRole(formData: FormData) {
   revalidatePath("/[locale]/admin/settings/roles", "page");
 }
 
-export async function setAdminUserActive(formData: FormData) {
+async function setAdminUserActive__run(formData: FormData) {
   await requirePermission("user.deactivate");
   const userId = textValue(formData, "userId");
   const active = textValue(formData, "active") === "true";
@@ -240,7 +242,7 @@ export async function setAdminUserActive(formData: FormData) {
   revalidatePath("/[locale]/admin/users", "page");
 }
 
-export async function draftAdminAnalyticsAction(formData: FormData) {
+async function draftAdminAnalyticsAction__run(formData: FormData) {
   await requirePermission("ai.analytics");
   const question = textValue(formData, "question");
   if (!question) throw new Error("Enter a question about the dashboard.");
@@ -248,7 +250,7 @@ export async function draftAdminAnalyticsAction(formData: FormData) {
   return runAdminAnalyticsQuestion(question, textValue(formData, "rangeStart") || undefined, textValue(formData, "rangeEnd") || undefined);
 }
 
-export async function draftAdminRoleAction(formData: FormData) {
+async function draftAdminRoleAction__run(formData: FormData) {
   await requirePermission("ai.chat");
   const description = textValue(formData, "description");
   if (!description) throw new Error("Describe the role before requesting a draft.");
@@ -256,7 +258,7 @@ export async function draftAdminRoleAction(formData: FormData) {
   return draftAdminRole(description);
 }
 
-export async function queueAdminReportRun(formData: FormData) {
+async function queueAdminReportRun__run(formData: FormData) {
   await requirePermission("report.export");
   const definitionId = textValue(formData, "definitionId");
   if (!definitionId) throw new Error("Choose a saved report before running it.");
@@ -267,7 +269,7 @@ export async function queueAdminReportRun(formData: FormData) {
 }
 
 
-export async function hardDeleteAdminCustomer(formData: FormData) {
+async function hardDeleteAdminCustomer__run(formData: FormData) {
   await requirePermission("customer.delete");
   const customerId = textValue(formData, "customerId");
   if (!customerId) throw new Error("Choose a customer before deleting it.");
@@ -276,3 +278,21 @@ export async function hardDeleteAdminCustomer(formData: FormData) {
   if (error) throw new Error(error.message.includes("history") ? "This customer has history and must be retained. Mark it inactive instead." : "The customer could not be deleted. Refresh and try again.");
   revalidatePath("/[locale]/admin/customers", "page");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function acknowledgeAdminAnomaly(...args: Parameters<typeof acknowledgeAdminAnomaly__run>) { return runAction(acknowledgeAdminAnomaly__run, args); }
+export async function draftAdminAnalyticsAction(...args: Parameters<typeof draftAdminAnalyticsAction__run>) { return runAction(draftAdminAnalyticsAction__run, args); }
+export async function recordAdminLedgerPayment(...args: Parameters<typeof recordAdminLedgerPayment__run>) { return runAction(recordAdminLedgerPayment__run, args); }
+export async function changeAdminUserRole(...args: Parameters<typeof changeAdminUserRole__run>) { return runAction(changeAdminUserRole__run, args); }
+export async function createAdminInvite(...args: Parameters<typeof createAdminInvite__run>) { return runAction(createAdminInvite__run, args); }
+export async function linkInvitedUser(...args: Parameters<typeof linkInvitedUser__run>) { return runAction(linkInvitedUser__run, args); }
+export async function setAdminUserActive(...args: Parameters<typeof setAdminUserActive__run>) { return runAction(setAdminUserActive__run, args); }
+export async function hardDeleteAdminCustomer(...args: Parameters<typeof hardDeleteAdminCustomer__run>) { return runAction(hardDeleteAdminCustomer__run, args); }
+export async function startAdminImpersonation(...args: Parameters<typeof startAdminImpersonation__run>) { return runAction(startAdminImpersonation__run, args); }
+export async function updateAdminSetting(...args: Parameters<typeof updateAdminSetting__run>) { return runAction(updateAdminSetting__run, args); }
+export async function draftAdminRoleAction(...args: Parameters<typeof draftAdminRoleAction__run>) { return runAction(draftAdminRoleAction__run, args); }
+export async function createAdminRole(...args: Parameters<typeof createAdminRole__run>) { return runAction(createAdminRole__run, args); }
+export async function deleteAdminRole(...args: Parameters<typeof deleteAdminRole__run>) { return runAction(deleteAdminRole__run, args); }
+export async function updateAdminRole(...args: Parameters<typeof updateAdminRole__run>) { return runAction(updateAdminRole__run, args); }
+export async function queueAdminReportRun(...args: Parameters<typeof queueAdminReportRun__run>) { return runAction(queueAdminReportRun__run, args); }
+export async function saveAdminReportDefinition(...args: Parameters<typeof saveAdminReportDefinition__run>) { return runAction(saveAdminReportDefinition__run, args); }

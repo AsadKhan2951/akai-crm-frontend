@@ -4,8 +4,11 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader, StatCard } from "@/components/ui-kit";
-import { markSalesFollowUpDone } from "./actions";
+import { markSalesFollowUpDone as markSalesFollowUpDone__server } from "./actions";
 import { SalesAiRecommendations } from "./SalesAiRecommendations";
+import { unwrap } from "@/lib/actions/client";
+
+const markSalesFollowUpDone = unwrap(markSalesFollowUpDone__server);
 
 function displayPhone(phone: string | null | undefined) {
   return phone ? phone.replace(/^\+92(\d{3})(\d{3})(\d{4})$/, "0$1-$2$3") : "";

@@ -5,9 +5,15 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { draftRecoveryReminderAction, draftRecoveryRiskAction, recordRecoveryCollection, submitRecoveryDeposit } from "./actions";
+import { draftRecoveryReminderAction as draftRecoveryReminderAction__server, draftRecoveryRiskAction as draftRecoveryRiskAction__server, recordRecoveryCollection as recordRecoveryCollection__server, submitRecoveryDeposit as submitRecoveryDeposit__server } from "./actions";
 import { enqueueOfflineOperation } from "@/lib/pwa/offline-queue";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { unwrap } from "@/lib/actions/client";
+
+const draftRecoveryReminderAction = unwrap(draftRecoveryReminderAction__server);
+const draftRecoveryRiskAction = unwrap(draftRecoveryRiskAction__server);
+const recordRecoveryCollection = unwrap(recordRecoveryCollection__server);
+const submitRecoveryDeposit = unwrap(submitRecoveryDeposit__server);
 
 type Customer = { id: string; primary_phone: string | null; whatsapp_phone: string | null };
 type QueueRow = { customer_id: string; business_name: string; area_code: string | null; balance_pkr: string; days_overdue: number; last_payment_at: string | null };

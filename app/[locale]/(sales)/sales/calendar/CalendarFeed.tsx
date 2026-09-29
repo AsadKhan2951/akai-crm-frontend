@@ -4,7 +4,10 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui-kit";
-import { createSalesCalendarFeedToken } from "../actions";
+import { createSalesCalendarFeedToken as createSalesCalendarFeedToken__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const createSalesCalendarFeedToken = unwrap(createSalesCalendarFeedToken__server);
 
 export function CalendarFeed() {
   const t = useTranslations("sales");

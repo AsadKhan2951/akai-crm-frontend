@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -11,7 +13,7 @@ function required(formData: FormData, key: string) {
   return value;
 }
 
-export async function createClaimAction(formData: FormData) {
+async function createClaimAction__run(formData: FormData) {
   await requirePermission("claim.create");
   const customerId = required(formData, "customerId");
   const claimType = required(formData, "claimType");
@@ -91,3 +93,6 @@ export async function registerWarrantyAction(formData: FormData) {
   revalidatePath("/sales/warranty");
   revalidatePath("/admin/warranty");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function createClaimAction(...args: Parameters<typeof createClaimAction__run>) { return runAction(createClaimAction__run, args); }

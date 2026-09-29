@@ -1,11 +1,13 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { requirePermission } from "@/lib/auth/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { normalizeBeatError, parseAreaCodes } from "@/lib/beat/queries";
 
-export async function createBeatAction(formData: FormData) {
+async function createBeatAction__run(formData: FormData) {
   await requirePermission("beat.manage");
   const name = String(formData.get("name") ?? "").trim();
   const agentId = String(formData.get("agentId") ?? "");
@@ -21,7 +23,7 @@ export async function createBeatAction(formData: FormData) {
   revalidatePath("/[locale]/admin/beats", "page");
 }
 
-export async function planBeatAction(formData: FormData) {
+async function planBeatAction__run(formData: FormData) {
   await requirePermission("beat.manage");
   const beatId = String(formData.get("beatId") ?? "");
   const plannedDate = String(formData.get("plannedDate") ?? "");
@@ -33,7 +35,7 @@ export async function planBeatAction(formData: FormData) {
   revalidatePath("/[locale]/sales/beat", "page");
 }
 
-export async function toggleBeatAction(formData: FormData) {
+async function toggleBeatAction__run(formData: FormData) {
   await requirePermission("beat.manage");
   const beatId = String(formData.get("beatId") ?? "");
   const isActive = String(formData.get("isActive") ?? "") === "true";
@@ -44,7 +46,7 @@ export async function toggleBeatAction(formData: FormData) {
   revalidatePath("/[locale]/admin/beats", "page");
 }
 
-export async function createBeatFrequencyTargetAction(formData: FormData) {
+async function createBeatFrequencyTargetAction__run(formData: FormData) {
   await requirePermission("beat.manage");
   const beatId = String(formData.get("beatId") ?? "");
   const customerType = String(formData.get("customerType") ?? "").trim();
@@ -57,3 +59,9 @@ export async function createBeatFrequencyTargetAction(formData: FormData) {
   if (error) throw new Error("Frequency target could not be saved.");
   revalidatePath("/[locale]/admin/beats", "page");
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function createBeatAction(...args: Parameters<typeof createBeatAction__run>) { return runAction(createBeatAction__run, args); }
+export async function createBeatFrequencyTargetAction(...args: Parameters<typeof createBeatFrequencyTargetAction__run>) { return runAction(createBeatFrequencyTargetAction__run, args); }
+export async function planBeatAction(...args: Parameters<typeof planBeatAction__run>) { return runAction(planBeatAction__run, args); }
+export async function toggleBeatAction(...args: Parameters<typeof toggleBeatAction__run>) { return runAction(toggleBeatAction__run, args); }

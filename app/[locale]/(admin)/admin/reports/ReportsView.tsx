@@ -4,7 +4,11 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { queueAdminReportRun, saveAdminReportDefinition } from "../actions";
+import { queueAdminReportRun as queueAdminReportRun__server, saveAdminReportDefinition as saveAdminReportDefinition__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const queueAdminReportRun = unwrap(queueAdminReportRun__server);
+const saveAdminReportDefinition = unwrap(saveAdminReportDefinition__server);
 
 type Row = Record<string, unknown>;
 const columnOptions: Record<string, string[]> = { orders: ["order_number", "customer_id", "status", "total_pkr", "placed_at", "placed_via"], customers: ["business_name", "area_code", "customer_type", "status", "data_complete", "assigned_agent_id"], products: ["sku", "name_en", "category_id", "brand_id", "price_pkr", "stock_quantity"], activities: ["type", "disposition", "occurred_at", "agent_id", "customer_id"], ledger: ["customer_id", "type", "amount_pkr", "reference_number", "entry_date"] };

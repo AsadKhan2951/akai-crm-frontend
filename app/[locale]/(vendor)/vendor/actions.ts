@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
@@ -12,7 +14,7 @@ async function vendorId() {
   return id;
 }
 
-export async function addVendorCartLine(formData: FormData) {
+async function addVendorCartLine__run(formData: FormData) {
   await requirePermission("order.create");
   const productId = String(formData.get("productId") ?? "");
   const quantity = String(formData.get("quantity") ?? "1");
@@ -110,7 +112,7 @@ export async function acknowledgeVendorCartPrices(formData: FormData) {
   revalidatePath("/[locale]/vendor/cart", "page");
 }
 
-export async function requestVendorQuoteForProduct(formData: FormData) {
+async function requestVendorQuoteForProduct__run(formData: FormData) {
   await requirePermission("quote.create"); await vendorId();
   const productId = String(formData.get("productId") ?? ""); const quantity = String(formData.get("quantity") ?? "1"); const notes = String(formData.get("notes") ?? "").trim() || null;
   const supabase = await getSupabaseServerClient(); const { data, error } = await supabase.rpc("request_vendor_quote_for_product", { p_product_id: productId, p_quantity: quantity, p_notes: notes });
@@ -124,3 +126,7 @@ export async function draftVendorAssistantAction(_previous: { ok: boolean; produ
   const { draftVendorAssistant } = await import("@/lib/ai/vendor");
   return draftVendorAssistant(customerId, query);
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function addVendorCartLine(...args: Parameters<typeof addVendorCartLine__run>) { return runAction(addVendorCartLine__run, args); }
+export async function requestVendorQuoteForProduct(...args: Parameters<typeof requestVendorQuoteForProduct__run>) { return runAction(requestVendorQuoteForProduct__run, args); }

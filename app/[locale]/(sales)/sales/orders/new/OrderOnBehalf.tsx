@@ -5,10 +5,13 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { createSalesOrderOnBehalf } from "../../actions";
+import { createSalesOrderOnBehalf as createSalesOrderOnBehalf__server } from "../../actions";
 import { enqueueOfflineOperation } from "@/lib/pwa/offline-queue";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
+import { unwrap } from "@/lib/actions/client";
+
+const createSalesOrderOnBehalf = unwrap(createSalesOrderOnBehalf__server);
 
 type Customer = { customer_id: string; business_name: string; area_code: string; primary_phone: string | null };
 type Product = { id: string; sku: string; name_en: string; name_ur: string; price_pkr: string; is_quote_only: boolean; unit_of_measure: string };

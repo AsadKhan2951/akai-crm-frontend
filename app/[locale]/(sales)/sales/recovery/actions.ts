@@ -1,5 +1,7 @@
 "use server";
 
+import { runAction } from "@/lib/actions/safe";
+
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { requirePermission } from "@/lib/auth/server";
@@ -34,7 +36,7 @@ export async function uploadRecoveryPhoto(formData: FormData) {
   return { path };
 }
 
-export async function recordRecoveryCollection(formData: FormData) {
+async function recordRecoveryCollection__run(formData: FormData) {
   await requirePermission("collection.record");
   const customerId = textValue(formData, "customerId");
   const amountPKR = moneyValue(textValue(formData, "amountPKR"), "Collection amount");
@@ -63,7 +65,7 @@ export async function recordRecoveryCollection(formData: FormData) {
   return { collectionId: data[0].collection_id as string, receiptNumber: data[0].receipt_number as string };
 }
 
-export async function submitRecoveryDeposit(formData: FormData) {
+async function submitRecoveryDeposit__run(formData: FormData) {
   await requirePermission("collection.deposit");
   const rawIds = textValue(formData, "collectionIds");
   const collectionIds = rawIds ? JSON.parse(rawIds) as unknown : [];
@@ -87,7 +89,7 @@ export async function cancelRecoveryCollection(formData: FormData) {
   revalidatePath("/[locale]/sales/recovery", "page");
 }
 
-export async function verifyRecoveryDeposit(formData: FormData) {
+async function verifyRecoveryDeposit__run(formData: FormData) {
   await requirePermission("collection.verify_deposit");
   const depositId = textValue(formData, "depositId");
   const status = textValue(formData, "status");
@@ -98,7 +100,7 @@ export async function verifyRecoveryDeposit(formData: FormData) {
   revalidatePath("/[locale]/admin/recovery", "page");
 }
 
-export async function clearRecoveryCheque(formData: FormData) {
+async function clearRecoveryCheque__run(formData: FormData) {
   await requirePermission("collection.verify_deposit");
   const collectionId = textValue(formData, "collectionId");
   const supabase = await getSupabaseServerClient();
@@ -107,7 +109,7 @@ export async function clearRecoveryCheque(formData: FormData) {
   revalidatePath("/[locale]/admin/recovery", "page");
 }
 
-export async function bounceRecoveryCheque(formData: FormData) {
+async function bounceRecoveryCheque__run(formData: FormData) {
   await requirePermission("collection.verify_deposit");
   const collectionId = textValue(formData, "collectionId");
   const reason = textValue(formData, "reason");
@@ -118,7 +120,7 @@ export async function bounceRecoveryCheque(formData: FormData) {
   revalidatePath("/[locale]/admin/recovery", "page");
 }
 
-export async function draftRecoveryReminderAction(formData: FormData) {
+async function draftRecoveryReminderAction__run(formData: FormData) {
   await requirePermission("ai.chat");
   const customerId = textValue(formData, "customerId");
   const locale = textValue(formData, "locale") === "ur" ? "ur" : "en";
@@ -127,10 +129,19 @@ export async function draftRecoveryReminderAction(formData: FormData) {
   return draftRecoveryReminder(customerId, locale);
 }
 
-export async function draftRecoveryRiskAction(formData: FormData) {
+async function draftRecoveryRiskAction__run(formData: FormData) {
   await requirePermission("ai.chat");
   const customerId = textValue(formData, "customerId");
   if (!customerId) throw new Error("Choose a customer before reviewing credit risk.");
   const { draftRecoveryRisk } = await import("@/lib/ai/recovery");
   return draftRecoveryRisk(customerId);
 }
+
+// Exposed actions return the error message instead of throwing (see lib/actions/safe.ts).
+export async function bounceRecoveryCheque(...args: Parameters<typeof bounceRecoveryCheque__run>) { return runAction(bounceRecoveryCheque__run, args); }
+export async function clearRecoveryCheque(...args: Parameters<typeof clearRecoveryCheque__run>) { return runAction(clearRecoveryCheque__run, args); }
+export async function verifyRecoveryDeposit(...args: Parameters<typeof verifyRecoveryDeposit__run>) { return runAction(verifyRecoveryDeposit__run, args); }
+export async function draftRecoveryReminderAction(...args: Parameters<typeof draftRecoveryReminderAction__run>) { return runAction(draftRecoveryReminderAction__run, args); }
+export async function draftRecoveryRiskAction(...args: Parameters<typeof draftRecoveryRiskAction__run>) { return runAction(draftRecoveryRiskAction__run, args); }
+export async function recordRecoveryCollection(...args: Parameters<typeof recordRecoveryCollection__run>) { return runAction(recordRecoveryCollection__run, args); }
+export async function submitRecoveryDeposit(...args: Parameters<typeof submitRecoveryDeposit__run>) { return runAction(submitRecoveryDeposit__run, args); }

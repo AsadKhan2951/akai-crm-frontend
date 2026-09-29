@@ -5,7 +5,12 @@ import { useTranslations } from "next-intl";
 import { PageHeader, EmptyState } from "@/components/ui-kit";
 import { Button } from "@/components/ui/button";
 import { AIDraftForm } from "@/components/AIDraftForm";
-import { queueCommunicationCampaign, retryCommunicationMessage, saveWhatsAppTemplate } from "./actions";
+import { queueCommunicationCampaign as queueCommunicationCampaign__server, retryCommunicationMessage as retryCommunicationMessage__server, saveWhatsAppTemplate as saveWhatsAppTemplate__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const queueCommunicationCampaign = unwrap(queueCommunicationCampaign__server);
+const retryCommunicationMessage = unwrap(retryCommunicationMessage__server);
+const saveWhatsAppTemplate = unwrap(saveWhatsAppTemplate__server);
 
 type FailedMessage = { id: string; channel: string; to_address: string; template_name: string | null; body: string; status: string; error_message: string | null; attempt_count: number; created_at: string };
 const templateKeys = ["order_confirmation", "order_approved", "order_rejected", "order_status_change", "quote_ready", "quote_expiring", "payment_reminder", "receipt", "dispatch_notification", "promotional_broadcast", "followup_nudge"];

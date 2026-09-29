@@ -4,7 +4,10 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { priceSalesQuote } from "../actions";
+import { priceSalesQuote as priceSalesQuote__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const priceSalesQuote = unwrap(priceSalesQuote__server);
 
 type Quote = { id: string; quote_number: string; customer_id: string; status: string; customer_notes: string | null; customer: { business_name: string; whatsapp_phone: string | null; email: string | null } | null; lines: Array<{ id: string; product_id: string; product?: { sku: string | null; name_en: string | null; name_ur: string | null } | Array<{ sku: string | null; name_en: string | null; name_ur: string | null }> | null; quantity: string; requested_notes: string | null; quoted_unit_price_pkr: string | null; line_total_pkr: string | null }> };
 type Rate = { assigned_to_user_id: string | null; agent_name: string | null; accepted_count: number; declined_count: number; responded_count: number; acceptance_rate: string };

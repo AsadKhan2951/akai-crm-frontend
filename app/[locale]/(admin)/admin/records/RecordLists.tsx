@@ -4,7 +4,10 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui-kit";
-import { recordAdminLedgerPayment } from "../actions";
+import { recordAdminLedgerPayment as recordAdminLedgerPayment__server } from "../actions";
+import { unwrap } from "@/lib/actions/client";
+
+const recordAdminLedgerPayment = unwrap(recordAdminLedgerPayment__server);
 
 type Row = Record<string, unknown>;
 export function AdminRecordList({ kind, rows, query }: { kind: "orders" | "quotes"; rows: Row[]; query: { search?: string; status?: string } }) { const t = useTranslations("admin"); const title = kind === "orders" ? t("ordersTitle") : t("quotesTitle"); const description = kind === "orders" ? t("ordersDescription") : t("quotesDescription"); const keys = kind === "orders" ? ["order_number", "status", "total_pkr", "placed_at", "placed_via"] : ["quote_number", "status", "valid_until", "created_at", "responded_at"]; return <div className="space-y-6"><PageHeader title={title} description={description} /><Filter query={query} /><Table rows={rows} keys={keys} /><>{rows.length === 0 ? <EmptyState title={t("noDashboardData")} description={t("noDashboardDataHint")} /> : null}</></div>; }

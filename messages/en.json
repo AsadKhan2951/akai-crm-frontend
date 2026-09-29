@@ -1561,7 +1561,12 @@
     "gpsError": "GPS could not be captured. You can still save the delivery.",
     "saveError": "The delivery update could not be saved. Check the fields and try again.",
     "driverUnavailable": "Driver link unavailable",
-    "driverUnavailableHint": "This link is invalid or expired. Ask Admin for a new link for today."
+    "driverUnavailableHint": "This link is invalid or expired. Ask Admin for a new link for today.",
+    "required": "Required",
+    "pickedQty": "Picked",
+    "shortQty": "Short",
+    "driverLinkCopied": "Driver link (copied). Valid for today only.",
+    "shareWhatsApp": "Send on WhatsApp"
   },
   "loyalty": {
     "title": "My points",

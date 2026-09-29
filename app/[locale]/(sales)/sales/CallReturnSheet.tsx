@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { logSalesActivity } from "./actions";
+import { logSalesActivity as logSalesActivity__server } from "./actions";
 import { manualCallProvider, type CallContext } from "@/lib/messaging/calls";
+import { unwrap } from "@/lib/actions/client";
+
+const logSalesActivity = unwrap(logSalesActivity__server);
 
 export function CallReturnSheet() {
   const t = useTranslations("communications");
