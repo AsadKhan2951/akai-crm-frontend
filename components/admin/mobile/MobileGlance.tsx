@@ -7,7 +7,7 @@ import { change, longDate, pct, pkr, type AppLocale } from '@/lib/admin/format';
 import { setDesktopView } from '@/lib/admin/actions';
 import { RevenueByMonthChart } from '../charts/RevenueByMonthChart';
 import { AgeingBar } from '../charts/AgeingBar';
-import { LocaleSwitch } from '../shell/LocaleSwitch';
+import { LocaleSwitch } from '../shell/LocaleSwitch'; 
 import { Dot } from '../ui/Badge';
 import { Progress, targetTone } from '../ui/Progress';
 import { EmptyState } from '../ui/EmptyState';
