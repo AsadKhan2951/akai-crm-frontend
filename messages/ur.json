@@ -1936,7 +1936,8 @@
     "paymentMethod": {
       "BALANCE": "Balance",
       "CREDIT": "Credit"
-    }
+    },
+    "validUntil": "کب تک درست"
   },
   "catalogueAdmin": {
     "gettingStarted": "یہاں سے شروع کریں: 1) categories بنائیں، 2) brands بنائیں، 3) products شامل کریں، 4) price list بنا کر activate کریں۔",
@@ -2646,5 +2647,48 @@
       "priority": "ترجیح",
       "note": "نوٹ"
     }
+  },
+  "adminOrders": {
+    "title": "آرڈرز",
+    "subtitle": "آپ کے دائرے کے تمام آرڈرز، نئے پہلے۔",
+    "subtitleWaiting": "{n} آرڈر کنفرم ہونے کے منتظر ہیں۔",
+    "search": "آرڈر نمبر تلاش کریں",
+    "status": "اسٹیٹس",
+    "allStatuses": "تمام اسٹیٹس",
+    "filter": "فلٹر",
+    "empty": "کوئی آرڈر نہیں ملا",
+    "emptyHint": "ڈیلرز اور سیلز ایجنٹس کے آرڈرز یہاں نظر آئیں گے۔",
+    "cols": {
+      "order": "آرڈر",
+      "customer": "ڈیلر",
+      "placed": "تاریخ",
+      "total": "کل",
+      "status": "اسٹیٹس",
+      "via": "کس نے دیا"
+    },
+    "via": {
+      "VENDOR_PORTAL": "ڈیلر ایپ",
+      "SALES_AGENT": "سیلز ایجنٹ",
+      "ADMIN": "ایڈمن",
+      "WHATSAPP": "واٹس ایپ",
+      "QUOTE_CONVERSION": "منظور شدہ کوٹیشن"
+    },
+    "selectAllPlaced": "تمام نئے آرڈرز منتخب کریں",
+    "confirmN": "{n} آرڈر کنفرم کریں",
+    "confirmedN": "{n} آرڈر کنفرم ہو گئے۔",
+    "payment": "ادائیگی",
+    "payment_BALANCE": "بیلنس سے",
+    "payment_CREDIT": "ادھار پر",
+    "pointsDiscount": "پوائنٹس ڈسکاؤنٹ",
+    "openApprovals": "منظوریاں کھولیں",
+    "placedHint": "اسٹاک چیک کر کے آرڈر کنفرم کریں۔ کنفرم آرڈرز پکنگ اور ڈسپیچ کے لیے ڈیلیوری میں جاتے ہیں۔",
+    "confirmedHint": "کنفرم ہو گیا۔ پکنگ اور ڈسپیچ کے لیے اسے ڈیلیوری رن میں شامل کریں۔",
+    "openDelivery": "ڈیلیوری کھولیں",
+    "confirm": "آرڈر کنفرم کریں",
+    "cancel": "آرڈر منسوخ کریں",
+    "cancelReason": "منسوخی کی وجہ (ڈیلر کو نظر آئے گی)",
+    "cancelNow": "آرڈر منسوخ کریں",
+    "keepOrder": "آرڈر رہنے دیں",
+    "cancelled": "آرڈر منسوخ ہو گیا۔"
   }
 }

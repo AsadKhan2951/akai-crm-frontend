@@ -167,11 +167,11 @@ export async function getSalesQuoteQueue() {
   const quoteIds = quoteRows.map((quote) => quote.id);
   const [{ data: customers, error: customerError }, { data: lines, error: lineError }] = await Promise.all([
     customerIds.length ? supabase.from("customers").select("id,business_name,whatsapp_phone,email").in("id", customerIds) : Promise.resolve({ data: [] as Array<Record<string, string | null>>, error: null }),
-    quoteIds.length ? supabase.from("quote_lines").select("id,quote_id,product_id,quantity,requested_notes,quoted_unit_price_pkr,line_total_pkr").in("quote_id", quoteIds) : Promise.resolve({ data: [] as Array<Record<string, string | null>>, error: null }),
+    quoteIds.length ? supabase.from("quote_lines").select("id,quote_id,product_id,quantity,requested_notes,quoted_unit_price_pkr,line_total_pkr,product:products(sku,name_en,name_ur)").in("quote_id", quoteIds) : Promise.resolve({ data: [] as Array<Record<string, unknown>>, error: null }),
   ]);
   if (customerError || lineError) throw new Error("Quote details could not be loaded.");
   const customerById = new Map((customers ?? []).map((customer) => [customer.id, customer]));
-  const linesByQuote = new Map<string, Array<Record<string, string | null>>>();
-  (lines ?? []).forEach((line) => linesByQuote.set(line.quote_id, [...(linesByQuote.get(line.quote_id) ?? []), line]));
+  const linesByQuote = new Map<string, Array<Record<string, unknown>>>();
+  ((lines ?? []) as Array<Record<string, unknown>>).forEach((line) => linesByQuote.set(String(line.quote_id), [...(linesByQuote.get(String(line.quote_id)) ?? []), line]));
   return { quotes: quoteRows.map((quote) => ({ ...quote, customer: customerById.get(quote.customer_id) ?? null, lines: linesByQuote.get(quote.id) ?? [] })), rates: rates ?? [] };
 }

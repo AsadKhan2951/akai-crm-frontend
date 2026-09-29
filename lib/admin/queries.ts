@@ -93,7 +93,7 @@ export async function getAdminOrders(search = "", status = "") {
 
 export async function getAdminQuotes(search = "", status = "") {
   const supabase = await getSupabaseServerClient();
-  let query = supabase.from("quotes").select("id,quote_number,customer_id,status,valid_until,created_at,responded_at,converted_order_id,assigned_to_user_id").order("created_at", { ascending: false }).limit(500);
+  let query = supabase.from("quotes").select("id,quote_number,customer_id,status,valid_until,created_at,responded_at,converted_order_id,assigned_to_user_id,customer:customers!quotes_customer_id_fkey(business_name,area_code)").order("created_at", { ascending: false }).limit(500);
   if (search) query = query.ilike("quote_number", `%${search.replace(/[%(),]/g, " ")}%`);
   if (status) query = query.eq("status", status);
   const { data, error } = await query;

@@ -242,5 +242,6 @@ export async function priceSalesQuote(formData: FormData) {
   const { data, error } = await supabase.rpc("price_sales_quote", { p_quote_id: quoteId, p_lines: lines, p_valid_until: karachiLocalToUtcIso(validUntil), p_internal_notes: internalNotes });
   if (error || data === null) throw new Error("The quote could not be priced. Check every line and the validity date.");
   revalidatePath("/[locale]/sales/quotes", "page");
+  revalidatePath("/[locale]/admin/quotes", "page");
   return { pricedCount: data };
 }

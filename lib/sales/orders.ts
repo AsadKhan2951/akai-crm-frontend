@@ -8,14 +8,14 @@ export type SalesOrderLine = { id: string; quantity: string; unit_price_pkr: str
 const one = <T,>(value: T | T[] | null | undefined): T | null => (Array.isArray(value) ? value[0] ?? null : value ?? null);
 
 /** Recent orders the signed-in Sales user can see (RLS scopes them to the agent's customers). */
-export async function getSalesOrders(search = "", status = "") {
+export async function getSalesOrders(search = "", status = "", limit = 100) {
   const supabase = await getSupabaseServerClient();
   let query = supabase
     .from("orders")
     .select("id,order_number,status,total_pkr,placed_at,created_at,placed_via,customer:customers!orders_customer_id_fkey(id,business_name,area_code)")
     .neq("status", "DRAFT")
     .order("created_at", { ascending: false })
-    .limit(100);
+    .limit(limit);
   if (status) query = query.eq("status", status);
   const clean = search.replace(/[(),%*\\]/g, " ").trim();
   if (clean) query = query.ilike("order_number", `%${clean}%`);

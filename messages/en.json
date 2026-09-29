@@ -1936,7 +1936,8 @@
     "paymentMethod": {
       "BALANCE": "Balance",
       "CREDIT": "Credit"
-    }
+    },
+    "validUntil": "Valid until"
   },
   "catalogueAdmin": {
     "gettingStarted": "Start here: 1) create categories, 2) create brands, 3) add products, 4) create and activate a price list.",
@@ -2646,5 +2647,48 @@
       "priority": "Priority",
       "note": "Note"
     }
+  },
+  "adminOrders": {
+    "title": "Orders",
+    "subtitle": "All orders in your scope, newest first.",
+    "subtitleWaiting": "{n, plural, one {# order is} other {# orders are}} waiting to be confirmed.",
+    "search": "Search order number",
+    "status": "Status",
+    "allStatuses": "All statuses",
+    "filter": "Filter",
+    "empty": "No orders found",
+    "emptyHint": "Orders from dealers and sales agents appear here.",
+    "cols": {
+      "order": "Order",
+      "customer": "Dealer",
+      "placed": "Placed",
+      "total": "Total",
+      "status": "Status",
+      "via": "Placed by"
+    },
+    "via": {
+      "VENDOR_PORTAL": "Dealer app",
+      "SALES_AGENT": "Sales agent",
+      "ADMIN": "Admin",
+      "WHATSAPP": "WhatsApp",
+      "QUOTE_CONVERSION": "Accepted quote"
+    },
+    "selectAllPlaced": "Select all placed orders",
+    "confirmN": "{n, plural, =0 {Confirm orders} one {Confirm # order} other {Confirm # orders}}",
+    "confirmedN": "{n, plural, one {# order confirmed.} other {# orders confirmed.}}",
+    "payment": "Payment",
+    "payment_BALANCE": "From balance",
+    "payment_CREDIT": "On credit",
+    "pointsDiscount": "Points discount",
+    "openApprovals": "Open approvals",
+    "placedHint": "Check stock and confirm this order. Confirmed orders go to Delivery for picking and dispatch.",
+    "confirmedHint": "Confirmed. Add it to a delivery run to pick and dispatch.",
+    "openDelivery": "Open delivery",
+    "confirm": "Confirm order",
+    "cancel": "Cancel order",
+    "cancelReason": "Reason for cancelling (the dealer will see this)",
+    "cancelNow": "Cancel order",
+    "keepOrder": "Keep order",
+    "cancelled": "Order cancelled."
   }
 }
