@@ -3,7 +3,10 @@
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { draftAdminAnalyticsAction } from "./actions";
+import { draftAdminAnalyticsAction as draftAdminAnalyticsAction__server } from "./actions";
+import { unwrap } from "@/lib/actions/client";
+
+const draftAdminAnalyticsAction = unwrap(draftAdminAnalyticsAction__server);
 
 export function AdminAnalyticsAssistant({ rangeStart, rangeEnd }: { rangeStart: string; rangeEnd: string }) {
   const t = useTranslations("admin");
